@@ -4,7 +4,10 @@
 echo "query()함수를 이용한 테이블 생성 0008<br />";
 // 24시간제
 echo date("Y-m-d H:i:s") . "<br />\n";
+$test = "FUCK";
+include "sample.php";
 
+exit;
 function test($msg){
 	echo "test";
 	echo "<br/>\n";
