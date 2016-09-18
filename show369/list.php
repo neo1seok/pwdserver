@@ -99,7 +99,7 @@ foreach ($maplist as $v){
 		
 		//continue;
 	}
-	echo "<p><a class='$classname' href='$input'>$imgid:$nickname $msg</a></p>";
+	echo "<p><a class='$classname' href='$input'>$msg $nickname($imgid) $msg</a></p>";
 
 		//echo "<p><a href='$input'>$imgid:$nickname $msg</a></p>";
 		

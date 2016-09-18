@@ -71,9 +71,16 @@ foreach ($maplist as $v){
 	#$imglink = "http://369am.diskn.com/$imgid";
 	$imglink = getimglink($imgid);
 	$classname = 'normal';
+	if($stamp == 'TRUE') {
+		$msg = "##########";
+		$classname = 'stamp';
+	
+	
+		//continue;
+	}
 	
 
-	echo "<p>NICK:$nickname</p>";
+	echo "<p class='$classname' >$nickname($imgid)</p>";
 	echo "<p><a href='$input'><img src='$imglink' width = '300'/></a></p>";
 		//echo "<img src='http://369am.diskn.com/$imgid' width = '300'/> <br />\n";
 	
