@@ -40,7 +40,7 @@ if($option == 'all'||$option == 'today'){
 	if($option == 'all')
 		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where stamp != 'TITLE'";
 	else 
-		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where todayin = 'TRUE' order by comment";
+		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where todayin = 'TRUE' order by `order`";
 	$maplist =  QueryString2Map($sql);
 }
 else if($option=="prev"){
