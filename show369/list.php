@@ -27,7 +27,7 @@ if($option==""){
 	$date = $maplist[0]['reg_date'];
 	$update_date = $maplist[0]['updt_date'];
 	
-	$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where todayin = 'TRUE' order by comment";
+	$sql = "SELECT imgid, nickname,nck_uid,stamp,`order` FROM nickname where todayin = 'TRUE' order by `order`";
 	$maplist =  QueryString2Map($sql);
 	
 }

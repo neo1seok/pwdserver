@@ -4,7 +4,7 @@ include("library.php");  // library.php 파일 포함
 
 function processPreset(){
 
-	$sql = "UPDATE nickname SET todayin = 'FALSE',comment = '';"		;
+	$sql = "UPDATE nickname SET todayin = 'FALSE',comment = '',`order`=-1;"		;
 	echo $sql;
 	pnl();
 	QueryString($sql);
@@ -97,8 +97,8 @@ function processOrderNTodayIn($uidarray){
 	
 	$order = 0;
 	foreach ($uidarray as $v){
-		$strorder = sprintf("%05d", $order);
-		$sql = "UPDATE nickname SET todayin = 'TRUE', updt_date = now(),comment = '$strorder' where imgid = '$v';"		;
+		$strorder = "";//sprintf("%05d", $order);
+		$sql = "UPDATE nickname SET todayin = 'TRUE', updt_date = now(),comment = '$strorder',`order`=$order where imgid = '$v';"		;
 	
 		//pnl();
 		QueryString($sql);
@@ -109,6 +109,26 @@ function processOrderNTodayIn($uidarray){
 	
 	
 	
+}
+
+function processUpdateProfile($mapprofile){
+
+
+	foreach ($mapprofile as $k => $v){
+		$imgid_profile = $v[0];
+		$imgid_ext = $v[1];
+		
+		$sql = "UPDATE nickname SET imgid_profile = '$imgid_profile',imgid_ext = '$imgid_ext', updt_date = now() where nickname = '$k';"		;
+
+		//pnl();
+		QueryString($sql);
+
+
+
+	}
+
+
+
 }
 function processSetHistory($imgids,$uids){
 	
@@ -178,10 +198,45 @@ function processTimeStamp(){
 	
 	
 }
-$uids = $_REQUEST['ids'];
-$date = $_REQUEST['date'];
 
-$uidarray = explode (",", $uids);
+function base64_url_decode($input)
+{
+	return base64_decode(strtr($input, '-_,', '+/='));
+}
+$uids = $_REQUEST['ids'];
+$date = getsaftyReq('date');
+$base64 = getsaftyReq('base64');
+
+$mapprofile = array();
+if($base64 != ''){
+	echo $base64;
+	pnl();
+	
+	$jsonmap = base64_url_decode($base64);
+	echo $jsonmap;
+	pnl();
+	echo 'mark 1';
+	$maptopid = json_decode($jsonmap,TRUE);
+	echo 'mark 2';
+	
+	//$map =  getProfileMap();
+	//var_dump($map);
+	//var_dump($maptopid["ids"]);
+	//var_dump($maptopid["profile"]);
+	//var_dump($maptopid);
+	
+	$uidarray = $maptopid['ids'];
+	$mapprofile = $maptopid['profile'];
+}
+else{
+	$uidarray = explode (",", $uids);
+	echo $uids;
+}
+
+
+
+
+
 
 $imgids =getIdsInputForm($uidarray);
 
@@ -209,63 +264,14 @@ processPreset();
 
 processInsert($uidarray);
 
-// $sql = "SELECT nickname,imgid FROM nickname;";
-// echo $sql;
-// pnl();
-
-// $maplist =  QueryString2Map($sql);
-
-// $mapresult = getMapFromResultDB('imgid','nickname',$maplist);
-// $listindb = array();
-
-// $maplist =  QueryString2Map("select COALESCE(max(seq),0)+1 as nextseq from nickname");
-
-// $nextseq = $maplist[0]['nextseq'];
-
-
-
-
-
-		
-// foreach ($mapresult as $k => $v){
-// 	array_push($listindb, $k);
-// 	echo $k;
-// 	pnl();
-// }
-
-// foreach ($uidarray as $v){
-// 	if (!in_array($v, $listindb)) {
-// 		$sql = "INSERT INTO neo_pwinfo.nickname
-// (seq, nck_uid, imgid, stamp, nickname, todayin, updt_date, reg_date, comment)
-// VALUES ($nextseq, 'nck_$nextseq', '$v', 'FALSE', '', 'TRUE', now(), now(), 'comment');";
-		
-// 		echo $v ." not exit in db = ";
-// 		echo $sql;
-// 		pnl();
-// 		QueryString($sql);
-		
-// 		pnl();
-// 		$nextseq++;
-// 	}
-	
-// }
-
-//$sql = "UPDATE nickname SET todayin = 'TRUE', updt_date = now() where imgid in ($imgids);"		;
-//QueryString($sql);
+// 
 processOrderNTodayIn($uidarray);
-// $order = 0;
-// foreach ($uidarray as $v){
-// 	$sql = "UPDATE nickname SET todayin = 'TRUE', updt_date = now(),comment = '$order' where imgid = '$v';"		;
-	
-// 	//echo $v ." exit in db as ".$mapresult[$v];
-// 	//pnl();
-// 	QueryString($sql);
-// 	$order++;
-	
-	
-// }
+
+
+
 processSetHistory($imgids,$uids);
 
+processUpdateProfile($mapprofile);
 // $sql = "SELECT nck_uid,imgid FROM nickname where imgid in (".$imgids.");";
 
 // $maplist =  QueryString2Map("select COALESCE(max(seq),0)+1 as nextseq from history");
