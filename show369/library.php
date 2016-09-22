@@ -123,12 +123,31 @@ function getPrevList($index){
 	//echo $scommaarrayform;
 	//exit;
 
-	$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where nck_uid in ($scommaarrayform) and stamp !='TITLE'";
+	//$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where nck_uid in ($scommaarrayform) and stamp !='TITLE'";
+	$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where nck_uid in ($scommaarrayform) ";
 	$maplist =  QueryString2Map($sql);
+	$newmap = array();
+	foreach ($maplist as $v){
+		$nck_uid = $v['nck_uid'];
+		$newmapp[$nck_uid] = $v;
+		
+	
+	}
+	$newlist = array();
+	foreach ($uidarray as $uid){
+		if($uid == '') continue;
+		if(!array_key_exists($uid,$newmapp)) continue; 
+		array_push ($newlist,$newmapp[$uid]);
+		
+//		echo $uid;
+//		pnl();
+	}
 
 	$mapPrevInfo['updt_date'] =$updt_date;
 	$mapPrevInfo['reg_date'] =$reg_date;
-	$mapPrevInfo['maplist'] =$maplist;
+	$mapPrevInfo['maplist'] =$newlist;
+	//$mapPrevInfo['maplist'] =$maplist;
+	
 
 	return  $mapPrevInfo;
 

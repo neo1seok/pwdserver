@@ -130,14 +130,21 @@ function processUpdateProfile($mapprofile){
 
 
 }
-function processSetHistory($imgids,$uids){
+function processSetHistory($uidarray,$imgids,$uids){
 	
 	$nck_uids = '';
-	$maplist =  QueryString2Map("SELECT nck_uid FROM nickname where imgid in (".$imgids.");");
-	foreach ($maplist as $v){
-		$nck_uid = $v['nck_uid'];
+	$maplist =  QueryString2Map("SELECT nck_uid ,imgid FROM nickname where imgid in (".$imgids.");");
+	$newmap = getMapFromResultDB('imgid','nck_uid',$maplist);
+	
+	foreach ($uidarray as $v){
+		$nck_uid = $newmap[$v];
 		$nck_uids .= $nck_uid.",";
 	}
+	
+// 	foreach ($maplist as $v){
+// 		$nck_uid = $v['nck_uid'];
+// 		$nck_uids .= $nck_uid.",";
+// 	}
 	
 
 
@@ -269,7 +276,7 @@ processOrderNTodayIn($uidarray);
 
 
 
-processSetHistory($imgids,$uids);
+processSetHistory($uidarray,$imgids,$uids);
 
 processUpdateProfile($mapprofile);
 // $sql = "SELECT nck_uid,imgid FROM nickname where imgid in (".$imgids.");";
