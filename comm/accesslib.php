@@ -2,6 +2,17 @@
 require_once 'commlib.php';
 function loginform($isprecheck){
 	
+	$LOGIN_DEBUG = getenv('LOGIN_DEBUG');
+	
+	$appId = "";
+	
+
+	$appId      = '171344269971521';
+	if($LOGIN_DEBUG == "TRUE")
+		$appId      = '180688449037103';
+	//appId      : '171344269971521',
+	
+	
 	if($isprecheck == 'TRUE'){
 		
 		$listmpap = QueryString2Map("SELECT id,rn FROM user;");
@@ -120,7 +131,8 @@ function onInputSubmit(item) {
 
   window.fbAsyncInit = function() {
 	    FB.init({
-	      appId      : '171344269971521',
+	      //appId      : '171344269971521',
+	      appId      : '$appId',
 	      xfbml      : true,
 	      version    : 'v2.7'
 	    });

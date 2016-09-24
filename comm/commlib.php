@@ -1,5 +1,29 @@
 ﻿<?php
 
+
+$_ENV_G = array();
+
+
+
+function loadEnv(){
+	#$fb = open("../config.json","r");
+	//print "env is: ".getenv('LOGIN_DEBUG')."\n";
+	//phpinfo(INFO_ENVIRONMENT);
+	return;
+	
+	print getenv('MY_PROJECT_PATH') . "\n" .
+			getenv('MY_PROJECT_ENV') . "\n" .
+			getenv('MY_PROJECT_MAIL') . "\n";
+	
+	$filename = "../config.json";
+	$myfile = fopen($filename, "r") or die("Unable to open file!");
+	echo fread($myfile,filesize($filename));
+	fclose($myfile);
+	$_ENV_G["test"] = "fasfsadfsdfadsf";
+}
+
+
+
 function makeSingleCommaArrayFrom($uidarray){
 	$scommaarrayform = '';
 	$i = 0;

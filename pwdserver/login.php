@@ -3,7 +3,7 @@
 include("library.php");  // library.php 파일 포함
 defMeta();
 
-$option = $_REQUEST['option'];
+$option = getsaftyReq('option');
 echo 'LOGIN';
 
 if($option == "confirm"){

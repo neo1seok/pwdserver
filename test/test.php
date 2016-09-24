@@ -1,7 +1,18 @@
 ﻿<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 <?php
+require_once("../comm/library.php");
+$a = 1; /* global scope */
 
+function test()
+{
+	global $_ENV;
+	echo $_ENV["test"]; /* reference to local scope variable */
+}
+
+test();
+
+exit();
 class Sendmail {
 	/* smtp 의 호스트 설정 : 아래는 gmail 일경우 */
 	var $host="ssl://smtp.gmail.com";

@@ -178,8 +178,8 @@ function viewWebtoonLink_OLD($curyoil){
 }
 
 
-$option = $_REQUEST['option'];
-$jsonmap = $_REQUEST['json'];
+$option = getsaftyReq('option');
+$jsonmap =getsaftyReq('json');// $_REQUEST['json'];
 
 $yoil = array("일","월","화","수","목","금","토");
 $curyoil = $yoil[date('w')];
