@@ -50,6 +50,8 @@ echo '<table cellpadding="10">' ;
 foreach ($indicesServer as $arg) {
 	if (isset($_SERVER[$arg])) {
 		echo '<tr><td>'.$arg.'</td><td>' . $_SERVER[$arg] . '</td></tr>' ;
+	}
+}
 
 require_once("../comm/library.php");
 $a = 1; /* global scope */
