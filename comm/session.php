@@ -18,6 +18,8 @@ function checkSessionCatagory($catagory){
 	
 	$user_id = $_SESSION['user_id'];
 	$user_name = $_SESSION['user_name'];
+	
+	$regdate =getsaftySession('date');
 // 	pnl();
 // 	echo $user_id;
 // 	pnl();
@@ -33,8 +35,29 @@ function checkSessionCatagory($catagory){
 //		echo 'test';
 //		exit;
 		pagego('login.php');
+		logout();
 		exit;
 	}
+	
+	$date = date('Y-m-d.H:i:s');
+	pnl();
+	//echo date("Y-m-d H:i:s") . "<br />\n";
+	echo"로그인 날짜 ".$regdate;
+	pnl();
+	
+	
+	$tdifftime = strtotime(date('Y-m-d.H:i:s')) - strtotime($regdate);
+	echo "login time: ".$tdifftime." msec";
+	pnl();
+	if($tdifftime >10*60){
+		pagego('login.php');
+		logout();
+		exit;
+		
+	}
+	
+	
+	pnl();
 
 
 
@@ -48,6 +71,7 @@ function setSession($id,$name){
 	$_SESSION['user_id'] = $id;
 	$_SESSION['user_name'] = $name;
 	$_SESSION['debug'] = 'FALSE';
+	$_SESSION['date'] = date('Y-m-d.H:i:s');
 
 
 

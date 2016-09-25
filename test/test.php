@@ -1,6 +1,56 @@
 ﻿<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 <?php
+<<<<<<< HEAD
+//phpinfo();
+echo $_SERVER['HTTP_HOST'];
+
+$indicesServer = array('PHP_SELF',
+		'argv',
+		'argc',
+		'GATEWAY_INTERFACE',
+		'SERVER_ADDR',
+		'SERVER_NAME',
+		'SERVER_SOFTWARE',
+		'SERVER_PROTOCOL',
+		'REQUEST_METHOD',
+		'REQUEST_TIME',
+		'REQUEST_TIME_FLOAT',
+		'QUERY_STRING',
+		'DOCUMENT_ROOT',
+		'HTTP_ACCEPT',
+		'HTTP_ACCEPT_CHARSET',
+		'HTTP_ACCEPT_ENCODING',
+		'HTTP_ACCEPT_LANGUAGE',
+		'HTTP_CONNECTION',
+		'HTTP_HOST',
+		'HTTP_REFERER',
+		'HTTP_USER_AGENT',
+		'HTTPS',
+		'REMOTE_ADDR',
+		'REMOTE_HOST',
+		'REMOTE_PORT',
+		'REMOTE_USER',
+		'REDIRECT_REMOTE_USER',
+		'SCRIPT_FILENAME',
+		'SERVER_ADMIN',
+		'SERVER_PORT',
+		'SERVER_SIGNATURE',
+		'PATH_TRANSLATED',
+		'SCRIPT_NAME',
+		'REQUEST_URI',
+		'PHP_AUTH_DIGEST',
+		'PHP_AUTH_USER',
+		'PHP_AUTH_PW',
+		'AUTH_TYPE',
+		'PATH_INFO',
+		'ORIG_PATH_INFO') ;
+
+echo '<table cellpadding="10">' ;
+foreach ($indicesServer as $arg) {
+	if (isset($_SERVER[$arg])) {
+		echo '<tr><td>'.$arg.'</td><td>' . $_SERVER[$arg] . '</td></tr>' ;
+=======
 require_once("../comm/library.php");
 $a = 1; /* global scope */
 
@@ -198,153 +248,57 @@ function build_data($subject, $body) {
 		$mime .= "Content-Type: multipart/mixed; boundary=\"".$boundary."\"\r\n\r\n".
 				"This is a multi-part message in MIME format.\r\n\r\n";
 		$mime .= "--".$boundary."\r\n";
+>>>>>>> 52e91995418d32a8bcf77d7123b6b9e431f1db8e
 	}
-	$mime .= "Content-Type: ".$this->ctype."; charset=\"".$this->charset."\"\r\n".
-			"Content-Transfer-Encoding: base64\r\n\r\n" . chunk_split(base64_encode($body));
-	 
-	if($attcnt > 0) {
-		$mime .= "\r\n\r\n--".$boundary;
-		for($i=0; $i<$attcnt; $i++) {
-			$mime .= "\r\n".$this->build_message($this->parts[$i])."\r\n\r\n--".$boundary;
-		}
-		$mime .= "--\r\n";
+	else {
+		echo '<tr><td>'.$arg.'</td><td>-</td></tr>' ;
 	}
-
-	return $mime;
 }
-/* MX 값을 찾는다. */
-function get_mx_server($email) {
-
-	if(!preg_match("/([\._0-9a-zA-Z-]+)@([0-9a-zA-Z-]+\.[a-zA-Z\.]+)/", $email, $matches)) return false;
-	getmxrr($matches[2], $host);
-	if(!$host) $host[0] = $matches[2];
-	return $host;
+echo '</table>' ;
+$baseroot =$_SERVER['DOCUMENT_ROOT'];
+require_once("$baseroot/comm/library.php");
+pnl();
+require '../vendor/autoload.php';
+if(!session_id()) {
+	session_start();
 }
-/*  이메일의 형식이 맞는지 체크한다. */
-function get_email($email) {
-	if(!preg_match("/([\._0-9a-zA-Z-]+)@([0-9a-zA-Z-]+\.[a-zA-Z\.]+)/", $email, $matches)) return false;
-	return "<".$matches[0].">";
-}
-/* 메일을 전송한다. */
-function send_mail($to, $from, $subject, $body,$cc_mail=false,$bcc_mail=false) {
+$fb = new Facebook\Facebook([
+		'app_id' => '180688449037103',
+		'app_secret' => 'd99c9928a1e4c92d150d6ea249730def',
+		'default_graph_version' => 'v2.5',
+]);
 
+$helper = $fb->getRedirectLoginHelper();
+$permissions = ['email', 'user_likes']; // optional
+$loginUrl = $helper->getLoginUrl('http://neo1seok.iptime.org:8080/test/testcallback.php?option=aaa', $permissions);
 
-	$from.=" <".$this->smtp_id.">";
+echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 
-	if(!is_array($to)){
-		$rel_to=$to;
-		$to = explode(",",$to);
-	}
-	else{
-		$rel_to=implode(',',$to);
-	}
+echo "
+		<div id='fb-root'></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = '//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.7&appId=180688449037103';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 		
-		
-	$data = $this->build_data($subject, $body);
-	if($this->host == "auto") {
-		foreach($to as $email) {
-			if($host = $this->get_mx_server($email)) {
-				for($i=0, $max=count($host); $i<$max; $i++) {
-					if($conn = $this->connect($host[$i])) break;
-				}
-				if($conn) {
-					$this->smtp_send($email, $from, $data,$cc_mail,$bcc_mail);
-					$this->close();
-				}
-			}
-		}
-	} else {
+		<div class='fb-login-button' data-max-rows='1' data-size='xlarge' data-show-faces='false' data-auto-logout-link='false'></div>";
 
+$a = 1; /* global scope */
+$today = date('Y-m-d.H:m:s');     // 17:16:18 m is mon
+echo $today;
+pnl();
+//phpinfo();
+//test();
+$to_time = strtotime($today);
+usleep(1000000);
+$from_time = strtotime(date('Y-m-d.H:m:s'));
+echo $to_time - $from_time;
 
-		 
-		foreach($to as $key=>$email){
-			$this->connect($this->host);
-			$this->smtp_send($email, $from, $data,$cc_mail,$bcc_mail,$rel_to);
-			$this->close();
-		}
-			
-		if($cc_mail!=false){
-			$this->cc_email($rel_to,$from,$data,$cc_mail,$bcc_mail);
-		}
-		if($bcc_mail!=false){
-			$this->bcc_email($rel_to,$from,$data,$cc_mail,$bcc_mail);
-		}
-	}
-}
+echo round(abs($to_time - $from_time) / 60,2). " minute";
 
-function cc_email($rel_to,$from,$data,$cc_mail,$bcc_mail)
-{
-	if(!is_array($cc_mail)) $cc = explode(",",$cc_mail);
+exit();
 
-	foreach($cc as $email){
-		$this->connect($this->host);
-		$this->smtp_send($email, $from, $data,$cc_mail,$bcc_mail,$rel_to);
-		$this->close();
-	}
-}
-function bcc_email($rel_to,$from,$data,$cc_mail,$bcc_mail){
-
-	if(!is_array($bcc_mail)) $bcc = explode(",",$bcc_mail);
-
-	foreach($bcc as $email){
-		$this->connect($this->host);
-		$this->smtp_send($email, $from, $data,$cc_mail,$bcc_mail,$rel_to);
-		$this->close();
-	}
-
-}
-}
-
-function sendMail($EMAIL, $NAME, $mailto, $SUBJECT, $CONTENT){
-	//$EMAIL : 답장받을 메일주소
-	//$NAME : 보낸이
-	//$mailto : 보낼 메일주소
-	//$SUBJECT : 메일 제목
-	//$CONTENT : 메일 내용
-	$admin_email = $EMAIL;
-	$admin_name = $NAME;
-
-	$header = "Return-Path: ".$admin_email."\n";
-	$header .= "From: =?EUC-KR?B?".base64_encode($admin_name)."?= <".$admin_email.">\n";
-	$header .= "MIME-Version: 1.0\n";
-	$header .= "X-Priority: 3\n";
-	$header .= "X-MSMail-Priority: Normal\n";
-	$header .= "X-Mailer: FormMailer\n";
-	$header .= "Content-Transfer-Encoding: base64\n";
-	$header .= "Content-Type: text/html;\n \tcharset=euc-kr\n";
-
-	$subject = "=?EUC-KR?B?".base64_encode($SUBJECT)."?=\n";
-	$contents = $CONTENT;
-
-	$message = base64_encode($contents);
-	flush();
-	return mail($mailto, $subject, $message, $header);
-}
-
-
-echo "query()함수를 이용한 테이블 생성 0007<br />";
-// 24시간제
-echo date("Y-m-d H:i:s") . "<br />\n";
-
-
-//sendMail('neo1seok@gmail.com','신원석','wsshin@ictk.com','test','test');
-$config=array(
-		'host'=>'ssl://smtp.ictk.com:587',
-		'smtp_id'=>'wsshin@ictk.com',
-		'smtp_pw'=>'sws79700',
-		'debug'=>1,
-		'charset'=>'utf-8',
-		'ctype'=>'text/plain'
-);
-$sendmail = new Sendmail($config);
-
-$to="wsshin@ictk.com	";
-$from="Master";
-$subject="메일 제목입니다.";
-$body="메일 내용입니다.";
-//$cc_mail="cc@example.com";
-//$bcc_mail="bcc@example.com";
-
-/* 메일 보내기 */
-$sendmail->send_mail($to, $from, $subject, $body,$cc_mail,$bcc_mail)
 ?>	

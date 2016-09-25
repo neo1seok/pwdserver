@@ -1,17 +1,73 @@
 <?php
+global $baseroot;
+//
+$HTTP_HOST =$_SERVER['HTTP_HOST'];
 require_once 'commlib.php';
+require_once "$baseroot/vendor/autoload.php";
+
+function getFaceBook(){
+	
+	$appId = "";
+	$LOGIN_DEBUG = getenv('LOGIN_DEBUG');
+	
+	$appId      = '171344269971521';
+	$app_secret = 'dd81a9e2abb7eb1ce47a7c201b11a53d';
+	if($LOGIN_DEBUG == "TRUE"){
+		$appId      = '180688449037103';
+		$app_secret = 'd99c9928a1e4c92d150d6ea249730def';
+	}
+	//appId      : '171344269971521',
+	
+	
+	
+	
+	$fb = new Facebook\Facebook([
+			'app_id' => $appId,
+			'app_secret' => $app_secret,
+			'default_graph_version' => 'v2.5',
+	]);
+	return $fb;
+	
+}
 function loginform($isprecheck){
 	
+<<<<<<< HEAD
+	$HTTP_HOST =$_SERVER['HTTP_HOST'];
+	/*	
+=======
+>>>>>>> 52e91995418d32a8bcf77d7123b6b9e431f1db8e
 	$LOGIN_DEBUG = getenv('LOGIN_DEBUG');
 	
 	$appId = "";
 	
 
 	$appId      = '171344269971521';
+<<<<<<< HEAD
+	$app_secret = 'dd81a9e2abb7eb1ce47a7c201b11a53d';
+	if($LOGIN_DEBUG == "TRUE"){
+		$appId      = '180688449037103';
+		$app_secret = 'd99c9928a1e4c92d150d6ea249730def';
+	}
+	//appId      : '171344269971521',
+	
+		
+	
+		if(!session_id()) {
+			session_start();
+		}
+		$fb = new Facebook\Facebook([
+				'app_id' => $appId,
+				'app_secret' => $app_secret,
+				'default_graph_version' => 'v2.5',
+		]);*/
+
+	
+=======
 	if($LOGIN_DEBUG == "TRUE")
 		$appId      = '180688449037103';
 	//appId      : '171344269971521',
 	
+>>>>>>> 52e91995418d32a8bcf77d7123b6b9e431f1db8e
 	
 	if($isprecheck == 'TRUE'){
 		
@@ -53,50 +109,49 @@ function loginform($isprecheck){
 		
 	}
 	
+	if(!session_id()) {
+		session_start();
+	}
+	
+	$fb = getFaceBook();
+	$helper = $fb->getRedirectLoginHelper();
+	$permissions = ['email', 'user_likes']; // optional
+	$loginUrl = $helper->getLoginUrl("http://$HTTP_HOST/comm/logincallback.php?precheck=$precheck", $permissions);
+	
+	echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+	//echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 	
 	echo "
 <script src='../comm/js/sha256.js'></script>			
 <script type='text/javascript'>
 
+function makePasswd(id,passwd,precheck){
 
+	var mapidRnJson = JSON.parse('$mapidRnJson');
+	var rn = mapidRnJson[id];
+	var pwhash = Sha256.hash(passwd+rn).toUpperCase();
+	var precheckHash = Sha256.hash(precheck).toUpperCase();
+	return pwhash+precheckHash;
+	
+}
 function onInputSubmit(item) {
 	console.log('onsubmit');
 	var passwd = item.user_pw.value
 	var id = item.user_id.value
-	//var comps = item.user_pw.value.split(',');
-	var mapidRnJson = JSON.parse('$mapidRnJson');
-	
-	var rn = mapidRnJson[id];
-	//console.log(rn);
 	
 	var passlen = passwd.length-$prechecklength;
-	//console.log(passlen);
+
 	var precheck = passwd.slice(passlen);
 	passwd = passwd.slice(0,passlen);
 	
-	
-		//console.log(passwd);
-		//console.log(precheck);
-	
-	var pwhash = Sha256.hash(passwd+rn).toUpperCase();
-	var precheckHash = Sha256.hash(precheck).toUpperCase();
-	
-	
-		//console.log('$precheckorgvalue');
-		//console.log(precheck);
-	
-		//console.log('$precheck');
-		//console.log(precheckHash);
-	
-		//console.log('$test');
-		//console.log(Sha256.hash('ABCD').toUpperCase());
-	
-	item.user_pw.value = pwhash+precheckHash; 
-		//console.log(item.user_pw.value);
+	item.user_pw.value = makePasswd(id,passwd,precheck);
 	
 	return true;
+
 	
 }
+<<<<<<< HEAD
+=======
  // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -155,38 +210,10 @@ function onInputSubmit(item) {
  //   statusChangeCallback(response);
 //  });
 
+>>>>>>> 52e91995418d32a8bcf77d7123b6b9e431f1db8e
  
-
-  // Load the SDK asynchronously
-   (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = '//connect.facebook.net/en_US/sdk.js';
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-    	console.log(response);
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!'+ 'id:'+ response.about;
-  		  });
-    
-    FB.api('/me',{fields: 'email'}, function(response) {
-    	  console.log(response);
-    	});
-  }
 	
 </script>
-
-
-<fb:login-button scope='public_profile,email' onlogin='checkLoginState();'>
-</fb:login-button>
 
 <div id='status'>
 </div>
@@ -234,6 +261,9 @@ function logout(){
 
 	session_start();
 	session_destroy();
+	echo "
+			
+			";
 	//echo $homeurl;
 	pagego($homeurl);
 }
@@ -249,12 +279,12 @@ function generateRandomString($length = 10) {
 }
 
 function confirm(){
-	if(!isset($_POST['user_id']) || !isset($_POST['user_pw'])) exit;
+	if(!isset($_REQUEST['user_id']) || !isset($_REQUEST['user_pw'])) exit;
 
 
-	$id = $_POST['user_id'];
-	$pwd = $_POST['user_pw'];
-	$precheck = $_POST['precheck'];
+	$id = $_REQUEST['user_id'];
+	$pwd = $_REQUEST['user_pw'];
+	$precheck = $_REQUEST['precheck'];
 	//$precheck_value = $_POST['precheck_value'];
 
 	$sql = sprintf("SELECT rn,pwd,name FROM user where id='%s';",$id);
@@ -303,7 +333,7 @@ function confirm(){
 	
 
 	if( $pwd != $hashpwd.$precheck){
-		echo "<script>alert('패스워드가 잘못되었습니다.');history.back();</script>";
+		//echo "<script>alert('패스워드가 잘못되었습니다.');history.back();</script>";
 		exit;
 
 	}

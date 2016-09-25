@@ -157,4 +157,8 @@ function getsaftySession($key){
 	return $_SESSION[$key];
 
 }
+function base64_url_decode($input)
+{
+	return base64_decode(strtr($input, '-_,', '+/='));
+}
 ?>	
