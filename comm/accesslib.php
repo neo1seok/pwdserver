@@ -168,6 +168,9 @@ function onInputSubmit(item) {
     FB.api('/me',{fields: 'email'}, function(response) {
     	  console.log(response);
     	});
+    	location.href='login.php?option=confirm&';
+    	
+    	
   }
 	
 </script>
