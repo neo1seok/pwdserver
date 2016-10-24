@@ -206,10 +206,7 @@ function processTimeStamp(){
 	
 }
 
-function base64_url_decode($input)
-{
-	return base64_decode(strtr($input, '-_,', '+/='));
-}
+
 $uids = $_REQUEST['ids'];
 $date = getsaftyReq('date');
 $base64 = getsaftyReq('base64');
