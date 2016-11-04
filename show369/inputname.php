@@ -65,6 +65,9 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	
 	<input type='submit' tabindex='3' value='UPDATE' style='height:50px'/>
 	</form>
+	<script language='JavaScript' type='text/JavaScript'> 
+	fn_selTest( '$stamp' ); // <--- 3이라는 값을 선택할때 
+	</script>
 	";
 	
 	
