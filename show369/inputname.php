@@ -21,10 +21,21 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	echo "
 	
 
-	$(document).ready(function(){
-		$(\"select option[value='$stamp']\").attr('selected', true);
-	});
-	<script language=\"javascript\">document.input.stamp.value='$stamp';</script>
+	
+	
+	
+	<script language='JavaScript' type='text/JavaScript'> 
+	function fn_selTest( val ) 	{ 
+		var ele = document.getElementById('stamp'); 
+
+		for( i=0 ; i<ele.length; i++ ) 	{ 
+			if( ele.options[i].value == val ) 		{ 
+				ele.options[i].selected = true; 
+				break; 
+			} 
+		} 
+	} 
+	</script> 
 	
 	<form name = 'input' method='post' action='update_nickname.php'>
 	<input type='hidden' name='option'  readonly value='' />
@@ -43,7 +54,7 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	</tr>
 	<td>STAMP</td>
 	<td>
-		<select name='stamp'>
+		<select name='stamp' id='stamp'>
 			<option value='TRUE'>TRUE</option>
 			<option value='FALSE'>FALSE</option>
 			<option value='TITLE'>TITLE</option>
