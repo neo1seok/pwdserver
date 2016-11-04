@@ -91,6 +91,7 @@ foreach ($maplist as $v){
 	
 	$msg = '';
 	if($stamp == 'TITLE') {
+		if($nickname == '') continue;
 		$msg = "##########";
 		echo "<p>=========$nickname=========</p>";
 		continue;
