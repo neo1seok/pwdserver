@@ -61,7 +61,8 @@ function getProfileMap(){
 function defLink(){
 	
 	$maparray = array(
-	    "리스트"=>"list.php",
+	    "리스트"=>"list.php?option=profile",
+		"프로파일리스트"=>"list.php",
 		"오늘이미지리스트"=> "imglist.php?option=today",
 		"전체이미지리스트"=> "imglist.php?option=all",
 		"프로파일이미지리스트"=> "imglist.php?option=profile",

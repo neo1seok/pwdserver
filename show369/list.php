@@ -18,7 +18,7 @@ setTimeout('history.go(0);', 20000);
 
 $option = $_REQUEST['option'];
 
-if($option==""){
+if($option==""|$option=="profile"){
 	
 	$maplist = getPrevHistory();
 	
@@ -26,8 +26,11 @@ if($option==""){
 // 	$maplist = QueryString2Map($sqlhistory);
 	$date = $maplist[0]['reg_date'];
 	$update_date = $maplist[0]['updt_date'];
+	if($option == 'profile')
+		$sql = "SELECT imgid_profile as imgid, nickname,nck_uid,stamp FROM nickname where imgid_profile is not null";
+	else
+		$sql = "SELECT imgid, nickname,nck_uid,stamp,`order` FROM nickname where todayin = 'TRUE' order by `order`";
 	
-	$sql = "SELECT imgid, nickname,nck_uid,stamp,`order` FROM nickname where todayin = 'TRUE' order by `order`";
 	$maplist =  QueryString2Map($sql);
 	
 }
