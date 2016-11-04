@@ -20,9 +20,7 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 
 	echo "
 	
-	$(document).ready(function(){
-		$("select option[value='$stamp']").attr("selected", true);
-	});
+
 	
 	
 	<form name = 'input' method='post' action='update_nickname.php'>
