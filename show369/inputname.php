@@ -40,10 +40,10 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	</tr>
 	<td>STAMP</td>
 	<td>
-		<select name="stamp">
-			<option value="TRUE">TRUE</option>
-			<option value="FALSE">TITLE</option>
-			<option value="TITLE">TITLE</option>
+		<select name='stamp'>
+			<option value='TRUE'>TRUE</option>
+			<option value='FALSE'>TITLE</option>
+			<option value='TITLE'>TITLE</option>
 		</select>
 	</td>
 	</tr>
