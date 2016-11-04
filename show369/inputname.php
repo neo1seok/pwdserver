@@ -24,6 +24,7 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	$(document).ready(function(){
 		$(\"select option[value='$stamp']\").attr('selected', true);
 	});
+	<script language=\"javascript\">document.input.stamp.value='$stamp';</script>
 	
 	<form name = 'input' method='post' action='update_nickname.php'>
 	<input type='hidden' name='option'  readonly value='' />
@@ -44,7 +45,7 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	<td>
 		<select name='stamp'>
 			<option value='TRUE'>TRUE</option>
-			<option value='FALSE'>TITLE</option>
+			<option value='FALSE'>FALSE</option>
 			<option value='TITLE'>TITLE</option>
 		</select>
 	</td>
