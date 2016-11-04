@@ -64,7 +64,7 @@ function defLink(){
 	    "리스트"=>"list.php",
 		"오늘이미지리스트"=> "imglist.php?option=today",
 		"전체이미지리스트"=> "imglist.php?option=all",
-		"프로파일이미지리스트"=> "imglist.php?option=all",
+		"프로파일이미지리스트"=> "imglist.php?option=profile",
 			"TMP"=> "tmp.php",
 		
 			"BACK"=> "javascript:history.back()",

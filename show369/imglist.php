@@ -39,8 +39,8 @@ if($option == 'all'||$option == 'today'||$option == 'profile'){
 	
 	if($option == 'all')
 		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where stamp != 'TITLE'";
-	if($option == 'profile')
-		$sql = "SELECT imgid_profile as imgid, nickname,nck_uid,stamp FROM nickname where where imgid_profile is not null";
+	else if($option == 'profile')
+		$sql = "SELECT imgid_profile as imgid, nickname,nck_uid,stamp FROM nickname where imgid_profile is not null";
 	else 
 		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where todayin = 'TRUE' order by `order`";
 	$maplist =  QueryString2Map($sql);
