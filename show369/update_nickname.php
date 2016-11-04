@@ -11,7 +11,7 @@ if($nickname == ''){
 //	exit();
 }
 
-$sql = "UPDATE nickname SET nickname = '$nickname' ,stamp=$stamp where nck_uid = '$nck_uid' ;"		;
+$sql = "UPDATE nickname SET nickname = '$nickname' ,stamp= '$stamp' where nck_uid = '$nck_uid' ;"		;
 
 echo $sql;
 pnl();
