@@ -24,7 +24,7 @@ $option = $_REQUEST['option'];
 $sql = "";
 
 echo "<h1>IMAGE LIST</h1>";
-if($option == 'all'||$option == 'today'){
+if($option == 'all'||$option == 'today'||$option == 'profile'){
 	
 	$maplist = getPrevHistory();
 	
@@ -39,6 +39,8 @@ if($option == 'all'||$option == 'today'){
 	
 	if($option == 'all')
 		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where stamp != 'TITLE'";
+	if($option == 'profile')
+		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where where imgid_profile is not null";
 	else 
 		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where todayin = 'TRUE' order by `order`";
 	$maplist =  QueryString2Map($sql);
