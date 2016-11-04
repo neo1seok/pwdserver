@@ -16,9 +16,15 @@ $imgid_profile = $maplist[0]['imgid_profile'];
 $imgid_ext = $maplist[0]['imgid_ext'];
 $map = getProfileMap();
 
-function inputForm($uid,$imgid,$nickname){
+function inputForm($uid,$imgid,$nickname,$stamp){
 
 	echo "
+	
+	$(document).ready(function(){
+		$("select option[value='$stamp']").attr("selected", true);
+	});
+	
+	
 	<form name = 'input' method='post' action='update_nickname.php'>
 	<input type='hidden' name='option'  readonly value='' />
 	<input type='hidden' name='id' tabindex='1' value='$uid' />
@@ -34,7 +40,15 @@ function inputForm($uid,$imgid,$nickname){
 	<td>NICK NAME</td>
 	<td><input type='text' name='nickname' tabindex='2' value='$nickname' /></td>
 	</tr>
-	
+	<td>STAMP</td>
+	<td>
+		<select name="stamp">
+			<option value="TRUE">TRUE</option>
+			<option value="FALSE">TITLE</option>
+			<option value="TITLE">TITLE</option>
+		</select>
+	</td>
+	</tr>
 	</table>
 	
 	<input type='submit' tabindex='3' value='UPDATE' style='height:50px'/>
@@ -95,7 +109,7 @@ if($option == 'inputform'){
 		exit;
 	}
 	
-	inputForm($uid,$imgid,$nickname);	
+	inputForm($uid,$imgid,$nickname,$stamp);	
 	
 }
 else if($option == 'profile') {
