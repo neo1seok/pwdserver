@@ -1,19 +1,20 @@
 <?php
 include("library.php");  // library.php 파일 포함
-defMeta();
+header('Content-Type: text/plain; charset=utf-8');
 
 function processPreset(){
 
 	$sql = "UPDATE nickname SET todayin = 'FALSE',comment = '',`order`=-1;"		;
-	echo $sql;
-	pnl();
+	appendLn($sql);
+	//pnl();
 	QueryString($sql);
 }
 function processDeleteEmpty($uidarray){
 
 	$sql = "SELECT nickname,imgid FROM nickname;";
-	echo $sql;
-	pnl();
+
+	appendLn($sql);
+	//pnl();
 
 	$maplist =  QueryString2Map($sql);
 
@@ -24,7 +25,7 @@ function processDeleteEmpty($uidarray){
 	foreach ($mapresult as $k => $v){
 		array_push($listindb, $k);
 		//echo $k;
-		pnl();
+		//pnl();
 	}
 
 	$nextseq = getNextSeq('nickname');
@@ -37,12 +38,12 @@ function processDeleteEmpty($uidarray){
 			(seq, nck_uid, imgid, stamp, nickname, todayin, updt_date, reg_date, comment)
 			VALUES ($nextseq, 'nck_$nextseq', '$v', 'FALSE', '', 'TRUE', now(), now(), 'comment');";
 
-			echo $v ." not exit in db = ";
-			echo $sql;
-			pnl();
+			appendLn($v ." not exit in db = ");
+			appendLn($sql);
+			//pnl();
 			QueryString($sql);
 
-			pnl();
+			//pnl();
 			$nextseq++;
 		}
 
@@ -82,9 +83,9 @@ function processInsert($uidarray){
 			(seq, nck_uid, imgid, stamp, nickname, todayin, updt_date, reg_date, comment)
 			VALUES ($nextseq, 'nck_$nextseq', '$v', 'FALSE', '', 'TRUE', now(), now(), 'comment');";
 
-			echo $v ." not exit in db = ";
+			appendLn( $v ." not exit in db = ");
 			//echo $sql;
-			pnl();
+			//pnl();
 			QueryString($sql);
 
 			//pnl();
@@ -218,11 +219,11 @@ $base64 = getsaftyReq('base64');
 $mapprofile = array();
 if($base64 != ''){
 	//echo $base64;
-	pnl();
+	//pnl();
 
 	$jsonmap = base64_url_decode($base64);
-	echo $jsonmap;
-	pnl();
+	appendLn($jsonmap);
+	//pnl();
 
 	$maptopid = json_decode($jsonmap,TRUE);
 
@@ -253,40 +254,40 @@ $imgids =getIdsInputForm($uidarray);
 $maplist = QueryString2Map("SELECT comment FROM history order by seq desc limit 1;");
 $hashuids =  strtoupper(hash('sha256', $uids));
 $prevuidshash = $maplist[0]['comment'];
-pnl();
-echo $hashuids;
-pnl();
-echo $prevuidshash;
-pnl();
-echo $date;
+//pnl();
+appendLn($hashuids);
+//pnl();
+appendLn ($prevuidshash);
+//pnl();
+appendLn ($date);
 
 if($hashuids ==  $prevuidshash){
-	appendLnBr('processSetHistoryJustHash');
+	appendLn('processSetHistoryJustHash');
 	processSetHistoryJustHash($uids);
-	appendLnBr('DONE!!');
+	appendLn('DONE!!');
 	exit();
 
 }
 
-appendLnBr('processPreset');
+appendLn('processPreset');
 processPreset();
-appendLnBr('DONE!!');
+appendLn('DONE!!');
 
-appendLnBr('processInsert');
+appendLn('processInsert');
 processInsert($uidarray);
-appendLnBr('DONE!!');
+appendLn('DONE!!');
 //
-appendLnBr('processOrderNTodayIn');
+appendLn('processOrderNTodayIn');
 processOrderNTodayIn($uidarray);
-appendLnBr('DONE!!');
+appendLn('DONE!!');
 
-appendLnBr('processSetHistory');
+appendLn('processSetHistory');
 processSetHistory($uidarray,$imgids,$uids);
-appendLnBr('DONE!!');
+appendLn('DONE!!');
 
-appendLnBr('processUpdateProfile');
+appendLn('processUpdateProfile');
 processUpdateProfile($mapprofile);
-appendLnBr('DONE!!');
+appendLn('DONE!!');
 // $sql = "SELECT nck_uid,imgid FROM nickname where imgid in (".$imgids.");";
 
 // $maplist =  QueryString2Map("select COALESCE(max(seq),0)+1 as nextseq from history");
@@ -296,6 +297,6 @@ appendLnBr('DONE!!');
 // VALUES ($nextseq, 'hst_$nextseq', '$uids', now(), now(), '');";
 // QueryString($sql);
 
-appendLnBr('processTimeStamp');
+appendLn('processTimeStamp');
 processTimeStamp();
-appendLnBr('DONE!!');
+appendLn('DONE!!');
