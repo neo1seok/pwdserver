@@ -23,7 +23,7 @@ function processDeleteEmpty($uidarray){
 
 	foreach ($mapresult as $k => $v){
 		array_push($listindb, $k);
-		echo $k;
+		//echo $k;
 		pnl();
 	}
 
@@ -52,63 +52,67 @@ function processDeleteEmpty($uidarray){
 
 }
 function processInsert($uidarray){
-	
+
 	$sql = "SELECT nickname,imgid FROM nickname;";
-	echo $sql;
-	pnl();
-	
+	//echo $sql;
+	//pnl();
+
 	$maplist =  QueryString2Map($sql);
-	
+
 	$mapresult = getMapFromResultDB('imgid','nickname',$maplist);
 	$listindb = array();
-	
-	
+
+
 	foreach ($mapresult as $k => $v){
 		array_push($listindb, $k);
-		echo $k;
-		pnl();
+		//echo $k;
+		//pnl();
 	}
-	
+	//echo "mark 0";
+
 	$nextseq = getNextSeq('nickname');
-	
+
+	//echo "mark 1";
+
 	foreach ($uidarray as $v){
 		if($v == '') continue;
-		
+
 		if (!in_array($v, $listindb)) {
 			$sql = "INSERT INTO nickname
 			(seq, nck_uid, imgid, stamp, nickname, todayin, updt_date, reg_date, comment)
 			VALUES ($nextseq, 'nck_$nextseq', '$v', 'FALSE', '', 'TRUE', now(), now(), 'comment');";
-	
+
 			echo $v ." not exit in db = ";
-			echo $sql;
+			//echo $sql;
 			pnl();
 			QueryString($sql);
-	
-			pnl();
+
+			//pnl();
 			$nextseq++;
 		}
-	
+
 	}
-	
-	
-	
+	//echo "mark 2";
+
+
+
 }
 function processOrderNTodayIn($uidarray){
-	
+
 	$order = 0;
 	foreach ($uidarray as $v){
 		$strorder = "";//sprintf("%05d", $order);
 		$sql = "UPDATE nickname SET todayin = 'TRUE', updt_date = now(),comment = '$strorder',`order`=$order where imgid = '$v';"		;
-	
+
 		//pnl();
 		QueryString($sql);
 		$order++;
-	
-	
+
+
 	}
-	
-	
-	
+
+
+
 }
 
 function processUpdateProfile($mapprofile){
@@ -117,7 +121,7 @@ function processUpdateProfile($mapprofile){
 	foreach ($mapprofile as $k => $v){
 		$imgid_profile = $v[0];
 		$imgid_ext = $v[1];
-		
+
 		$sql = "UPDATE nickname SET imgid_profile = '$imgid_profile',imgid_ext = '$imgid_ext', updt_date = now() where nickname = '$k';"		;
 
 		//pnl();
@@ -131,39 +135,39 @@ function processUpdateProfile($mapprofile){
 
 }
 function processSetHistory($uidarray,$imgids,$uids){
-	
+
 	$nck_uids = '';
 	$maplist =  QueryString2Map("SELECT nck_uid ,imgid FROM nickname where imgid in (".$imgids.");");
 	$newmap = getMapFromResultDB('imgid','nck_uid',$maplist);
-	
+
 	foreach ($uidarray as $v){
 		$nck_uid = $newmap[$v];
 		$nck_uids .= $nck_uid.",";
 	}
-	
+
 // 	foreach ($maplist as $v){
 // 		$nck_uid = $v['nck_uid'];
 // 		$nck_uids .= $nck_uid.",";
 // 	}
-	
+
 
 
 	$nextseq = getNextSeq('history');
-	
+
 	$hashuids =  strtoupper(hash('sha256', $uids));
-	
+
 	$sql = "INSERT INTO history (seq, hst_uid, uids, updt_date, reg_date, comment)
-	
+
 	VALUES ($nextseq, 'hst_$nextseq', '$nck_uids', now(), now(), '$hashuids');";
 	QueryString($sql);
-	
-	
+
+
 }
 function processSetHistoryJustHash($uids){
-	
+
 	$nck_uids = '';
 	$maplist = getPrevHistory();
-	
+
 	$hst_uid = $maplist[0]['hst_uid'];
 
 
@@ -173,19 +177,19 @@ function processSetHistoryJustHash($uids){
 // 	$sql = "INSERT INTO history (seq, hst_uid, uids, updt_date, reg_date, comment)
 
 // 	VALUES ($nextseq, 'hst_$nextseq', '$nck_uids', now(), now(), '$hashuids');";
-	
-	
+
+
 	$sql = "UPDATE history SET updt_date = now() WHERE hst_uid = '$hst_uid';";
 	QueryString($sql);
 
 
 }
 function processTimeStamp(){
-	
+
 	$maplist =  QueryString2Map("SELECT nck_uid,todayin FROM nickname where stamp = 'TRUE';");
-	
+
 	$nextseq = getNextSeq('time_stamp');
-	
+
 	foreach ($maplist as $v){
 		$nck_uid = $v['nck_uid'];
 		$todayin = $v['todayin'];
@@ -193,17 +197,17 @@ function processTimeStamp(){
 		if($todayin == 'TRUE'){
 			$msg = "TODAY";
 		}
-		
+
 		$sql = "INSERT INTO time_stamp
 		(seq, tsp_uid, nck_uid, updt_date, reg_date, comment)
 		VALUES ($nextseq, 'tsp_$nextseq', '$nck_uid', now(), now(), '$msg');
 		";
 		QueryString($sql);
-		
-		
+
+
 	}
-	
-	
+
+
 }
 
 
@@ -213,29 +217,28 @@ $base64 = getsaftyReq('base64');
 
 $mapprofile = array();
 if($base64 != ''){
-	echo $base64;
+	//echo $base64;
 	pnl();
-	
+
 	$jsonmap = base64_url_decode($base64);
 	echo $jsonmap;
 	pnl();
-	echo 'mark 1';
+
 	$maptopid = json_decode($jsonmap,TRUE);
-	echo 'mark 2';
-	
+
 	//$map =  getProfileMap();
 	//var_dump($map);
 	//var_dump($maptopid["ids"]);
 	//var_dump($maptopid["profile"]);
 	//var_dump($maptopid);
-	
+
 	$uidarray = $maptopid['ids'];
 	$mapprofile = $maptopid['profile'];
 }
-else{
-	$uidarray = explode (",", $uids);
-	echo $uids;
-}
+// else{
+// 	$uidarray = explode (",", $uids);
+// 	echo $uids;
+// }
 
 
 
@@ -258,24 +261,32 @@ pnl();
 echo $date;
 
 if($hashuids ==  $prevuidshash){
+	appendLnBr('processSetHistoryJustHash');
 	processSetHistoryJustHash($uids);
+	appendLnBr('DONE!!');
 	exit();
-	
+
 }
 
-
+appendLnBr('processPreset');
 processPreset();
+appendLnBr('DONE!!');
 
+appendLnBr('processInsert');
 processInsert($uidarray);
-
-// 
+appendLnBr('DONE!!');
+//
+appendLnBr('processOrderNTodayIn');
 processOrderNTodayIn($uidarray);
+appendLnBr('DONE!!');
 
-
-
+appendLnBr('processSetHistory');
 processSetHistory($uidarray,$imgids,$uids);
+appendLnBr('DONE!!');
 
+appendLnBr('processUpdateProfile');
 processUpdateProfile($mapprofile);
+appendLnBr('DONE!!');
 // $sql = "SELECT nck_uid,imgid FROM nickname where imgid in (".$imgids.");";
 
 // $maplist =  QueryString2Map("select COALESCE(max(seq),0)+1 as nextseq from history");
@@ -285,9 +296,6 @@ processUpdateProfile($mapprofile);
 // VALUES ($nextseq, 'hst_$nextseq', '$uids', now(), now(), '');";
 // QueryString($sql);
 
-
+appendLnBr('processTimeStamp');
 processTimeStamp();
-
-
-
-
+appendLnBr('DONE!!');
