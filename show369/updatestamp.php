@@ -235,6 +235,8 @@ if($base64 != ''){
 
 	$uidarray = $maptopid['ids'];
 	$mapprofile = $maptopid['profile'];
+	$hashuids = $maptopid['hashuids'];
+
 }
 // else{
 // 	$uidarray = explode (",", $uids);
@@ -252,7 +254,7 @@ $imgids =getIdsInputForm($uidarray);
 
 
 $maplist = QueryString2Map("SELECT comment FROM history order by seq desc limit 1;");
-$hashuids =  strtoupper(hash('sha256', $uids));
+#$hashuids =  strtoupper(hash('sha256', $uids));
 $prevuidshash = $maplist[0]['comment'];
 //pnl();
 appendLn($hashuids);
