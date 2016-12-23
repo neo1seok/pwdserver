@@ -19,31 +19,31 @@ $map = getProfileMap();
 function inputForm($uid,$imgid,$nickname,$stamp){
 
 	echo "
-	
 
-	
-	
-	
-	<script language='JavaScript' type='text/JavaScript'> 
-	function fn_selTest( val ) 	{ 
-		var ele = document.getElementById('stamp'); 
 
-		for( i=0 ; i<ele.length; i++ ) 	{ 
-			if( ele.options[i].value == val ) 		{ 
-				ele.options[i].selected = true; 
-				break; 
-			} 
-		} 
-	} 
-	</script> 
-	
+
+
+
+	<script language='JavaScript' type='text/JavaScript'>
+	function fn_selTest( val ) 	{
+		var ele = document.getElementById('stamp');
+
+		for( i=0 ; i<ele.length; i++ ) 	{
+			if( ele.options[i].value == val ) 		{
+				ele.options[i].selected = true;
+				break;
+			}
+		}
+	}
+	</script>
+
 	<form name = 'input' method='post' action='update_nickname.php'>
 	<input type='hidden' name='option'  readonly value='' />
 	<input type='hidden' name='id' tabindex='1' value='$uid' />
-	
-	
+
+
 	<table>
-	
+
 	<tr>
 	<td>IMGID</td>
 	<td><input type='text' name='imgid' readonly tabindex='1' value='$imgid' /></td>
@@ -62,25 +62,26 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 	</td>
 	</tr>
 	</table>
-	
+
 	<input type='submit' tabindex='3' value='UPDATE' style='height:50px'/>
 	</form>
-	<script language='JavaScript' type='text/JavaScript'> 
-	fn_selTest( '$stamp' ); // <--- 3이라는 값을 선택할때 
+	<script language='JavaScript' type='text/JavaScript'>
+	fn_selTest( '$stamp' ); // <--- 3이라는 값을 선택할때
 	</script>
 	";
-	
-	
+
+
 }
 
 function inputLink($uid){
 
 	$maparray = array(
 			"일반"=>"inputname.php?id=$uid&option=shrink",
+			"이전출근부"=>"inputname.php?id=$uid&option=timestamp",
 			"자세히"=>"inputname.php?id=$uid&option=profile",
 			"입력(로그인필요)"=>"inputname.php?id=$uid&option=inputform",
-			
-				
+
+
 	);
 
 	MakeLink($maparray);
@@ -103,13 +104,13 @@ function viewImg($imgid){
 	if($imgid == NULL || $imgid == ""){
 		return ;
 	}
-	
+
 	$imglink = getimglink($imgid);
 	echo "<img src='$imglink' width = '300'/> <br />\n";
 
 }
 if($stamp == 'TITLE'){
-	
+
 	echo "<script>alert('$nickname아이디 는 고칠수 있는 ID 가 아닙니다.');history.back();</script>";
 	exit();
 }
@@ -123,34 +124,47 @@ if($option == 'inputform'){
 		pagego('login.php');
 		exit;
 	}
-	
-	inputForm($uid,$imgid,$nickname,$stamp);	
-	
+
+	inputForm($uid,$imgid,$nickname,$stamp);
+
+}
+else if($option == 'timestamp') {
+	$maphistory = QueryString2Map("SELECT seq, hst_uid, uids, updt_date, reg_date, comment FROM neo_pwinfo.history where uids like '%$uid%' order by reg_date desc limit 10;");
+	foreach ($maphistory as $v){
+		echo "\n";
+		$reg_date = $v['reg_date'];
+		$comment = $v['comment'];
+		echo "등록일:$reg_date";
+		pnl();
+
+	}
+
+
+
 }
 else if($option == 'profile') {
 	//echo $option;
-	
-	
+
+
 	//echo $imgid_profile;
-	
+
 	viewImg($imgid_profile);
 	viewImg($imgid_ext);
 
-	
-	
-	
-/*	
+
+
+
+/*
 	if (array_key_exists($nickname, $map)) {
 		foreach ($map[$nickname] as $id){
 			$imglink = getimglink($id);
 			echo "<img src='$imglink' width = '300'/> <br />\n";
 		}
-	
+
 	}
 */
 }
- 
 inputLink($uid);
 
-defLink(); 
+defLink();
 ?>;
