@@ -129,7 +129,7 @@ if($option == 'inputform'){
 
 }
 else if($option == 'timestamp') {
-	$maphistory = QueryString2Map("SELECT seq, hst_uid, uids, updt_date, reg_date, comment FROM neo_pwinfo.history where uids like '%$uid%' order by reg_date desc limit 10;");
+	$maphistory = QueryString2Map("SELECT seq, hst_uid, uids, updt_date, reg_date, comment FROM neo_pwinfo.history where uids like '%$uid,%' order by reg_date desc limit 10;");
 	foreach ($maphistory as $v){
 		echo "\n";
 		$reg_date = $v['reg_date'];
