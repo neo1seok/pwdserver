@@ -72,7 +72,29 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 
 
 }
+function deleteImgID($uid,$nickname){
 
+	echo "
+
+
+
+
+
+	<script language='JavaScript' type='text/JavaScript'>
+	var r = confirm('$nickname($uid) 를 삭제 하시겠습니까?');
+	if (r == true) {
+	    x = "You pressed OK!";
+	} else {
+	    x = "You pressed Cancel!";
+	}
+
+	</script>
+
+
+	";
+
+
+}
 function inputLink($uid){
 
 	$maparray = array(
@@ -80,6 +102,7 @@ function inputLink($uid){
 			"이전출근부"=>"inputname.php?id=$uid&option=timestamp",
 			"자세히"=>"inputname.php?id=$uid&option=profile",
 			"입력(로그인필요)"=>"inputname.php?id=$uid&option=inputform",
+			"삭제(로그인필요)"=>"inputname.php?id=$uid&option=delete",
 
 
 	);
@@ -125,9 +148,21 @@ if($option == 'inputform'){
 		exit;
 	}
 
+	deleteImgID($uid,$nickname);
+
+}
+if($option == 'delete'){
+	$user_id = $_SESSION['user_id'];
+	$ret = strpos($user_id, 'VISIT');
+	if (0 === $ret) {
+		pagego('login.php');
+		exit;
+	}
+
 	inputForm($uid,$imgid,$nickname,$stamp);
 
 }
+
 else if($option == 'timestamp') {
 	$maphistory = QueryString2Map("SELECT seq, hst_uid, uids, updt_date, reg_date, comment FROM neo_pwinfo.history where uids like '%$uid,%' order by reg_date desc limit 10;");
 	foreach ($maphistory as $v){
