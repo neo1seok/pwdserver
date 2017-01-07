@@ -72,13 +72,6 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 
 
 }
-function deleteImgID($uid,$nickname){
-	$sql = "delete from nickname where nck_uid='$uid'";
-	QueryString($sql);
-	// echo "<meta http-equiv='refresh' content='0;url=list.php?optjion=image'>";
-	commBackHome();
-	echo "TEST";
-}
 function inputLink($uid){
 
 	$maparray = array(
@@ -86,25 +79,13 @@ function inputLink($uid){
 			"이전출근부"=>"inputname.php?id=$uid&option=timestamp",
 			"자세히"=>"inputname.php?id=$uid&option=profile",
 			"입력(로그인필요)"=>"inputname.php?id=$uid&option=inputform",
-			"삭제(로그인필요)"=>"inputname.php?id=$uid&option=delete_confirm",
+			"삭제(로그인필요)"=>"deletename.php?id=$uid&option=confirm",
 
 
 	);
 
 	MakeLink($maparray);
-	// 	echo "\n";
-	// 	echo "<ul>";
-	// 	echo "\n";
-	// 	echo "<lis class='st'><a href='list.php'>매인화면</a></lis>";
-	// 	echo "\n";
-	// 	echo "<lis class='st'><a href='list.php?option=image'>매인화면</a></lis>";
-	// 	echo "\n";
-	// 	echo "<li><a href='javascript:history.back()'>back</a></li>";
-	// 	echo "\n";
-	// 	echo "<li><a href='login.php?option=logout'>로그아웃</a></li>";
-	// 	echo "\n";
-	// 	echo "</ul>";
-	// 	echo "\n";
+
 
 }
 function viewImg($imgid){
@@ -124,7 +105,7 @@ if($stamp == 'TITLE'){
 $imglink = getimglink($imgid);
 echo "<img src='$imglink' width = '300'/> <br />\n";
 
-if($option == 'inputform' || $option == 'delete_confirm' ||$option == 'delete'){
+if($option == 'inputform' ){
 	$user_id = $_SESSION['user_id'];
 	$ret = strpos($user_id, 'VISIT');
 	if (0 === $ret) {
@@ -132,33 +113,9 @@ if($option == 'inputform' || $option == 'delete_confirm' ||$option == 'delete'){
 		exit;
 	}
 
-	if($option == 'inputform')
-		inputForm($uid,$imgid,$nickname,$stamp);
-	else if($option == 'delete_confirm'){
-		echo "<script> var val = confirm('$uid($nickname) 를 삭제 하시겠습니까?');//history.back();\n";
-		echo "
-		console.log(val);
+	inputForm($uid,$imgid,$nickname,$stamp);
 
-		if ( val == false){
-			window.location.href = 'inputname.php?id=$uid&option=shrink';
-			//echo val;
-			console.log('false');
-
-		}
-		else{
-			window.location.href = 'inputname.php?id=$uid&option=delete';
-			console.log('true');
-		}
-
-		";
-		echo "</script>";
-	}
-	else if($option == 'delete') {
-		deleteImgID($uid,$nickname);
-	}
-
-
-
+	
 }
 
 else if($option == 'timestamp') {

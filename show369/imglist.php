@@ -25,23 +25,23 @@ $sql = "";
 
 echo "<h1>IMAGE LIST</h1>";
 if($option == 'all'||$option == 'today'||$option == 'profile'){
-	
+
 	$maplist = getPrevHistory();
-	
+
 	// 	$sqlhistory = "SELECT updt_date FROM history order by seq desc limit 1;";
 	// 	$maplist = QueryString2Map($sqlhistory);
 	$date = $maplist[0]['reg_date'];
 	$update_date = $maplist[0]['updt_date'];
-	
+
 // 	$maplist = QueryString2Map("SELECT updt_date FROM history order by seq desc limit 1;");
-	
-// 	$date = $maplist[0]['updt_date'];	
-	
+
+// 	$date = $maplist[0]['updt_date'];
+
 	if($option == 'all')
-		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where stamp != 'TITLE'";
+		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where stamp != 'TITLE' and comment != 'REMOVED'" ;
 	else if($option == 'profile')
 		$sql = "SELECT imgid_profile as imgid, nickname,nck_uid,stamp FROM nickname where imgid_profile is not null";
-	else 
+	else
 		$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where todayin = 'TRUE' order by `order`";
 	$maplist =  QueryString2Map($sql);
 }
@@ -76,16 +76,16 @@ foreach ($maplist as $v){
 	if($stamp == 'TRUE') {
 		$msg = "##########";
 		$classname = 'stamp';
-	
-	
+
+
 		//continue;
 	}
-	
+
 
 	echo "<p class='$classname' >$nickname($imgid)</p>";
 	echo "<p><a href='$input'><img src='$imglink' width = '300'/></a></p>";
 		//echo "<img src='http://369am.diskn.com/$imgid' width = '300'/> <br />\n";
-	
+
 
 
 }
