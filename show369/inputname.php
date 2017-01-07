@@ -135,7 +135,7 @@ if($option == 'inputform' || $option == 'delete_confirm' ||$option == 'delete'){
 	if($option == 'inputform')
 		inputForm($uid,$imgid,$nickname,$stamp);
 	else if($option == 'delete_confirm'){
-		echo "<script> var val = confirm('$uid + $nickname');//history.back();\n";
+		echo "<script> var val = confirm('$uid($nickname) 를 삭제 하시겠습니까?');//history.back();\n";
 		echo "
 		console.log(val);
 
