@@ -6,37 +6,9 @@ require_once 'commlib.php';
 require_once "$baseroot/vendor/autoload.php";
 
 function getFaceBook(){
-	
+
 	$appId = "";
 	$LOGIN_DEBUG = getenv('LOGIN_DEBUG');
-	
-	$appId      = '171344269971521';
-	$app_secret = 'dd81a9e2abb7eb1ce47a7c201b11a53d';
-	if($LOGIN_DEBUG == "TRUE"){
-		$appId      = '180688449037103';
-		$app_secret = 'd99c9928a1e4c92d150d6ea249730def';
-	}
-	//appId      : '171344269971521',
-	
-	
-	
-	
-	$fb = new Facebook\Facebook([
-			'app_id' => $appId,
-			'app_secret' => $app_secret,
-			'default_graph_version' => 'v2.5',
-	]);
-	return $fb;
-	
-}
-function loginform($isprecheck){
-	
-	$HTTP_HOST =$_SERVER['HTTP_HOST'];
-	/*	
-	$LOGIN_DEBUG = getenv('LOGIN_DEBUG');
-	
-	$appId = "";
-	
 
 	$appId      = '171344269971521';
 	$app_secret = 'dd81a9e2abb7eb1ce47a7c201b11a53d';
@@ -45,9 +17,37 @@ function loginform($isprecheck){
 		$app_secret = 'd99c9928a1e4c92d150d6ea249730def';
 	}
 	//appId      : '171344269971521',
-	
-		
-	
+
+
+
+
+	$fb = new Facebook\Facebook([
+			'app_id' => $appId,
+			'app_secret' => $app_secret,
+			'default_graph_version' => 'v2.5',
+	]);
+	return $fb;
+
+}
+function loginform($isprecheck){
+
+	$HTTP_HOST =$_SERVER['HTTP_HOST'];
+	/*
+	$LOGIN_DEBUG = getenv('LOGIN_DEBUG');
+
+	$appId = "";
+
+
+	$appId      = '171344269971521';
+	$app_secret = 'dd81a9e2abb7eb1ce47a7c201b11a53d';
+	if($LOGIN_DEBUG == "TRUE"){
+		$appId      = '180688449037103';
+		$app_secret = 'd99c9928a1e4c92d150d6ea249730def';
+	}
+	//appId      : '171344269971521',
+
+
+
 		if(!session_id()) {
 			session_start();
 		}
@@ -57,62 +57,62 @@ function loginform($isprecheck){
 				'default_graph_version' => 'v2.5',
 		]);*/
 
-	
-	
+
+
 	if($isprecheck == 'TRUE'){
-		
+
 		$listmpap = QueryString2Map("SELECT id,rn FROM user;");
 		$mapidRn = getMapFromResultDB('id','rn',$listmpap);
-		
+
 		$mapidRnJson = json_encode($mapidRn);
-		
+
 		$precheck = 'true';
 		$mapHint = array(
 				"0331"=>"second sister",
 				"1219"=>"first sister",
 				"0124"=>"dad",
 				"1111"=>"mom",
-		
-		
+
+
 		);
-		
+
 		//$date =  date("md");
 		$rnshort = generateRandomString(4);
 // 		$randnum = rand(0, count($mapHint)-1);
 // 		$index = 0;
-		
+
 // 		foreach ($mapHint as $k => $v){
-			
+
 // 			//$precheck = $date.$k;
 // 			$hint = $v;
 // 			$key = $k;
 // 			if($index == $randnum) break;
 // 			$index++;
-		
+
 // 		}
 		$precheckorgvalue = $rnshort;//$date.$key;
 		$precheck = strtoupper(hash('sha256', $precheckorgvalue));
 		$prechecklength = strlen($precheckorgvalue);
 		$test = strtoupper(hash('sha256', 'ABCD'));
 		appendLn("<p>RN:$rnshort </p>");
-		
-		
+
+
 	}
-	
+
 	if(!session_id()) {
 		session_start();
 	}
-	
+
 	$fb = getFaceBook();
 	$helper = $fb->getRedirectLoginHelper();
 	$permissions = ['email', 'user_likes']; // optional
 	$loginUrl = $helper->getLoginUrl("http://$HTTP_HOST/comm/logincallback.php?precheck=$precheck", $permissions);
-	
+
 	echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 	//echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
-	
+
 	echo "
-<script src='../comm/js/sha256.js'></script>			
+<script src='../comm/js/sha256.js'></script>
 <script type='text/javascript'>
 
 function makePasswd(id,passwd,precheck){
@@ -122,26 +122,26 @@ function makePasswd(id,passwd,precheck){
 	var pwhash = Sha256.hash(passwd+rn).toUpperCase();
 	var precheckHash = Sha256.hash(precheck).toUpperCase();
 	return pwhash+precheckHash;
-	
+
 }
 function onInputSubmit(item) {
 	console.log('onsubmit');
 	var passwd = item.user_pw.value
 	var id = item.user_id.value
-	
+
 	var passlen = passwd.length-$prechecklength;
 
 	var precheck = passwd.slice(passlen);
 	passwd = passwd.slice(0,passlen);
-	
+
 	item.user_pw.value = makePasswd(id,passwd,precheck);
-	
+
 	return true;
 
-	
+
 }
- 
-	
+
+
 </script>
 
 <div id='status'>
@@ -179,9 +179,9 @@ echo	"
 function logout(){
 	$homeurl ='main.php';
 	startSession();
-	
+
 	vewSessionState();
-	
+
 	if(isset($_SESSION['homeurl']) ) {
 		$homeurl =$_SESSION['homeurl'];
 
@@ -191,7 +191,7 @@ function logout(){
 	session_start();
 	session_destroy();
 	echo "
-			
+
 			";
 	//echo $homeurl;
 	pagego($homeurl);
@@ -206,7 +206,14 @@ function generateRandomString($length = 10) {
 	}
 	return $randomString;
 }
+function debugconfirm(){
+	startSession();
+	appendLn("로그인 성공");
 
+	setSession('debug','debug');
+
+	commBackHome();
+}
 function confirm(){
 	if(!isset($_REQUEST['user_id']) || !isset($_REQUEST['user_pw'])) exit;
 
@@ -221,10 +228,10 @@ function confirm(){
 
 	echo $sql;
 	echo "2 <br />\n";
-	
+
 	echo $pwd;
 	pnl();
-	
+
 
 // 	echo $precheck_value;
 // 	pnl();
@@ -237,7 +244,7 @@ function confirm(){
 // 			echo "<script>alert('check 값이 다릅니다.');history.back();</script>";
 // 		exit();
 // 	}
-	
+
 
 
 	$res = QueryString($sql);
@@ -247,31 +254,31 @@ function confirm(){
 		exit;
 
 	}
-	
+
 	$hashpwd = $res[1];
-	
-	
+
+
 	$cmppwdhash = strtoupper(hash('sha256', $pwd . $res[0])).$precheck;
-	
+
 	echo $hashpwd.$precheck;
 	pnl();
 	echo $pwd;
 	pnl();
 
-	
-	
+
+
 
 	if( $pwd != $hashpwd.$precheck){
 		//echo "<script>alert('패스워드가 잘못되었습니다.');history.back();</script>";
 		exit;
 
 	}
-	
+
 	//exit();
 
 	startSession();
 	appendLn("로그인 성공");
-	
+
 	setSession($id,$res[2]);
 
 	commBackHome();

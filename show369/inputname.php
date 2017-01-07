@@ -73,27 +73,11 @@ function inputForm($uid,$imgid,$nickname,$stamp){
 
 }
 function deleteImgID($uid,$nickname){
-
-	echo "
-
-
-
-
-
-	<script language='JavaScript' type='text/JavaScript'>
-	var r = confirm('$nickname($uid) 를 삭제 하시겠습니까?');
-	if (r == true) {
-	    x = "You pressed OK!";
-	} else {
-	    x = "You pressed Cancel!";
-	}
-
-	</script>
-
-
-	";
-
-
+	$sql = "delete from nickname where nck_uid='$uid'";
+	QueryString($sql);
+	// echo "<meta http-equiv='refresh' content='0;url=list.php?optjion=image'>";
+	commBackHome();
+	echo "TEST";
 }
 function inputLink($uid){
 
@@ -102,7 +86,7 @@ function inputLink($uid){
 			"이전출근부"=>"inputname.php?id=$uid&option=timestamp",
 			"자세히"=>"inputname.php?id=$uid&option=profile",
 			"입력(로그인필요)"=>"inputname.php?id=$uid&option=inputform",
-			"삭제(로그인필요)"=>"inputname.php?id=$uid&option=delete",
+			"삭제(로그인필요)"=>"inputname.php?id=$uid&option=delete_confirm",
 
 
 	);
@@ -140,7 +124,7 @@ if($stamp == 'TITLE'){
 $imglink = getimglink($imgid);
 echo "<img src='$imglink' width = '300'/> <br />\n";
 
-if($option == 'inputform'){
+if($option == 'inputform' || $option == 'delete_confirm' ||$option == 'delete'){
 	$user_id = $_SESSION['user_id'];
 	$ret = strpos($user_id, 'VISIT');
 	if (0 === $ret) {
@@ -148,18 +132,32 @@ if($option == 'inputform'){
 		exit;
 	}
 
-	deleteImgID($uid,$nickname);
+	if($option == 'inputform')
+		inputForm($uid,$imgid,$nickname,$stamp);
+	else if($option == 'delete_confirm'){
+		echo "<script> var val = confirm('$uid + $nickname');//history.back();\n";
+		echo "
+		console.log(val);
 
-}
-if($option == 'delete'){
-	$user_id = $_SESSION['user_id'];
-	$ret = strpos($user_id, 'VISIT');
-	if (0 === $ret) {
-		pagego('login.php');
-		exit;
+		if ( val == false){
+			window.location.href = 'inputname.php?id=$uid&option=shrink';
+			//echo val;
+			console.log('false');
+
+		}
+		else{
+			window.location.href = 'inputname.php?id=$uid&option=delete';
+			console.log('true');
+		}
+
+		";
+		echo "</script>";
+	}
+	else if($option == 'delete') {
+		deleteImgID($uid,$nickname);
 	}
 
-	inputForm($uid,$imgid,$nickname,$stamp);
+
 
 }
 

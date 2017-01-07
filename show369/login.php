@@ -8,7 +8,11 @@ echo 'LOGIN';
 vewSessionState();
 
 if($option == "confirm"){
-	confirm();
+	$pi_debug_value = getenv ( 'PWD_SERVER_DEBUG');
+	if($pi_debug_value == 'TRUE')
+		debugconfirm();
+	else
+		confirm();
 	exit();
 }
 else if($option == "logout"){
@@ -16,9 +20,13 @@ else if($option == "logout"){
 	exit();
 }
 
+$pi_debug_value = getenv ( 'PWD_SERVER_DEBUG');
+pnl();
+echo $pi_debug_value;
+//echo $_SERVER['WINDIR'] ;
+//phpinfo();
+pnl();
 
 loginform('TRUE');
 
 ?>
-
-
