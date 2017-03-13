@@ -12,16 +12,16 @@ vewSessionState();
 setTimeout('history.go(0);', 20000);
 </SCRIPT>
 
-		
+
 		";
 */
 
 $option = $_REQUEST['option'];
 
 if($option==""|$option=="profile"){
-	
+
 	$maplist = getPrevHistory();
-	
+
 // 	$sqlhistory = "SELECT updt_date FROM history order by seq desc limit 1;";
 // 	$maplist = QueryString2Map($sqlhistory);
 	$date = $maplist[0]['reg_date'];
@@ -30,47 +30,47 @@ if($option==""|$option=="profile"){
 		$sql = "SELECT imgid_profile as imgid, nickname,nck_uid,stamp FROM nickname where imgid_profile is not null";
 	else
 		$sql = "SELECT imgid, nickname,nck_uid,stamp,`order` FROM nickname where todayin = 'TRUE' order by `order`";
-	
+
 	$maplist =  QueryString2Map($sql);
-	
+
 }
 else if($option=="prev"){
 	$index = $_REQUEST['index'];
-	
-	
+
+
 	$mapPrevInfo = getPrevList($index);
-	
+
 	$date = $mapPrevInfo['reg_date'];
 	$update_date = $mapPrevInfo['updt_date'];
 	$maplist =  $mapPrevInfo['maplist'];
-	
-	
+
+
 // 	$sqlhistory = "SELECT uids,updt_date,reg_date FROM history where uids != '' order by seq desc limit 10;";
 // 	$maplist = QueryString2Map($sqlhistory);
 // 	$count = count($maplist);
 // 	if($index >=$count) $index = $count-1;
-	   
+
 // 	$date = $maplist[$index]['updt_date'];
 // 	$uids = $maplist[$index]['uids'];
-	
+
 // 	$uidarray = explode (",", $uids);
-	
+
 // 	$scommaarrayform = makeSingleCommaArrayFrom($uidarray);
 // // 	$i = 0;
 // // 	foreach ($uidarray as $v){
 // // 		if($v == '') continue;
-// // 		if($i > 0) $scommaarrayform .= ","; 
+// // 		if($i > 0) $scommaarrayform .= ",";
 // // 		$scommaarrayform .= "'$v'";
 // // 		$i++;
 // // 	}
 // 	//
 // 	//echo $scommaarrayform;
 // 	//exit;
-	
+
 // 	$sql = "SELECT imgid, nickname,nck_uid,stamp FROM nickname where nck_uid in ($scommaarrayform) and stamp !='TITLE'";
 // 	$maplist =  QueryString2Map($sql);
-	
-	
+
+
 }
 
 
@@ -84,11 +84,11 @@ foreach ($maplist as $v){
 	$nickname = $v['nickname'];
 	$nck_uid= $v['nck_uid'];
 	$stamp = $v['stamp'];
-		
+
 	$input = "inputname.php?id=$nck_uid";
-	$imglink = "http://369am.diskn.com/$imgid";
+	$imglink = "http://rmaqnddj5882.diskn.com/$imgid";
 	$classname = 'normal';
-	
+
 	$msg = '';
 	if($stamp == 'TITLE') {
 		if($nickname == '') continue;
@@ -97,20 +97,20 @@ foreach ($maplist as $v){
 		continue;
 	}
 	if($stamp == 'TRUE') {
-		$msg = "##########"; 
+		$msg = "##########";
 		$classname = 'stamp';
-		
-		
+
+
 		//continue;
 	}
 	echo "<p><a class='$classname' href='$input'>$msg $nickname($imgid) $msg</a></p>";
 
 		//echo "<p><a href='$input'>$imgid:$nickname $msg</a></p>";
-		
 
 
-	
-	
+
+
+
 }
 
 prevLink('list.php','',4);
@@ -118,7 +118,7 @@ prevLink('list.php','',4);
 
 // for($i = 1 ; $i <4 ;$i++){
 // 	echo "<p><a><a href='list.php?option=prev&index=$i'>리스트  $i</a></p>";
-// 	echo "\n";	
+// 	echo "\n";
 // }
 
 

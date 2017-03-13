@@ -5,8 +5,8 @@ function checkSession(){
 }
 function getProfileMap(){
 	$map = array();
-	
-	
+
+
 	$map['홍도'] = array('26nC8w0W3q','');
 	$map['마리'] = array('2m2sw7pXSW','2RQ2W3cJjC');
 	$map['하나'] = array('36gBX2t9BW','0mIJcqKUdg');
@@ -28,8 +28,8 @@ function getProfileMap(){
 	$map['준교수'] = array('16vpzSpRCm','16vpzUaSIM');
 	$map['메이'] = array('26nC8ttOGy','0Rey8NtdNQ');
 	$map['보영'] = array('26nC8tv610','1m9RfmwuNy');
-	
-	
+
+
 	$map['수'] = array('1mALkNfdWS','26nC7XskiO');
 	$map['이슬'] = array('36fjKqWuzO','2m2sumcwEe');
 	$map['소피아'] = array('1RXVLlRPE4','0Rey8TpLCR');
@@ -55,11 +55,11 @@ function getProfileMap(){
 	$map['아침'] = array('1mBEu0CErG','');
 	$map['비누'] = array('36ggngodzO','');
 	$map['삼팔실장'] = array('1RXVQK5Gm4','16uevhdcCc');
-	
+
 	return $map;
 }
 function defLink(){
-	
+
 	$maparray = array(
 	    "리스트"=>"list.php",
 		"프로파일리스트"=>"list.php?option=profile",
@@ -67,12 +67,12 @@ function defLink(){
 		"전체이미지리스트"=> "imglist.php?option=all",
 		"프로파일이미지리스트"=> "imglist.php?option=profile",
 			"TMP"=> "tmp.php",
-		
+
 			"BACK"=> "javascript:history.back()",
 			"로그아웃"=> "login.php?option=logout",
-			
+
  	);
-	
+
 	MakeLink($maparray);
 // 	echo "\n";
 // 	echo "<ul>";
@@ -93,11 +93,11 @@ function defLink(){
 function getPrevHistory(){
 	$sqlhistory = "SELECT seq, hst_uid, uids, updt_date, reg_date, comment  FROM history where uids != '' order by seq desc limit 10;";
 	$maplist = QueryString2Map($sqlhistory);
-	return $maplist; 
+	return $maplist;
 }
 function getPrevList($index){
 	$mapPrevInfo = array();
-	
+
 	$maplist = getPrevHistory();
 
 // 	$sqlhistory = "SELECT uids,updt_date,reg_date FROM history where uids != '' order by seq desc limit 10;";
@@ -132,15 +132,15 @@ function getPrevList($index){
 	foreach ($maplist as $v){
 		$nck_uid = $v['nck_uid'];
 		$newmapp[$nck_uid] = $v;
-		
-	
+
+
 	}
 	$newlist = array();
 	foreach ($uidarray as $uid){
 		if($uid == '') continue;
-		if(!array_key_exists($uid,$newmapp)) continue; 
+		if(!array_key_exists($uid,$newmapp)) continue;
 		array_push ($newlist,$newmapp[$uid]);
-		
+
 //		echo $uid;
 //		pnl();
 	}
@@ -149,20 +149,20 @@ function getPrevList($index){
 	$mapPrevInfo['reg_date'] =$reg_date;
 	$mapPrevInfo['maplist'] =$newlist;
 	//$mapPrevInfo['maplist'] =$maplist;
-	
+
 
 	return  $mapPrevInfo;
 
 }
 function listTitle($title,$date,$update_date){
 	echo "<h1>$title</h1>";
-	
-	
+
+
 	echo "<h2>$date</h2>";
 	echo "\n";
 	echo "<h3>update $update_date</h3>";
 	echo "\n";
-	
+
 }
 function prevLink($pagename,$title,$maxprev){
 	echo "\n";
@@ -177,20 +177,23 @@ function prevLink($pagename,$title,$maxprev){
 // 			"오늘이미지리스트"=> "imglist.php?option=today",
 // 			"전체이미지리스트"=> "imglist.php?option=all",
 // 			"TMP"=> "tmp.php",
-	
+
 // 			"BACK"=> "javascript:history.back()",
 // 			"로그아웃"=> "login.php?option=logout",
-				
+
 // 	);
-	
+
 	MakeLink($maparray);
-	
+
 	echo "\n";
 }
+
 function getimglink($imgid){
-	$imglink = "http://369am.diskn.com/$imgid";
+	//$imglink = "http://369am.diskn.com/$imgid";
+	$imglink = "http://rmaqnddj5882.diskn.com/$imgid";
+
 	if(getsaftySession('debug') == 'true') return $imgid;
 	return $imglink;
-	
+
 }
-?>	
+?>
