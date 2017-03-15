@@ -4,13 +4,13 @@
  include("library.php");  // library.php 파일 포함
  defMeta();
  checkSession();
- 
+
 $uid = $_REQUEST['uid'];
 $option = $_REQUEST['option'];
 
 if($option == ""){
 	$option = "update";
-	
+
 }
 
 $phd_uid="phd_1";
@@ -28,22 +28,22 @@ if($option == "update"){
 	if(count($map)==0){
 		echo "No Result";
 		echo "<br />\n";
-		
+
 		echo '<a href="javascript:history.back()">back</a>';
-		
+
 		exit;
 	}
 	$res = $map[0];
-	
+
 	$phd_uid=$res['phd_uid'];
 	$site = $res['site'];
 	$ptail=$res['ptail'];
 	$id=$res['id'];
 	$etc=$res['etc'];
-	
+
 	$title=$res['title'];
 	$hint=$res['hint'];
-	
+
 }
 
 $map = QueryString2Map("SELECT phd_uid, title FROM pheader;");
@@ -60,46 +60,72 @@ foreach ($map as $value) {
 
 $jsonString = json_encode($mapPhdUid2Title);
 
- 
-?>
 
+?>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript">
 
-function onloadpage(){
+$(window).load(function(){
+    //alert('ojtiger.com');
+    console.log('onloadpage 2');
+  	var jsonString = '<?php echo $jsonString; ?>'
+  	phd_uid = '<?php echo $phd_uid; ?>'
 
-	console.log('onloadpage');
-	var jsonString = '<?php echo $jsonString; ?>'
-	phd_uid = '<?php echo $phd_uid; ?>'
-		
-	
-	mapValue = JSON.parse(jsonString);
-	
-	UpdateProductDropInfo();
+    console.log(phd_uid);
+  	mapValue = JSON.parse(jsonString);
 
-}
+    $.each(mapValue,function( key, value ){
+        console.log(key,value);
+        $("#phd_uid").append("<option value='"+key+"'>"+value+"</option>");
 
-function UpdateProductDropInfo(){
-	console.log(phd_uid);
-	for (var key in mapValue) {
-		addOption(key, mapValue[key]);
-	}
-	
 
-}
-function addOption(value,txt){
-    var frm = document.input;
-    var op = new Option();
-    op.value = value; // 값 설정
-    op.text = txt; // 텍스트 설정
 
-    if(phd_uid == value)
-	    op.selected = true; // 선택된 상태 설정 (기본값은 false이며 선택된 상태로 만들 경우에만 사용)
+    })
 
-    frm.phd_uid.options.add(op); // 옵션 추가
-    
-	
-	
-}
+    $("#phd_uid").val(phd_uid).attr("selected", "selected");
+
+
+  	//UpdateProductDropInfo();
+});
+
+
+
+//
+// function onloadpage(){
+//
+// 	// console.log('onloadpage');
+// 	// var jsonString = '<?php echo $jsonString; ?>'
+// 	// phd_uid = '<?php echo $phd_uid; ?>'
+// 	//
+// 	//
+// 	// mapValue = JSON.parse(jsonString);
+// 	//
+// 	// UpdateProductDropInfo();
+//
+// }
+//
+// function UpdateProductDropInfo(){
+// 	console.log(phd_uid);
+// 	for (var key in mapValue) {
+// 		addOption(key, mapValue[key]);
+// 	}
+//
+//
+// }
+// function addOption(value,txt){
+//     var frm = document.input;
+//     var op = new Option();
+//     op.value = value; // 값 설정
+//     op.text = txt; // 텍스트 설정
+//
+//     if(phd_uid == value)
+// 	    op.selected = true; // 선택된 상태 설정 (기본값은 false이며 선택된 상태로 만들 경우에만 사용)
+//
+//     frm.phd_uid.options.add(op); // 옵션 추가
+//
+//
+//
+// }
 
 function onInputSubmit(item) {
 	console.log("onsubmit");
@@ -115,8 +141,8 @@ function onInputSubmit(item) {
 	console.log(dbcompare);
 	console.log(compare);
 
-	
-	
+
+
 
 	if (dbcompare == compare) {
 		alert("변경된 내용이 없습니다.");
@@ -129,10 +155,10 @@ function onInputSubmit(item) {
 	return true;
 }
 
-	
+
 </script>
 
-<body onload="onloadpage()">
+<body>
 
 <form name = 'input' method='post' action='update_ok.php' onsubmit="return onInputSubmit(this);">
 

@@ -7,8 +7,14 @@ $option = getsaftyReq('option');
 echo 'LOGIN';
 
 if($option == "confirm"){
-	confirm();
+	$pi_debug_value = getenv ( 'PWD_SERVER_DEBUG');
+	if($pi_debug_value == 'TRUE')
+		debugconfirm();
+	else
+		confirm();
 	exit();
+	// confirm();
+	// exit();
 }
 else if($option == "logout"){\
 	logout();
@@ -18,5 +24,3 @@ else if($option == "logout"){\
 loginform('TRUE');
 
 ?>
-
-

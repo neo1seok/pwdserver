@@ -190,6 +190,12 @@ function prevLink($pagename,$title,$maxprev){
 
 function getimglink($imgid){
 	//$imglink = "http://369am.diskn.com/$imgid";
+	$pi_debug_value = getenv ( 'PWD_SERVER_DEBUG');
+	if($pi_debug_value == 'TRUE'){
+
+		return "https://www.sktform.co.kr/wp-content/uploads/2/cfile10.uf.2374984052C27EBB1CA0D5.jpg";
+	}
+
 	$imglink = "http://rmaqnddj5882.diskn.com/$imgid";
 
 	if(getsaftySession('debug') == 'true') return $imgid;
