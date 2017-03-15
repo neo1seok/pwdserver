@@ -11,16 +11,35 @@ foreach ($maplist as $map){
 	$title = $map['title'];
 	$link = $map['link'];
 	echo "<p><a href='$link'>$title</a></p>";
-	echo "\n";	
-	
+	echo "\n";
+
 }
 
 //#pagego('webtoon.php');
 
 ?>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	$('#btn_excute').click(function(){
+		console.log('btn_excute');
+		var strcmd= $('#txt_cmd').val();
+		console.log(strcmd);
+		 $.get( "comm/excuteshell.php?cmd="+strcmd, function( data ) {
+			 console.log(data);
+		 		$('#txt_result').append( data );
+		 		//alert( "Load was performed." );
+		 	});
+
+	});
+});
 
 
-<form name = 'input' method='post' action='insertlink.php'">
+</script>
+
+<form name = 'input' method='post' action='insertlink.php'>
 
 <input type='hidden' name='option'  readonly value='' />
 
@@ -43,9 +62,9 @@ foreach ($maplist as $map){
 <input type='submit' tabindex='3' value='링크추가' style='height:50px'/>
 </form>
 
-
-<form name = 'excute' method='post' action='comm/excuteshell.php'">
-
+<!--
+<form name = 'excute' method='post' action='comm/excuteshell.php'>
+-->
 <input type='hidden' name='option'  readonly value='' />
 
 <table>
@@ -53,11 +72,11 @@ foreach ($maplist as $map){
 
 <tr>
 	<td>shell</td>
-	<td><TEXTAREA NAME='cmd' ROWS=1 COLS=100 tabindex='2'></TEXTAREA></td>
+	<td><TEXTAREA id=txt_cmd NAME='cmd' ROWS=1 COLS=100 tabindex='2'></TEXTAREA></td>
 	</tr>
 
 </table>
-
-<input type='submit' tabindex='3' value='실행' style='height:50px'/>
-</form>
-
+<button id="btn_excute" type="submit" tabindex='3'  name="button" style='height:50px' >실행</button>
+<p id=txt_result></p>
+<!--<input type='submit' tabindex='3' value='실행' style='height:50px'/>
+</form>-->
