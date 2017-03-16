@@ -2,42 +2,19 @@
     <head>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script type="text/javascript">
-
-
-        $(window).load(function(){
-
-          $.get( "test2.php", function( data ) {
-              var mapValue = JSON.parse(data);
-              mapValue.forEach(function( item, index ){
-                  console.log(item);
-                  $("#selectBox").append("<option value='"+item+"'>"+item+"</option>");
-
-              })
-
-              console.log(mapValue[1]);
-              $("#selectBox").val(mapValue[1]).attr("selected", "selected");
-
-
-              //$( asfsadf ).html( mapValue[0] );
-              //alert( "Load was performed." );
-            });
-
-
-          	//UpdateProductDropInfo();
-        });
-
-
             $('#navigation li').live('click', function() {
-                $('#navigation li').removeClass('selected');
-                $(this).addClass('selected');
+                //$('#navigation li').removeClass('selected');
+                //$(this).addClass('selected');
                 //$('#result').text("FUCK");
-
                 asfsadf = this
-
+                $.get( "tet.php", function( data ) {
+                    $( asfsadf ).html( data );
+                    //alert( "Load was performed." );
+                  });
 
             })
 
-        </script>;
+        </script>
         <style type="text/css">
             #navigation li {
                 list-style:none;
@@ -54,7 +31,6 @@
         </style>
     </head>
     <body>
-
         <ul id="navigation">
             <li>HTML</li>
             <li>CSS</li>
@@ -63,8 +39,6 @@
             <li>PHP</li>
             <li>mysql</li>
         </ul>
-        <select id='selectBox'>
-        </select>
         <p id='result'>RESULT</p>
     </body>
 </html>
