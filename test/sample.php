@@ -46,7 +46,7 @@
     <script type="text/javascript">
 
 
-    $(document).ready(function(){
+    $(function() {
       console.log('ready');
 
     });
