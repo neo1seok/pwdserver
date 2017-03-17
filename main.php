@@ -1,9 +1,7 @@
 <?php
 require_once("library.php");  // library.php 파일 포함
-defMeta();
+//defMeta();
 setHome("");
-echo '<h1>원석의 심플 홈피</h1>';
-echo '<p>이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서  돌아가고 있습니다.</p>';
 
 $maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_date, comment FROM fav_link;");
 // $list_aa = array();
@@ -63,7 +61,7 @@ function update_link(maplist){
 		//console.log(index);
 		//console.log(del_link);
 
-		$('#link_table').append(`<tr id='${ val.fnk_uid }_tr'><th><a class='class_link_user' id='${ val.fnk_uid }_link' href='${val.link}'>${ val.title }</a> </th><th>${del_link}</th></tr>`);
+		$('#link_table tbody').append(`<tr id='${ val.fnk_uid }_tr'><th><a class='class_link_user' id='${ val.fnk_uid }_link' href='${val.link}'>${ val.title }</a> </th><th>${del_link}</th></tr>`);
 		index ++;
 		//console.log(val.fnk_uid);
 		//console.log(val.link);
@@ -87,6 +85,10 @@ console.log(`Fifteen is ${a + b} and\nnot ${2 * a + b}.`);
 
 $(document).ready(function(){
 	update_link(maplist);
+	$('#div_link').hide();
+	$('#div_add_link').hide();
+	$('#div_excute_shell').hide();
+
 	$('.class_del').click(function(){
 		console.log('class_del');
 		var link_id = `${this.id}_link`;
@@ -139,26 +141,96 @@ $(document).ready(function(){
 		 	});
 
 	});
+
+	$('#toggle_link').click(function(){
+		console.log('toggle_link');
+
+		$('#div_link').toggle();
+
+	});
+	$('#toggle_add_link').click(function(){
+		console.log('toggle_add_link');
+
+		$('#div_add_link').toggle();
+
+	});
+	$('#toggle_excute').click(function(){
+		console.log('toggle_excute');
+
+		$('#div_excute_shell').toggle();
+
+	});
 });
 
 
 </script>
 
-<table id="link_table">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+
+<div class="jumbotron">
+      <div class="container">
+				<h1>원석의 심플 홈피</h1>
+        <p>이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서  돌아가고 있습니다.</p>
+        <p><a class="btn btn-info btn-sm" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
+				<p><a class="btn btn-info btn-sm" id='toggle_add_link' href="#" role="button">ADD LINK »</a></p>
+				<p><a class="btn btn-info btn-sm" id='toggle_excute' href="#" role="button">EXCUTE SHELL »</a></p>
+      </div>
+    </div>
+
+
+<div id='div_link' >
+
+<div class="col-md-6">
+<table id="link_table" class="table table-striped">
+	<thead>
+		<tr>
+			<th>제목</th>
+			<th>삭제</th>
+		</tr>
+	</thead>
+	<tbody>
+ </tbody>
 </table>
+</div>
+</div>
+<div id='div_add_link' >
+
 <form name = 'input' method='post' action='insertlink.php'>
 
 <input type='hidden' name='option'  readonly value='' />
 
 <table>
-
 <tr>
-	<td>제목</td>
+	<td class="label label-success">제목</td>
 	<td><input type='text' name='title' tabindex='1'  /></td>
 </tr>
 
 <tr>
-	<td>링크</td>
+	<td class="label label-success">링크</td>
 	<td><TEXTAREA NAME='link' ROWS=3 COLS=100 tabindex='2'>
 
 </TEXTAREA></td>
@@ -168,7 +240,8 @@ $(document).ready(function(){
 
 <input type='submit' tabindex='3' value='링크추가' style='height:50px'/>
 </form>
-
+</div>
+<div id='div_excute_shell' >
 <!--
 <form name = 'excute' method='post' action='comm/excuteshell.php'>
 -->
@@ -183,7 +256,8 @@ $(document).ready(function(){
 	</tr>
 
 </table>
-<button id="btn_excute" type="submit" tabindex='3'  name="button" style='height:50px' >실행</button>
+<button class='btn btn-lg btn-primary' id="btn_excute" type="submit" tabindex='3'  name="button" style='height:50px' >실행</button>
 <p id=txt_result></p>
 <!--<input type='submit' tabindex='3' value='실행' style='height:50px'/>
 </form>-->
+</div>
