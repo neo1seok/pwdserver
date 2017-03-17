@@ -226,9 +226,7 @@ $str_json_maplist = json_encode($maplist);
 
 
 
-				<div id='div_link' >
-
-				<div class="col-md-6">
+				<div class="col-md-6" id='div_link' >
 				<table id="link_table" class="table table-striped">
 					<thead>
 						<tr>
@@ -239,7 +237,6 @@ $str_json_maplist = json_encode($maplist);
 					<tbody>
 				 </tbody>
 				</table>
-				</div>
 				</div>
 				<div id='div_add_link' >
 
