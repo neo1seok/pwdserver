@@ -195,9 +195,9 @@ $(document).ready(function(){
       <div class="container">
 				<h1>원석의 심플 홈피</h1>
         <p>이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서  돌아가고 있습니다.</p>
-        <p><a class="btn btn-info btn-sm" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
-				<p><a class="btn btn-info btn-sm" id='toggle_add_link' href="#" role="button">ADD LINK »</a></p>
-				<p><a class="btn btn-info btn-sm" id='toggle_excute' href="#" role="button">EXCUTE SHELL »</a></p>
+        <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
+				<p><a class="btn btn-info btn-lg" id='toggle_add_link' href="#" role="button">ADD LINK »</a></p>
+				<p><a class="btn btn-info btn-lg" id='toggle_excute' href="#" role="button">EXCUTE SHELL »</a></p>
       </div>
     </div>
 
