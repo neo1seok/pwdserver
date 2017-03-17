@@ -1,7 +1,7 @@
 ﻿<?php
 
 
-$_ENV_G = array();
+//$_ENV_G = array();
 
 
 
@@ -10,11 +10,11 @@ function loadEnv(){
 	//print "env is: ".getenv('LOGIN_DEBUG')."\n";
 	//phpinfo(INFO_ENVIRONMENT);
 	return;
-	
+
 	print getenv('MY_PROJECT_PATH') . "\n" .
 			getenv('MY_PROJECT_ENV') . "\n" .
 			getenv('MY_PROJECT_MAIL') . "\n";
-	
+
 	$filename = "../config.json";
 	$myfile = fopen($filename, "r") or die("Unable to open file!");
 	echo fread($myfile,filesize($filename));
@@ -49,7 +49,7 @@ function getcurpage(){
 
 function appendLn($str){
 	echo $str;
-	echo "\n";	
+	echo "\n";
 }
 function appendLnBr($str){
 	echo $str;
@@ -74,14 +74,14 @@ function defMeta(){
 	echo "\n";
 	echo '<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">';
 	echo "\n";
-	
+
 	echo '<head>';
 	echo "\n";
 	echo '<link rel="stylesheet" type="text/css" href="../comm/css/style.css">';
 	echo "\n";
 	echo '</head>';
 	echo "\n";
-	
+
 }
 
 function MakeLink($linkarray){
@@ -103,41 +103,41 @@ function sampleTable(){
 	// 머릿글 출력
 	echo "<tr>";
 	echo "\n";
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	echo "<th>";
 	echo '1';
 	echo "</th>";
-	
+
 	echo "<th>";
 	echo '2';
 	echo "</th>";
-	
-	
-	
+
+
+
 	//echo "<td>수정</td>";
 	echo "</tr>";
 	echo "\n";
-	
-	
+
+
 	echo "<tr>";
 	echo "<td>aa</td>";
 	echo "<td>aa2</td>";
 	echo "</tr>";
-	
-	
-	
-	
+
+
+
+
 	// 테이블 끝
 	echo "</table>";
 	echo "\n";
-	
-	
+
+
 }
 function alertBoxAndBack($msg){
 	echo "<script>alert('$msg');history.back();</script>";
@@ -148,7 +148,7 @@ function getsaftyReq($key){
 		return "";
 	}
 	return $_REQUEST[$key];
-	
+
 }
 function getsaftySession($key){
 	if(!isset($_SESSION[$key])) {
@@ -161,4 +161,4 @@ function base64_url_decode($input)
 {
 	return base64_decode(strtr($input, '-_,', '+/='));
 }
-?>	
+?>
