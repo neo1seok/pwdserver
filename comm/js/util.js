@@ -1,3 +1,5 @@
+
+
 function convert_to_safe_json_string(str){
   var s = str;
   //console.log('convert_to_safe_json_string');
@@ -16,3 +18,10 @@ function convert_to_safe_json_string(str){
   s = s.replace(/[\ufeff]*/gi,"");
   return s;
 }
+function toHex(str) {
+    var result = '';
+    for (var i=0; i<str.length; i++) {
+      result += str.charCodeAt(i).toString(16);
+    }
+    return result;
+  }

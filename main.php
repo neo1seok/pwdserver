@@ -30,7 +30,6 @@ $str_json_maplist = json_encode($maplist);
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
     <title>원석의 홈페이지</title>
 
-    <!-- 부트스트랩 -->
 
 		<!-- 합쳐지고 최소화된 최신 CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -38,7 +37,29 @@ $str_json_maplist = json_encode($maplist);
 		<!-- 부가적인 테마 -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+		<style type="text/css">
 
+		ul {
+			list-style-type: none;
+			padding-right: 20px;
+		padding-left: 0px;
+		}
+
+
+		li {
+		 display: inline;
+		 padding: 0 20px;
+		 border-right:  1px solid #999;
+		}
+		li[class=\"st\"]{
+		 display: inline;
+		 padding: 0 10px;
+		}
+		.st {
+		 display: inline;
+		 padding: 0 10px;
+		}
+		</style>
 
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
@@ -78,6 +99,9 @@ $str_json_maplist = json_encode($maplist);
 		      <div class="container">
 						<h1>원석의 심플 홈피</h1>
 		        <p>이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서  돌아가고 있습니다.</p>
+
+						<ul class='class_dir_btn'></ul>
+
 		        <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
 						<p><a class="btn btn-info btn-lg" id='toggle_add_link' href="#" role="button">ADD LINK »</a></p>
 						<p><a class="btn btn-info btn-lg" id='toggle_excute' href="#" role="button">EXCUTE SHELL »</a></p>
@@ -91,31 +115,44 @@ $str_json_maplist = json_encode($maplist);
 				<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
 				<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+				<script src="comm/js/util.js"></script>
 				<script type="text/javascript">
-				function convert_to_safe_json_string(str){
-					var s = str;
-					//console.log('convert_to_safe_json_string');
-
-					//s = s.replace(String.fromCharCode(65279), "" );
-					s = s.replace(/\\n/g, "\\n")
-					               .replace(/\\'/g, "\\'")
-					               .replace(/\\"/g, '\\"')
-					               .replace(/\\&/g, "\\&")
-					               .replace(/\\r/g, "\\r")
-					               .replace(/\\t/g, "\\t")
-					               .replace(/\\b/g, "\\b")
-					               .replace(/\\f/g, "\\f");
-					// remove non-printable and other non-valid JSON chars
-					s = s.replace(/[\u0000-\u0019]+/g,"");
-					s = s.replace(/[\ufeff]*/gi,"");
-					return s;
-				}
+				// function convert_to_safe_json_string(str){
+				// 	var s = str;
+				// 	//console.log('convert_to_safe_json_string');
+				//
+				// 	//s = s.replace(String.fromCharCode(65279), "" );
+				// 	s = s.replace(/\\n/g, "\\n")
+				// 	               .replace(/\\'/g, "\\'")
+				// 	               .replace(/\\"/g, '\\"')
+				// 	               .replace(/\\&/g, "\\&")
+				// 	               .replace(/\\r/g, "\\r")
+				// 	               .replace(/\\t/g, "\\t")
+				// 	               .replace(/\\b/g, "\\b")
+				// 	               .replace(/\\f/g, "\\f");
+				// 	// remove non-printable and other non-valid JSON chars
+				// 	s = s.replace(/[\u0000-\u0019]+/g,"");
+				// 	s = s.replace(/[\ufeff]*/gi,"");
+				// 	return s;
+				// }
 				function update_link(maplist){
 					var index = 0;
+
+
+
+
+					//$('#go_webtoon').text(maplist[0].title);
+
+					//go_webtoon go_pwd
 					$.each( maplist, function( i, val ) {
+
 						var del_link ='';
-						if(index >2) del_link= `<a class='class_del' id='${ val.fnk_uid }' href=#>삭제</a>`;
+						if(i <= 2){
+
+							$('.class_dir_btn').append(`<lis class='st'><a class="btn btn-success btn-lg" id='${ val.fnk_uid }' href="${val.link}" role="button">${ val.title }</a></lis>`);
+							return;
+						}
+						if(i >2) del_link= `<a class='class_del' id='${ val.fnk_uid }' href=#>삭제</a>`;
 						//console.log(index);
 						//console.log(del_link);
 
@@ -125,13 +162,7 @@ $str_json_maplist = json_encode($maplist);
 						//console.log(val.link);
 					});
 				}
-				function toHex(str) {
-				    var result = '';
-				    for (var i=0; i<str.length; i++) {
-				      result += str.charCodeAt(i).toString(16);
-				    }
-				    return result;
-				  }
+
 				var  str_maplist = '<?php echo $str_json_maplist; ?>';
 				//console.log(str_maplist);
 				//console.log(convert_to_safe_json_string(str_maplist));
