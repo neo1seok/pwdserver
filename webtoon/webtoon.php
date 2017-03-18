@@ -95,7 +95,7 @@ function listtoons_2($todaywebtoonMap){
 
 		}
 		$arrayName = array('list' => $list, 'link' => $link);
-		push_back($array,$arrayName);
+		array_push($array,$arrayName);
 
 
 	}
@@ -111,16 +111,28 @@ function viewWebtoonLink($curyoil){
 
 
 	$todaylist = json_encode(listtoons_2($todaywebtoonMap));
+	return $todaylist;
+	//echo $todaylist;
 
 
 
 	$totalwebtoonMap = QueryString2Map("SELECT id,title,lastno,comment FROM webtoon;");
 
 	$totallist = json_encode(listtoons_2($totalwebtoonMap));
-
+	//echo $totallist;
 
 }
 
+function viewWebtoonLink_total(){
+
+
+	$totalwebtoonMap = QueryString2Map("SELECT id,title,lastno,comment FROM webtoon;");
+
+	$totallist = json_encode(listtoons_2($totalwebtoonMap));
+	return $totallist;
+	//echo $totallist;
+
+}
 
 function viewWebtoonLink_OLD($curyoil){
 	$maptitle = array(
@@ -229,6 +241,8 @@ if($option=='updatetopids'){
 	exit;
 }
 $header = '오늘은'. $yoil[date('w')].'요일 입니다. ';
+$todaylist = viewWebtoonLink($curyoil);
+$totallist = viewWebtoonLink_total();
 //
 // defMeta();
 //
@@ -238,7 +252,7 @@ $header = '오늘은'. $yoil[date('w')].'요일 입니다. ';
 //
 //
 //
-// viewWebtoonLink($curyoil);
+//
 //
 // echo "<li><a href='javascript:history.back()'>back</a></li>";
 // echo "\n";
@@ -292,12 +306,30 @@ $header = '오늘은'. $yoil[date('w')].'요일 입니다. ';
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+		<script src="../comm/js/util.js"></script>
+
     <script type="text/javascript">
-		console.log(<?php echo $todaylist; ?>);
+
+		var todaylist = `<?php echo $todaylist; ?>`;
+		console.log(convert_to_safe_json_string(todaylist));
+		todaylist = JSON.parse(convert_to_safe_json_string(`<?php echo $todaylist; ?>`));
+		totallist = JSON.parse(convert_to_safe_json_string(`<?php echo $totallist; ?>`));
 
     $(function() {
       console.log('ready');
 
+			todaylist.forEach(function(item, index){
+					$('#table_today tbody').append(`<tr><th>${item.list}</th><th>${item.link}</th></tr>`);
+
+			})
+
+			totallist.forEach(function(item, index){
+					console.log(item,index);
+					$('#table_today_all tbody').append(`<tr><th>${item.list}</th><th>${item.link}</th></tr>`);
+
+			})
+			$('#div_today').show();
+			$('#div_all').hide();
 			$('#toggle_today').click(function(){
 				console.log('toggle_today');
 
