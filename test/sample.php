@@ -27,32 +27,34 @@
 </head>
 <body>
 
-<div class="jumbotron">
-      <div class="container">
-        <h1>TITLE</h1>
-        <p>DICCRIPT.</p>
-        <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
-      </div>
-    </div>
-
-
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../comm/js/util.js"></script>
 
     <script type="text/javascript">
 
 
     $(function() {
+      setup_nav('#navi');
       console.log('ready');
 
     });
 
 
     </script>
+    <div id = 'navi'></div>
+    <div class="jumbotron">
+          <div class="container">
+            <h1>TITLE</h1>
+            <p>DICCRIPT.</p>
+            <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
+          </div>
+        </div>
+
 
 </body>
 </html>

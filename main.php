@@ -17,6 +17,7 @@ $maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_dat
 //
 // }
 $str_json_maplist = json_encode($maplist);
+$curpage = getcurpage();
 
 //#pagego('webtoon.php');
 
@@ -68,31 +69,12 @@ $str_json_maplist = json_encode($maplist);
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  <script src="https://www.w3schools.com/lib/w3data.js"></script>
+
+
   <body>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-		      <div class="container">
-		        <div class="navbar-header">
-		          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-		            <span class="sr-only">Toggle navigation</span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		          </button>
-		          <a class="navbar-brand" href="#">Project name</a>
-		        </div>
-		        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-		          <form class="navbar-form navbar-right">
-		            <div class="form-group">
-		              <input type="text" placeholder="Email" class="form-control">
-		            </div>
-		            <div class="form-group">
-		              <input type="password" placeholder="Password" class="form-control">
-		            </div>
-		            <button type="submit" class="btn btn-success">Sign in</button>
-		          </form>
-		        </div><!--/.navbar-collapse -->
-		      </div>
-		    </nav>
+    <div id = 'navi'></div>
+
 
 
 		<div class="jumbotron">
@@ -117,24 +99,8 @@ $str_json_maplist = json_encode($maplist);
 				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 				<script src="comm/js/util.js"></script>
 				<script type="text/javascript">
-				// function convert_to_safe_json_string(str){
-				// 	var s = str;
-				// 	//console.log('convert_to_safe_json_string');
-				//
-				// 	//s = s.replace(String.fromCharCode(65279), "" );
-				// 	s = s.replace(/\\n/g, "\\n")
-				// 	               .replace(/\\'/g, "\\'")
-				// 	               .replace(/\\"/g, '\\"')
-				// 	               .replace(/\\&/g, "\\&")
-				// 	               .replace(/\\r/g, "\\r")
-				// 	               .replace(/\\t/g, "\\t")
-				// 	               .replace(/\\b/g, "\\b")
-				// 	               .replace(/\\f/g, "\\f");
-				// 	// remove non-printable and other non-valid JSON chars
-				// 	s = s.replace(/[\u0000-\u0019]+/g,"");
-				// 	s = s.replace(/[\ufeff]*/gi,"");
-				// 	return s;
-				// }
+        w3IncludeHTML();
+
 				function update_link(maplist){
 					var index = 0;
 
@@ -147,9 +113,9 @@ $str_json_maplist = json_encode($maplist);
 					$.each( maplist, function( i, val ) {
 
 						var del_link ='';
-						if(i <= 2){
+						if(i <= 1){
 
-							$('.class_dir_btn').append(`<lis class='st'><a class="btn btn-success btn-lg" id='${ val.fnk_uid }' href="${val.link}" role="button">${ val.title }</a></lis>`);
+							//$('.class_dir_btn').append(`<lis class='st'><a class="btn btn-success btn-lg" id='${ val.fnk_uid }' href="${val.link}" role="button">${ val.title }</a></lis>`);
 							return;
 						}
 						if(i >2) del_link= `<a class='class_del' id='${ val.fnk_uid }' href=#>삭제</a>`;
@@ -170,10 +136,26 @@ $str_json_maplist = json_encode($maplist);
 				var maplist  = $.parseJSON( convert_to_safe_json_string(str_maplist));
 				var a = 5;
 				var b = 10;
-				console.log(`Fifteen is ${a + b} and\nnot ${2 * a + b}.`);
+				//console.log(`Fifteen is ${a + b} and\nnot ${2 * a + b}.`);
 
 				$(document).ready(function(){
 					update_link(maplist);
+        //  var navi = get_navigation('');
+
+        var base_url = window.location.origin;
+
+var host = window.location.host;
+
+var pathArray = window.location.pathname.split( '/' );
+
+
+          console.log(base_url);
+          console.log( host);
+          console.log( pathArray);
+          setup_nav('#navi');
+
+          //console.log(navi);
+        //  $('#navi').append(get_navigation());
 					$('#div_link').hide();
 					$('#div_add_link').hide();
 					$('#div_excute_shell').hide();
