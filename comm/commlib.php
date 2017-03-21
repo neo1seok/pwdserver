@@ -46,7 +46,11 @@ function pagego($url){
 function getcurpage(){
 	return $_SERVER['REQUEST_URI'];
 }
+function getbaseurl(){
 
+
+	return 'http://' . $_SERVER['SERVER_NAME'];
+}
 function appendLn($str){
 	echo $str;
 	echo "\n";
