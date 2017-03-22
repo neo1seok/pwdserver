@@ -74,7 +74,7 @@ $curpage = getcurpage();
 
   <body>
     <div id = 'navi'></div>
-
+    <div id = 'main_container'></div>
 
 
 		<div class="jumbotron">
@@ -152,7 +152,18 @@ var pathArray = window.location.pathname.split( '/' );
           console.log(base_url);
           console.log( host);
           console.log( pathArray);
-          setup_nav('#navi');
+          var  map_container =
+          { Header: "MAIN", Discription: "DISC",
+            Links: [
+                { Name: "MAIN", Link: window.location.origin +"/",Id:"" },
+                { Name: "MAIN", Link: window.location.origin +"/" ,Id:""},
+            ],
+
+
+          };
+
+
+          setup_nav('#navi','#main_container',map_container);
 
           //console.log(navi);
         //  $('#navi').append(get_navigation());

@@ -30,7 +30,16 @@ function test(){
   var ret ='test';
   return ret;
 }
-function get_navigation(){
+function get_navigation(links){
+
+
+  var linkarray = '';
+  links.forEach(function (value, index, ar) {
+
+
+      linkarray += `<a class="navbar-brand" href="${value.Link}" >${value.Name}</a>\n`;
+  });
+//  console.log(linkarray);
 
 var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -41,10 +50,8 @@ var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${window.location.origin}/" >MAIN</a>
-            <a class="navbar-brand" href="${window.location.origin}/webtoon/" >WEBTOON</a>
-            <a class="navbar-brand" href="${window.location.origin}/pwdserver/" >개인 PW정보</a>
-            </div>
+            <div id ="nav_Link">${linkarray}</div>
+                </div>
           <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
             <form class="navbar-form navbar-right">
               <div class="form-group">
@@ -60,7 +67,40 @@ var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
       </nav>`;
       return ret;
 }
-function setup_nav(sel){
-    $(sel).append(get_navigation());
+function get_container(container_info){
+  var linkarray = '';
+  container_info.Links.forEach(function (value, index, ar) {
+    var attrb= "";
+    var isattr = "Attrib" in value
+    if (isattr){
+        attrb = value.Attrb;
+          console.log("Attrb");
+    }
+    console.log(" ${attrb}");
+      linkarray += `<a class="btn btn-info btn-lg" ${attrb} href="${value.Link}" >${value.Name}</a>\n`;
+  });
+
+  var ret = `    <div class="jumbotron">
+          <div class="container">
+          <br/>
+            <h1>${container_info.Header}</h1>
+            <p>${container_info.Discription}.</p>
+            <p>${linkarray}</p>
+          </div>
+        </div>`;
+        return ret;
+}
+function setup_nav(sel_nav,sel_cont,map_container){
+  var links = [
+  { Name: "MAIN", Link: window.location.origin +"/" },
+    { Name: "WEBTOON", Link: window.location.origin +"/webtoon/" },
+      { Name: "개인 PW정보", Link: window.location.origin +"/pwdserver/" },
+
+  ];
+
+
+  $(sel_nav).append(get_navigation(links));
+  $(sel_cont).append(get_container(map_container));
+
 
 }
