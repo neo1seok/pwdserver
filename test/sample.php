@@ -40,10 +40,11 @@
 
     $(function() {
       var  map_container =
-      { Header: "MAIN", Discription: "DISC",
+      { Header: "SAMPLE", Discription: "sample Discription",
         Links: [
-            { Name: "MAIN", Link: window.location.origin +"/", Attrib:"id='bbb'" },
-            { Name: "MAIN", Link: window.location.origin +"/" },
+            { Name: "SAMPLE>>", Link: "#",Id:"toggle_link" },
+            { Name: "SAMPLE>>", Link: "#" ,Id:"toggle_add_link"},
+            { Name: "SAMPLE1>>", Link: "#" ,Id:"toggle_excute"},
         ],
 
 

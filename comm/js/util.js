@@ -71,9 +71,9 @@ function get_container(container_info){
   var linkarray = '';
   container_info.Links.forEach(function (value, index, ar) {
     var attrb= "";
-    var isattr = "Attrib" in value
+    var isattr = "Id" in value
     if (isattr){
-        attrb = value.Attrb;
+        attrb = `id = "${value.Id}"`;
           console.log("Attrb");
     }
     console.log(" ${attrb}");

@@ -73,22 +73,6 @@ $curpage = getcurpage();
 
 
   <body>
-    <div id = 'navi'></div>
-    <div id = 'main_container'></div>
-
-
-		<div class="jumbotron">
-		      <div class="container">
-						<h1>원석의 심플 홈피</h1>
-		        <p>이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서  돌아가고 있습니다.</p>
-
-						<ul class='class_dir_btn'></ul>
-
-		        <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
-						<p><a class="btn btn-info btn-lg" id='toggle_add_link' href="#" role="button">ADD LINK »</a></p>
-						<p><a class="btn btn-info btn-lg" id='toggle_excute' href="#" role="button">EXCUTE SHELL »</a></p>
-		      </div>
-		    </div>
 
 
 
@@ -153,10 +137,11 @@ var pathArray = window.location.pathname.split( '/' );
           console.log( host);
           console.log( pathArray);
           var  map_container =
-          { Header: "MAIN", Discription: "DISC",
+          { Header: "원석의 심플 홈피", Discription: "이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서 돌아가고 있습니다.",
             Links: [
-                { Name: "MAIN", Link: window.location.origin +"/",Id:"" },
-                { Name: "MAIN", Link: window.location.origin +"/" ,Id:""},
+                { Name: "FAV LINK>>", Link: "#",Id:"toggle_link" },
+                { Name: "ADD LINK>>", Link: "#" ,Id:"toggle_add_link"},
+                { Name: "EXCUTE SHELL>>", Link: "#" ,Id:"toggle_excute"},
             ],
 
 
@@ -248,6 +233,22 @@ var pathArray = window.location.pathname.split( '/' );
 				</script>
 
 
+        <div id = 'navi'></div>
+        <div id = 'main_container'></div>
+
+
+        <!-- <div class="jumbotron">
+              <div class="container">
+                <h1>원석의 심플 홈피</h1>
+                <p>이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서  돌아가고 있습니다.</p>
+
+                <ul class='class_dir_btn'></ul>
+
+                <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
+                <p><a class="btn btn-info btn-lg" id='toggle_add_link' href="#" role="button">ADD LINK »</a></p>
+                <p><a class="btn btn-info btn-lg" id='toggle_excute' href="#" role="button">EXCUTE SHELL »</a></p>
+              </div>
+            </div> -->
 
 
 				<div class="col-md-6" id='div_link' >
