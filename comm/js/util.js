@@ -41,9 +41,11 @@ var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
+            <div id="main_menu">
             <a class="navbar-brand" href="${window.location.origin}/" >MAIN</a>
             <a class="navbar-brand" href="${window.location.origin}/webtoon/" >WEBTOON</a>
             <a class="navbar-brand" href="${window.location.origin}/pwdserver/" >개인 PW정보</a>
+            </div>
             </div>
           <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
             <form class="navbar-form navbar-right">
@@ -61,6 +63,30 @@ var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
       return ret;
 }
 function setup_nav(sel){
+
+  var movies = [
+  { Name: "MAIN", Link: "${window.location.origin}/" },
+  { Name: "WEBTOON", Link: "${window.location.origin}/webtoon/" },
+  { Name: "개인 PW정보", Link: "${window.location.origin}/pwdserver/" }
+  ];
+
+  var markup = "<a class=\"navbar-brand\" href=\"${Link}/\" >${Name}</a>";
+
+
+
+
+
+
     $(sel).append(get_navigation());
+
+    /* Compile the markup as a named template */
+  	$.template( "movieTemplate", markup );
+    console.log($.tmpl( "movieTemplate", movies ));
+
+
+    /* Render the template with the movies data and insert
+  	   the rendered HTML under the "movieList" element */
+  	$.tmpl( "movieTemplate", movies )
+  	  .appendTo( "#main_menu" );
 
 }
