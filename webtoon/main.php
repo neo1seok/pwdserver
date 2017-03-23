@@ -261,17 +261,7 @@ $totallist = viewWebtoonLink_total();
   </head>
 </head>
 <body>
-<div id = 'navi'></div>
-<div class="jumbotron">
-      <div class="container">
-        <h1>웹툰리스트</h1>
 
-        <p><?php echo $header; ?></p>
-        <p><a class="btn btn-info btn-lg" id='toggle_today' href="#" role="button">오늘의 웹툰 »</a></p>
-				<p><a class="btn btn-info btn-lg" id='toggle_all' href="#" role="button">전체 목록 »</a></p>
-				<p><a class="btn btn-info btn-lg" id='toggle_add_webtoon' href="#" role="button">웹툰추가 »</a></p>
-      </div>
-    </div>
 
 
 
@@ -285,6 +275,7 @@ $totallist = viewWebtoonLink_total();
 
     <script type="text/javascript">
 
+
 		var todaylist = `<?php echo $todaylist; ?>`;
 		console.log(convert_to_safe_json_string(todaylist));
 		todaylist = JSON.parse(convert_to_safe_json_string(`<?php echo $todaylist; ?>`));
@@ -293,7 +284,20 @@ $totallist = viewWebtoonLink_total();
     $(function() {
       console.log('ready');
 
-      setup_nav('#navi');
+      var  map_container =
+      { Header: "웹툰리스트", Discription: "<?php echo $header; ?>",
+        Links: [
+            { Name: "오늘의 웹툰 »", Link: "#",Id:"toggle_today" },
+            { Name: "전체 목록>>", Link: "#" ,Id:"toggle_all"},
+            { Name: "웹툰추가>>", Link: "#" ,Id:"toggle_add_webtoon"},
+        ],
+
+
+      };
+
+
+      setup_nav('#navi','#main_container',map_container,'#nav_webtoon');
+
 
 
               var base_url = window.location.origin;
@@ -319,6 +323,8 @@ $totallist = viewWebtoonLink_total();
 			})
 			$('#div_today').show();
 			$('#div_all').hide();
+      $('#div_input').hide();
+
 			$('#toggle_today').click(function(){
 				console.log('toggle_today');
 
@@ -347,6 +353,19 @@ $totallist = viewWebtoonLink_total();
 
 
     </script>
+    <div id = 'navi'></div>
+    <div id = 'main_container'></div>
+    <!-- <div class="jumbotron">
+          <div class="container">
+            <h1>웹툰리스트</h1>
+
+            <p><?php echo $header; ?></p>
+            <p><a class="btn btn-info btn-lg" id='toggle_today' href="#" role="button">오늘의 웹툰 »</a></p>
+    				<p><a class="btn btn-info btn-lg" id='toggle_all' href="#" role="button">전체 목록 »</a></p>
+    				<p><a class="btn btn-info btn-lg" id='toggle_add_webtoon' href="#" role="button">웹툰추가 »</a></p>
+          </div>
+        </div> -->
+
 
 		<div class="col-md-6" id='div_today' >
 			<h2>오늘의 리스트</h2>

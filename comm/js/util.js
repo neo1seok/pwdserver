@@ -30,63 +30,108 @@ function test(){
   var ret ='test';
   return ret;
 }
-function get_navigation(){
+function get_navigation(navinfo){
 
-var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <div id="main_menu">
-            <a class="navbar-brand" href="${window.location.origin}/" >MAIN</a>
-            <a class="navbar-brand" href="${window.location.origin}/webtoon/" >WEBTOON</a>
-            <a class="navbar-brand" href="${window.location.origin}/pwdserver/" >개인 PW정보</a>
-            </div>
-            </div>
-          <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-            <form class="navbar-form navbar-right">
-              <div class="form-group">
-                <input type="text" placeholder="Email" class="form-control">
-              </div>
-              <div class="form-group">
-                <input type="password" placeholder="Password" class="form-control">
-              </div>
-              <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
-          </div><!--/.navbar-collapse -->
-        </div>
-      </nav>`;
+
+  var linkarray = '';
+  navinfo.Links.forEach(function (value, index, ar) {
+
+
+      linkarray += `<li id="${value.Id}"><a class="navbar-brand"  href="${value.Link}" >${value.Name}</a></li>\n`;
+  });
+  // navinfo.ActiveLinks.forEach(function (value, index, ar) {
+  //
+  //
+  //     linkarrayActive += ` <li class="active"><a class="navbar-brand" href="${value.Link}" >${value.Name}</a></li>\n`;
+  // });
+//  console.log(linkarray);
+
+// var ret = `  <nav class="navbar navbar-inverse navbar-fixed-top">
+//         <div class="container">
+//           <div class="navbar-header">
+//             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+//               <span class="sr-only">Toggle navigation</span>
+//               <span class="icon-bar"></span>
+//               <span class="icon-bar"></span>
+//               <span class="icon-bar"></span>
+//             </button>
+//             <div id ="nav_Link">${linkarray}</div>
+//                 </div>
+//           <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+//             <form class="navbar-form navbar-right">
+//               <div class="form-group">
+//                 <input type="text" placeholder="Email" class="form-control">
+//               </div>
+//               <div class="form-group">
+//                 <input type="password" placeholder="Password" class="form-control">
+//               </div>
+//               <button type="submit" class="btn btn-success">Sign in</button>
+//             </form>
+//           </div><!--/.navbar-collapse -->
+//         </div>
+//       </nav>`;
+var ret =
+      `
+      <nav class="navbar navbar-inverse">
+       <div class="container-fluid">
+         <div class="navbar-header">
+           <a class="navbar-brand" href="${navinfo.Title.Link}">${navinfo.Title.Name}</a>
+         </div>
+         <ul class="nav navbar-nav">
+         ${linkarray}
+         </ul>
+         <form class="navbar-form navbar-left">
+           <div class="form-group">
+             <input type="text" class="form-control" placeholder="Search">
+           </div>
+           <button type="submit" class="btn btn-default">Submit</button>
+         </form>
+       </div>
+     </nav>
+      `;
       return ret;
 }
-function setup_nav(sel){
+function get_container(container_info){
+  var linkarray = '';
+  container_info.Links.forEach(function (value, index, ar) {
+    var attrb= "";
+    var isattr = "Id" in value
+    if (isattr){
+        attrb = `id = "${value.Id}"`;
+          console.log("Attrb");
+    }
+    console.log(" ${attrb}");
+      linkarray += `<a class="btn btn-info btn-lg" ${attrb} href="${value.Link}" >${value.Name}</a>\n`;
+  });
 
-  var movies = [
-  { Name: "MAIN", Link: "${window.location.origin}/" },
-  { Name: "WEBTOON", Link: "${window.location.origin}/webtoon/" },
-  { Name: "개인 PW정보", Link: "${window.location.origin}/pwdserver/" }
-  ];
+  var ret = `    <div class="jumbotron">
+          <div class="container">
+          <br/>
+            <h1>${container_info.Header}</h1>
+            <p>${container_info.Discription}.</p>
+            <p>${linkarray}</p>
+          </div>
+        </div>`;
+        return ret;
+}
+function setup_nav(sel_nav,sel_cont,map_container,active_sel_id){
+  var navinfo = {
+    Title:{ Name: "neo1seok main", Link: window.location.origin +"/" },
+  Links:[
+    { Name: "MAIN", Link: window.location.origin +"/" ,Id:"nav_main"},
+      { Name: "WEBTOON", Link: window.location.origin +"/webtoon/",Id:"nav_webtoon" },
+      { Name: "개인 PW정보", Link: window.location.origin +"/pwdserver/",Id:"nav_pwd" },
+      // { Name: "MAIN", Link: window.location.origin +"/" },
+      //   { Name: "WEBTOON", Link: window.location.origin +"/webtoon/" },
+      //     { Name: "개인 PW정보", Link: window.location.origin +"/pwdserver/" },
 
-  var markup = "<a class=\"navbar-brand\" href=\"${Link}/\" >${Name}</a>";
+  ]};
 
 
+  $(sel_nav).append(get_navigation(navinfo));
+  $(sel_cont).append(get_container(map_container));
 
+  $(active_sel_id).addClass( "active" );
 
-
-
-    $(sel).append(get_navigation());
-
-    /* Compile the markup as a named template */
-  	$.template( "movieTemplate", markup );
-    console.log($.tmpl( "movieTemplate", movies ));
-
-
-    /* Render the template with the movies data and insert
-  	   the rendered HTML under the "movieList" element */
-  	$.tmpl( "movieTemplate", movies )
-  	  .appendTo( "#main_menu" );
 
 }

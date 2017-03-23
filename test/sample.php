@@ -39,7 +39,19 @@
 
 
     $(function() {
-      setup_nav('#navi');
+      var  map_container =
+      { Header: "SAMPLE", Discription: "sample Discription",
+        Links: [
+            { Name: "SAMPLE>>", Link: "#",Id:"toggle_link" },
+            { Name: "SAMPLE>>", Link: "#" ,Id:"toggle_add_link"},
+            { Name: "SAMPLE1>>", Link: "#" ,Id:"toggle_excute"},
+        ],
+
+
+      };
+
+
+      setup_nav('#navi','#main_container',map_container);
       console.log('ready');
 
     });
@@ -47,13 +59,14 @@
 
     </script>
     <div id = 'navi'></div>
-    <div class="jumbotron">
+      <div id = 'main_container'></div>
+    <!-- <div class="jumbotron">
           <div class="container">
             <h1>TITLE</h1>
             <p>DICCRIPT.</p>
             <p><a class="btn btn-info btn-lg" id='toggle_link' href="#" role="button">FAV LINK »</a></p>
           </div>
-        </div>
+        </div> -->
 
 
 </body>
