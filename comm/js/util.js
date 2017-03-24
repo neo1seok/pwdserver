@@ -72,7 +72,7 @@ function get_navigation(navinfo){
 //       </nav>`;
 var ret =
       `
-      <nav class="navbar navbar-inverse">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
        <div class="container-fluid">
          <div class="navbar-header">
            <a class="navbar-brand" href="${navinfo.Title.Link}">${navinfo.Title.Name}</a>
