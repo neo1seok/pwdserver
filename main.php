@@ -18,6 +18,7 @@ $maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_dat
 // }
 $str_json_maplist = json_encode($maplist);
 $curpage = getcurpage();
+$sn = $_REQUEST['sn'];
 
 //#pagego('webtoon.php');
 
@@ -123,6 +124,9 @@ $curpage = getcurpage();
 				//console.log(`Fifteen is ${a + b} and\nnot ${2 * a + b}.`);
 
 				$(document).ready(function(){
+
+          console.log('<?php echo $sn; ?>');
+
 					update_link(maplist);
         //  var navi = get_navigation('');
 
