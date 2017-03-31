@@ -70,7 +70,7 @@ function get_navigation(navinfo){
 //           </div><!--/.navbar-collapse -->
 //         </div>
 //       </nav>`;
-var ret =
+var ret_old =
       `
       <nav class="navbar navbar-inverse navbar-fixed-top">
        <div class="container-fluid">
@@ -86,6 +86,20 @@ var ret =
            </div>
            <button type="submit" class="btn btn-default">Submit</button>
          </form>
+       </div>
+     </nav>
+      `;
+var ret =
+      `
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+       <div class="container-fluid">
+         <div class="navbar-header">
+           <a class="navbar-brand" href="${navinfo.Title.Link}">${navinfo.Title.Name}</a>
+         </div>
+         <ul class="nav navbar-nav">
+         ${linkarray}
+         </ul>
+
        </div>
      </nav>
       `;
