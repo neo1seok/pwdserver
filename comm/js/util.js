@@ -91,7 +91,7 @@ var ret_old =
       `;
 var ret =
       `
-      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <nav class="navbar navbar-inverse">
        <div class="container-fluid">
          <div class="navbar-header">
            <a class="navbar-brand" href="${navinfo.Title.Link}">${navinfo.Title.Name}</a>
