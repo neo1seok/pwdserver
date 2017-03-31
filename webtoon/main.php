@@ -284,6 +284,14 @@ $totallist = viewWebtoonLink_total();
     $(function() {
       console.log('ready');
 
+			var myOptions = [ '월','화','수','목','금','토','일'];
+
+	$.each(myOptions, function(val, text) {
+		console.log(val,text);
+
+		 $('#txt_date').append(new Option(text, text));
+	});
+
       var  map_container =
       { Header: "웹툰리스트", Discription: "<?php echo $header; ?>",
         Links: [
@@ -317,7 +325,7 @@ $totallist = viewWebtoonLink_total();
 			})
 
 			totallist.forEach(function(item, index){
-					console.log(item,index);
+					//console.log(item,index);
 					$('#table_today_all tbody').append(`<tr><th>${item.list}</th><th>${item.link}</th></tr>`);
 
 			})
@@ -344,6 +352,29 @@ $totallist = viewWebtoonLink_total();
 
 				$('#div_input').toggle();
 
+
+
+			});
+			$('#btn_add_webtoon').click(function(){
+				var id = $('#txt_id').val();
+				var date = $('#txt_date').val();
+				var title = $('#txt_title').val();
+
+				if(id == '' || title== '' ){
+					alert('값을 입력해 주세요')
+					return;
+
+				}
+				console.log(id,date,title);
+				var url = `webtoon.php?option=input&id=${id}&date=${date}&title=${title}`;
+				console.log(url);
+
+				$.get( url, function( data ) {
+					console.log('input result');
+					console.log(data);
+					console.log('input END');
+
+				 });
 
 
 			});
@@ -400,12 +431,21 @@ $totallist = viewWebtoonLink_total();
 			<h2>웹툰 입력</h2>
 
 			<form class="navbar-form navbar-right">
+
 		 	 <div class="form-group">
-		 		 <input type="text" placeholder="웹툰아이디" class="form-control">
+		 		 <input type="text" id='txt_id' size="100" placeholder="웹툰아이디" class="form-control">
 		 	 </div>
+
 			 <div class="form-group">
-				 <input type="text" placeholder="연재요일" class="form-control">
+				 <input type="text" id='txt_title' size="200" placeholder="웹툰이름" class="form-control">
 			 </div>
+
+			 <div class="form-group">
+				<select id='txt_date' class="form-control"></select>
+				<select id='txt_portal' class="form-control"><option value="네이버">네이버</option></select>
+				<!--<input type="text" id='txt_date' placeholder="연재요일" class="form-control">-->
+			</div>
+
 		  	 <button type="submit" id='btn_add_webtoon' class="btn btn-success">입력</button>
 		  </form>
 

@@ -125,16 +125,14 @@ $sn = $_REQUEST['sn'];
 
 				$(document).ready(function(){
 
-          console.log('<?php echo $sn; ?>');
+        //  console.log('<?php echo $sn; ?>');
 
 					update_link(maplist);
         //  var navi = get_navigation('');
 
         var base_url = window.location.origin;
-
-var host = window.location.host;
-
-var pathArray = window.location.pathname.split( '/' );
+        var host = window.location.host;
+        var pathArray = window.location.pathname.split( '/' );
 
 
           console.log(base_url);
