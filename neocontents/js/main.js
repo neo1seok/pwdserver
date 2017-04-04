@@ -1,27 +1,32 @@
+
+
+
+
 function map_click(){
+  //
+  // $('#toggle_contents').click(function(){
+  //   console.log('toggle_today');
+  //
+  //   $('#div_contents').toggle();
+  //
+  // });
+  // $('#toggle_list').click(function(){
+  //   console.log('toggle_all');
+  //
+  //   $('#div_all').toggle();
+  //
+  //
+  //
+  // });
+  // $('#toggle_input').click(function(){
+  //   console.log('toggle_all');
+  //
+  //   $('#div_input').toggle();
+  //
+  //
+  //
+  // });
 
-  $('#toggle_today').click(function(){
-    console.log('toggle_today');
-
-    $('#div_today').toggle();
-
-  });
-  $('#toggle_all').click(function(){
-    console.log('toggle_all');
-
-    $('#div_all').toggle();
-
-
-
-  });
-  $('#toggle_add_webtoon').click(function(){
-    console.log('toggle_all');
-
-    $('#div_input').toggle();
-
-
-
-  });
   $('.cla_show').click(function(){
     var id =this.id;
     console.log('click cla_show',id);

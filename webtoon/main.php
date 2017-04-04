@@ -333,35 +333,47 @@ $totallist = viewWebtoonLink_total();
 			$('#div_all').hide();
       $('#div_input').hide();
 
-			$('#toggle_today').click(function(){
-				console.log('toggle_today');
 
-				$('#div_today').toggle();
+			var toggle_map =
+			[
+					{ Btn: "#toggle_today", Div:"#div_today",IsShow:false},
+					{ Btn: "#toggle_all", Div:"#div_all",IsShow:false},
+					{ Btn: "#toggle_add_webtoon", Div:"#div_input",IsShow:false},
+			]
 
-			});
-			$('#toggle_all').click(function(){
-				console.log('toggle_all');
-
-				$('#div_all').toggle();
-
-
-
-			});
-			$('#toggle_add_webtoon').click(function(){
-				console.log('toggle_all');
-
-				$('#div_input').toggle();
+			map_toggle_click(toggle_map);
+//			all_toggle_click('#toggle_all',toggle_map);
 
 
-
-			});
+			// $('#toggle_today').click(function(){
+			// 	console.log('toggle_today');
+			//
+			// 	$('#div_today').toggle();
+			//
+			// });
+			// $('#toggle_all').click(function(){
+			// 	console.log('toggle_all');
+			//
+			// 	$('#div_all').toggle();
+			//
+			//
+			//
+			// });
+			// $('#toggle_add_webtoon').click(function(){
+			// 	console.log('toggle_all');
+			//
+			// 	$('#div_input').toggle();
+			//
+			//
+			//
+			// });
 			$('#btn_add_webtoon').click(function(){
 				var id = $('#txt_id').val();
 				var date = $('#txt_date').val();
 				var title = $('#txt_title').val();
 
 				if(id == '' || title== '' ){
-					alert('값을 입력해 주세요')
+					alert('값을 입력해 주세요');
 					return;
 
 				}

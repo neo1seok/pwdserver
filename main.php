@@ -158,6 +158,8 @@ $curpage = getcurpage();
 					$('#div_add_link').hide();
 					$('#div_excute_shell').hide();
 
+
+
 					$('.class_del').click(function(){
 						console.log('class_del');
 						var link_id = `${this.id}_link`;
@@ -211,24 +213,33 @@ $curpage = getcurpage();
 
 					});
 
-					$('#toggle_link').click(function(){
-						console.log('toggle_link');
+          var toggle_map =
+          [
+              { Btn: "#toggle_link", Div:"#div_link",IsShow:false},
+              { Btn: "#toggle_add_link", Div:"#div_add_link",IsShow:false},
+              { Btn: "#toggle_excute", Div:"#div_excute_shell",IsShow:false},
+          ]
 
-						$('#div_link').toggle();
+          map_toggle_click(toggle_map);
 
-					});
-					$('#toggle_add_link').click(function(){
-						console.log('toggle_add_link');
-
-						$('#div_add_link').toggle();
-
-					});
-					$('#toggle_excute').click(function(){
-						console.log('toggle_excute');
-
-						$('#div_excute_shell').toggle();
-
-					});
+					// $('#toggle_link').click(function(){
+					// 	console.log('toggle_link');
+          //
+					// 	$('#div_link').toggle();
+          //
+					// });
+					// $('#toggle_add_link').click(function(){
+					// 	console.log('toggle_add_link');
+          //
+					// 	$('#div_add_link').toggle();
+          //
+					// });
+					// $('#toggle_excute').click(function(){
+					// 	console.log('toggle_excute');
+          //
+					// 	$('#div_excute_shell').toggle();
+          //
+					// });
 				});
 
 

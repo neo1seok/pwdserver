@@ -134,7 +134,9 @@ function setup_nav(sel_nav,sel_cont,map_container,active_sel_id){
   Links:[
     { Name: "MAIN", Link: window.location.origin +"/" ,Id:"nav_main"},
       { Name: "WEBTOON", Link: window.location.origin +"/webtoon/",Id:"nav_webtoon" },
+      { Name: "오늘의 정보", Link: window.location.origin +"/neocontents/",Id:"nav_contents" },
       { Name: "개인 PW정보", Link: window.location.origin +"/pwdserver/",Id:"nav_pwd" },
+
       // { Name: "MAIN", Link: window.location.origin +"/" },
       //   { Name: "WEBTOON", Link: window.location.origin +"/webtoon/" },
       //     { Name: "개인 PW정보", Link: window.location.origin +"/pwdserver/" },
@@ -146,6 +148,54 @@ function setup_nav(sel_nav,sel_cont,map_container,active_sel_id){
   $(sel_cont).append(get_container(map_container));
 
   $(active_sel_id).addClass( "active" );
+
+
+}
+function map_toggle_click(toggle_list_map) {
+  toggle_list_map.forEach(function (value, index, ar) {
+    $(value.Btn).click(function(){
+      console.log('toggle',value.Btn);
+        $(value.Div).toggle();
+
+    });
+
+  });
+}
+function all_toggle_click(btn,toggle_list_map) {
+  $(btn).click(function(){
+    console.log('all_toggle_click');
+    var isShowOne = false;
+    console.log(isShowOne);
+    toggle_list_map.forEach(function (value, index, ar) {
+      if($(value.Div).is(":visible")){
+        isShowOne = true;
+        return;
+      }
+      //#$(value.Div).toggle();
+    });
+    console.log(isShowOne);
+
+    if(isShowOne){
+      funct = function(div){
+        console.log(div,'hide');
+        $(div).hide();
+      }
+    }
+    else{
+      funct = function(div){
+        console.log(div,'show');
+        $(div).show();
+
+      }
+
+    }
+    toggle_list_map.forEach(function (value, index, ar) {
+      console.log(value.Div);
+      funct(value.Div);
+    });
+
+
+  });
 
 
 }

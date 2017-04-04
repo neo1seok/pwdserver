@@ -99,30 +99,20 @@ $list_contents = json_encode(QueryString2Map($sql));
 			var  map_container =
       { Header: "<?php echo $header; ?>", Discription: "이 페이지는 개인 정보를 저장하는 페이지 이다.",
         Links: [
-            { Name: "정보 입력>>", Link: "#" ,Id:"toggle_add_webtoon"},
-            { Name: "전체 목록>>", Link: "#" ,Id:"toggle_all"},
+            { Name: "입력>>", Link: "#" ,Id:"toggle_input"},
+            { Name: "전체 목록>>", Link: "#" ,Id:"toggle_list"},
+						{ Name: "정보>>", Link: "#" ,Id:"toggle_contents"},
+						{ Name: "전체토글>>", Link: "#" ,Id:"toggle_all"},
         ],
 
 
       };
 
 
-      setup_nav('#navi','#main_container',map_container,'#nav_webtoon');
 
 
 
-              var base_url = window.location.origin;
-
-      var host = window.location.host;
-
-      var pathArray = window.location.pathname.split( '/' );
-
-
-                console.log(base_url);
-                console.log( host);
-                console.log( pathArray);
-
-
+      setup_nav('#navi','#main_container',map_container,'#nav_contents');
       update_list(list_contents);
 
 			//$('#div_today').show();
@@ -130,171 +120,23 @@ $list_contents = json_encode(QueryString2Map($sql));
       $('#div_input').hide();
 			$('#div_contents').hide();
 
+			var toggle_map =
+			[
+					{ Btn: "#toggle_contents", Div:"#div_contents",IsShow:false},
+					{ Btn: "#toggle_list", Div:"#div_list",IsShow:false},
+					{ Btn: "#toggle_input", Div:"#div_input",IsShow:false},
+			]
+
+			map_toggle_click(toggle_map);
+			all_toggle_click('#toggle_all',toggle_map);
+
+			// $('#toggle_all').click(function(){
+			// 	all_toggle_click(toggle_map);
+			//
+		  // });
+
 			map_click();
 
-// 			$('#toggle_today').click(function(){
-// 				console.log('toggle_today');
-//
-// 				$('#div_today').toggle();
-//
-// 			});
-// 			$('#toggle_all').click(function(){
-// 				console.log('toggle_all');
-//
-// 				$('#div_all').toggle();
-//
-//
-//
-// 			});
-// 			$('#toggle_add_webtoon').click(function(){
-// 				console.log('toggle_all');
-//
-// 				$('#div_input').toggle();
-//
-//
-//
-// 			});
-// 			$('.cla_show').click(function(){
-// 				var id =this.id;
-// 				console.log('click cla_show',id);
-// 				var url = `dbupdate.php?option=get_contents&id=${id}`;
-// 				//var url = ``;
-// 				console.log(url);
-// 				$.get( url, function( data ) {
-// 					console.log('input result');
-// 					console.log(data);
-// 					var map_contents = JSON.parse(convert_to_safe_json_string(data));
-// 					console.log('input END');
-// 					if(map_contents.length == 0) return false;
-// 					console.log(map_contents[0].title);
-// 					$('#p_title').text(map_contents[0].title);
-// 					$('#p_issue').text(map_contents[0].issue);
-// 					$('#p_solution').text(map_contents[0].solution);
-//
-// 					$('#div_contents').show();
-// 					$('#div_input').hide();
-// 					//$('#div_contents').show();
-//
-// 				 });
-// 			});
-// 			$('.cla_del').click(function(){
-// 				var id = this.id;
-// 				console.log('click cla_del',id);
-// 				if(!confirm('정말로 삭제하시겠습니까?')) return false;
-//
-// 				$.get( `dbupdate.php?option=delete&id=${id}`, function( data ) {
-// 					console.log('input result');
-// 					console.log(data);
-// 					console.log('input END');
-// 					if( convert_to_safe_json_string(data) == 'OK'){
-// 						location.reload();
-// 						console.log('location.reload');
-//
-// 					}
-//
-// 				 });
-//
-// 			});
-// 			$('.cla_modify').click(function(){
-// 				var id = this.id;
-// 				console.log('click cla_modify',id);
-// 				var url = `dbupdate.php?option=get_contents&id=${id}`;
-// 				//var url = ``;
-// 				//var url = ``;
-// 				console.log(url);
-// 				$.get( url, function( data ) {
-// 					console.log('input result');
-// 					console.log(data);
-// 					var map_contents = JSON.parse(convert_to_safe_json_string(data));
-// 					console.log('input END');
-// 					if(map_contents.length == 0) return false;
-// 					console.log(map_contents[0].title);
-//
-//
-// 					$('#inputTitle').val(map_contents[0].title);
-// 					$('#inputIssue').val(map_contents[0].issue);
-// 					$('#inputSolution').val(map_contents[0].solution);
-// 					$('#inputId').val(map_contents[0].tdc_uid);
-//
-// 					$('#div_contents').hide();
-// 					$('#div_input').show();
-//
-//
-//
-// 				 });
-//
-// 			});
-// 			$('#input_new').click(function(){
-// 				console.log('click input_new');
-// 				$('#inputTitle').val("");
-// 				$('#inputIssue').val("");
-// 				$('#inputSolution').val("");
-// 				$('#inputId').val("");
-//
-// 				$('#div_contents').hide();
-// 				$('#div_input').show();
-//
-// 			});
-//
-//
-// 			$('#btnInput').click(function(){
-//
-// 				var inputTitle = $('#inputTitle').val();
-// 				var inputIssue = $('#inputIssue').val();
-// 				var inputSolution = $('#inputSolution').val();
-// 				var inputId =$('#inputId').val();
-//
-// 				if( inputTitle == '' ){
-// 					alert('값을 입력해 주세요');
-// 					return;
-// 				}
-//
-// 				var map_contents ={
-// 					Title:inputTitle,
-// 					Issue:inputIssue,
-// 					Solution:inputSolution,
-// 				}
-// 				var json_contents = JSON.stringify(map_contents)
-//
-// //				JSON.stringify(map_contents);
-//
-//
-//
-// 				var b64_contents = utf8_to_b64( json_contents );
-// 				console.log(json_contents);
-// 				console.log(inputTitle,inputIssue,inputSolution);
-// 				console.log(b64_contents);
-//
-// 				//alert('값을 입력해 주세요');
-// 			//	return;
-// 			 var url = `dbupdate.php?option=input&contents=${b64_contents}`;
-// 				if(inputId !="" ){
-// 						url = `dbupdate.php?option=modify&id=${inputId}&contents=${b64_contents}`;
-// 				}
-//
-//
-//
-// 				//var url = ``;
-// 				console.log(url);
-// 				if(!confirm('입력 하시겠습니까?')) return false;
-// 				$.get( url, function( data ) {
-// 					console.log('input result');
-// 					console.log(data);
-// 					console.log('input END');
-// 					if( convert_to_safe_json_string(data) == 'OK'){
-// 						location.reload();
-// 						console.log('location.reload');
-//
-// 					}
-//
-// 				 });
-// 				 return false; //<- 이 문장으로 새로고침(reload)이 방지됨
-//
-//
-//
-//
-// 			});
-// 			//div_input
 
     });
 
@@ -305,7 +147,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 
 
-		<div class="col-md-6" id='div_all' >
+		<div class="col-md-6" id='div_list' >
 			<h2>전체 리스트</h2>
 		<table id="table_today_all"  class="table table-striped">
 			<thead>
