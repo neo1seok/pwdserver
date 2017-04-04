@@ -81,4 +81,12 @@ $list_today_contents = QueryString2Map($sql);
 echo json_encode($list_today_contents);
 exit;
 }
+if($option == 'delete'){
+	$tdc_uid =getsaftyReq('id');// $_REQUEST['json'];
+	$sql = "delete FROM today_contents where tdc_uid = '$tdc_uid';";
+
+QueryString2Map($sql);
+echo "OK";
+exit;
+}
 echo "FAIL";
