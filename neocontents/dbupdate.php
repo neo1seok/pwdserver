@@ -18,8 +18,8 @@ if($option=='input' || $option=='modify'){
 	$title = $map_contents['Title'];
 	$issue = $map_contents['Issue'];
 	$solution = $map_contents['Solution'];
-
-	#echo $jsonmap;
+// echo $b64_contents;
+// 	echo $jsonmap;
 
 	// $title =getsaftyReq('title');// $_REQUEST['json'];
 	// $issue =getsaftyReq('issue');// $_REQUEST['json'];

@@ -108,10 +108,9 @@ var Base64 = {
 }
 
 function utf8_to_b64( str ) {
-  return window.btoa(unescape(encodeURIComponent( str )));
+  return window.btoa(unescape(encodeURIComponent( str ))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 function b64_to_utf8( str ) {
   return decodeURIComponent(escape(window.atob( str )));
 }
- 
