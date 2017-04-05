@@ -33,22 +33,47 @@ function map_click(){
     var url = `dbupdate.php?option=get_contents&id=${id}`;
     //var url = ``;
     console.log(url);
-    $.get( url, function( data ) {
-      console.log('input result');
-      console.log(data);
-      var map_contents = JSON.parse(convert_to_safe_json_string(data));
-      console.log('input END');
-      if(map_contents.length == 0) return false;
-      console.log(map_contents[0].title);
-      $('#p_title').text(map_contents[0].title);
-      $('#p_issue').text(map_contents[0].issue);
-      $('#p_solution').text(map_contents[0].solution);
+    $.ajax({
+    type: 'post',
+    dataType: 'json',
+    url: 'dbupdate.php',
+    data: {option:'get_contents', id:id},
+    success: function (data) {
+        console.log(data);
+        console.log(data.length);
+        var map_contents= data;
+        if(map_contents.length == 0) return false;
 
-      $('#div_contents').show();
-      $('#div_input').hide();
-      //$('#div_contents').show();
+        console.log(map_contents[0].title);
+        $('#p_title').text(map_contents[0].title);
+        $('#p_issue').text(map_contents[0].issue);
+        $('#p_solution').text(map_contents[0].solution);
 
-     });
+        $('#div_contents').show();
+        $('#div_input').hide();
+    },
+    error: function (request, status, error) {
+        console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+    }
+});
+
+    // $.get( url, function( data ) {
+    //   console.log('input result');
+    //   console.log(data);
+    //   var map_contents = JSON.parse(convert_to_safe_json_string(data));
+    //   console.log('input END');
+    //   if(map_contents.length == 0) return false;
+    //   console.log(map_contents[0].title);
+    //   $('#p_title').text(map_contents[0].title);
+    //   $('#p_issue').text(map_contents[0].issue);
+    //   $('#p_solution').text(map_contents[0].solution);
+    //
+    //   $('#div_contents').show();
+    //   $('#div_input').hide();
+    //   //$('#div_contents').show();
+    //
+    //  });
+
   });
   $('.cla_del').click(function(){
     var id = this.id;

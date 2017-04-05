@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once ("library.php"); // library.php 파일 포함
 
 

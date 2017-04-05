@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 
 $baseroot =$_SERVER['DOCUMENT_ROOT'];
