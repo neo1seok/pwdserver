@@ -164,7 +164,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 		</div>
 
-		<div  class="container" id="div_input">
+		<div  class="container" id="div_input" name="div_input">
 
 
 			<form class="form-signin">
@@ -187,7 +187,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 			</form>
 
 		</div> <!-- /container -->
-		<div  class="container" id="div_contents">
+		<div  class="container" id="div_contents" name="div_contents">
 			<article>
 				<!-- READ HEADER -->
 				<div class="read_header">

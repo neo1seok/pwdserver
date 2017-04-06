@@ -54,6 +54,7 @@ function map_click(){
 
         $('#div_contents').show();
         $('#div_input').hide();
+        $(location).attr('href', '#div_contents')
     },
     error: function (request, status, error) {
         console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
@@ -122,6 +123,7 @@ function map_click(){
 
           $('#div_contents').hide();
            $('#div_input').show();
+           $(location).attr('href', '#div_input')
       },
       error: function (request, status, error) {
           console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
