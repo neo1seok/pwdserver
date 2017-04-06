@@ -44,10 +44,13 @@ function map_click(){
         var map_contents= data;
         if(map_contents.length == 0) return false;
 
+        var issue = map_contents[0].issue.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        var solution = map_contents[0].solution.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
         console.log(map_contents[0].title);
         $('#p_title').text(map_contents[0].title);
-        $('#p_issue').text(map_contents[0].issue);
-        $('#p_solution').text(map_contents[0].solution);
+        $('#p_issue').html(issue);
+        $('#p_solution').html(solution);
 
         $('#div_contents').show();
         $('#div_input').hide();
@@ -100,26 +103,52 @@ function map_click(){
     //var url = ``;
     //var url = ``;
     console.log(url);
-    $.get( url, function( data ) {
-      console.log('input result');
-      console.log(data);
-      var map_contents = JSON.parse(convert_to_safe_json_string(data));
-      console.log('input END');
-      if(map_contents.length == 0) return false;
-      console.log(map_contents[0].title);
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: 'dbupdate.php',
+      data: {option:'get_contents', id:id},
+      success: function (data) {
+          console.log(data);
+          console.log(data.length);
+          var map_contents= data;
+          if(map_contents.length == 0) return false;
 
+          console.log(map_contents[0].title);
+          $('#inputTitle').val(map_contents[0].title);
+          $('#inputIssue').val(map_contents[0].issue);
+          $('#inputSolution').val(map_contents[0].solution);
+          $('#inputId').val(map_contents[0].tdc_uid);
 
-      $('#inputTitle').val(map_contents[0].title);
-      $('#inputIssue').val(map_contents[0].issue);
-      $('#inputSolution').val(map_contents[0].solution);
-      $('#inputId').val(map_contents[0].tdc_uid);
+          $('#div_contents').hide();
+           $('#div_input').show();
+      },
+      error: function (request, status, error) {
+          console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+      }
+    });
 
-      $('#div_contents').hide();
-      $('#div_input').show();
-
-
-
-     });
+    //
+    // $.get( url, function( data ) {
+    //   console.log('input result');
+    //   console.log(data);
+    //   var map_contents = JSON.parse(convert_to_safe_json_string(data));
+    //   console.log('input END');
+    //   if(map_contents.length == 0) return false;
+    //   console.log(map_contents[0].title);
+    //
+    //
+    //   $('#inputTitle').val(map_contents[0].title);
+    //   $('#inputIssue').val(map_contents[0].issue);
+    //   $('#inputSolution').val(map_contents[0].solution);
+    //   $('#inputId').val(map_contents[0].tdc_uid);
+    //
+    //   $('#div_contents').hide();
+    //   $('#div_input').show();
+    //
+    //
+    //
+    //  });
 
   });
   $('#input_new').click(function(){
