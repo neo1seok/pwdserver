@@ -84,17 +84,51 @@ function map_click(){
     console.log('click cla_del',id);
     if(!confirm('정말로 삭제하시겠습니까?')) return false;
 
-    $.get( `dbupdate.php?option=delete&id=${id}`, function( data ) {
-      console.log('input result');
-      console.log(data);
-      console.log('input END');
-      if( convert_to_safe_json_string(data) == 'OK'){
-        location.reload();
-        console.log('location.reload');
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: 'dbupdate.php',
+      data: {option:'delete',id:id},
+      success: function (data) {
+          console.log(data);
+          console.log(data.length);
+          var result= data;
+          if(result.RESULT != 'OK') {
+            return false;
+          }
 
+          location.reload();
+          console.log('location.reload');
+          //
+          // console.log(map_contents[0].title);
+          // $('#inputTitle').val(map_contents[0].title);
+          // $('#inputIssue').val(map_contents[0].issue);
+          // $('#inputSolution').val(map_contents[0].solution);
+          // $('#inputId').val(map_contents[0].tdc_uid);
+          //
+          // $('#div_contents').hide();
+          //  $('#div_input').show();
+          //  $(location).attr('href', '#div_input')
+      },
+      error: function (request, status, error) {
+          console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
       }
+    });
 
-     });
+
+
+
+    // $.get( `dbupdate.php?option=delete&id=${id}`, function( data ) {
+    //   console.log('input result');
+    //   console.log(data);
+    //   console.log('input END');
+    //   if( convert_to_safe_json_string(data) == 'OK'){
+    //     location.reload();
+    //     console.log('location.reload');
+    //
+    //   }
+    //
+    //  });
 
   });
   $('.cla_modify').click(function(){
