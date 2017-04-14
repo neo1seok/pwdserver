@@ -200,23 +200,62 @@ function map_click(){
     if(inputId !="" ){
         url = `dbupdate.php?option=modify&id=${inputId}&contents=${b64_contents}`;
     }
-
-
-
-    //var url = ``;
-    console.log(url);
+    var option = "input";
+    if(inputId !="" ){
+      var option = "modify";
+    }
+    console.log(option);
     if(!confirm('입력 하시겠습니까?')) return false;
-    $.get( url, function( data ) {
-      console.log('input result');
-      console.log(data);
-      console.log('input END');
-      if( convert_to_safe_json_string(data) == 'OK'){
-        location.reload();
-        console.log('location.reload');
 
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: 'dbupdate.php',
+      data: {option:option, contents:json_contents,id:inputId},
+      success: function (data) {
+          console.log(data);
+          console.log(data.length);
+          var result= data;
+          if(result.RESULT != 'OK') {
+            return false;
+          }
+
+          location.reload();
+          console.log('location.reload');
+          //
+          // console.log(map_contents[0].title);
+          // $('#inputTitle').val(map_contents[0].title);
+          // $('#inputIssue').val(map_contents[0].issue);
+          // $('#inputSolution').val(map_contents[0].solution);
+          // $('#inputId').val(map_contents[0].tdc_uid);
+          //
+          // $('#div_contents').hide();
+          //  $('#div_input').show();
+          //  $(location).attr('href', '#div_input')
+      },
+      error: function (request, status, error) {
+          console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
       }
+    });
 
-     });
+
+
+
+    //
+    // //var url = ``;
+    //
+    // $.get( url, function( data ) {
+    //   console.log('input result');
+    //   console.log(data);
+    //   console.log('input END');
+    //   if( convert_to_safe_json_string(data) == 'OK'){
+    //     location.reload();
+    //     console.log('location.reload');
+    //
+    //   }
+    //
+    //  });
+
      return false; //<- 이 문장으로 새로고침(reload)이 방지됨
 
 

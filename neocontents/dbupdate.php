@@ -4,13 +4,15 @@ require_once ("library.php"); // library.php 파일 포함
 header("Content-Type:application/json");
 
 $option = getsaftyReq('option');
+$result = array('RESULT' => 'OK');
 if($option=='input' || $option=='modify'){
 
 	#header('Content-Type: text/plain; charset=utf-8');
 	$id =getsaftyReq('id');// $_REQUEST['json'];
-	$b64_contents =getsaftyReq('contents');// $_REQUEST['json'];
+	#$b64_contents =getsaftyReq('contents');// $_REQUEST['json'];
+	$jsonmap =getsaftyReq('contents');// $_REQUEST['json'];
 	//echo $b64_contents;
-	$jsonmap = base64_url_decode($b64_contents);
+	#$jsonmap = base64_url_decode($b64_contents);
 
 	$map_contents = json_decode($jsonmap,TRUE);
 
@@ -26,8 +28,6 @@ if($option=='input' || $option=='modify'){
 	// $issue =getsaftyReq('issue');// $_REQUEST['json'];
 	// $solution =getsaftyReq('solution');// $_REQUEST['json'];
 	// #$jsonmap = base64_decode($jsonmap);
-
-
 
 
 	if($option=='modify'){
@@ -55,11 +55,12 @@ if($option=='input' || $option=='modify'){
 
 $list_today_contents = QueryString2Map($sql);
 
+
 if( count($list_today_contents) ==0){
-		echo "FAIL";//
-		exit;
+	$result = array('RESULT' => 'FAIL','REASON'=>"NOT ISERTED DB $sql");
+		//echo "FAIL";//
 }
-echo "OK";//
+echo json_encode($result);
 //echo 'test';
 //echo $todaywebtoonMap;
 #echo json_encode($list_today_contents);
@@ -92,8 +93,10 @@ if($option == 'delete'){
 	$sql = "delete FROM today_contents where tdc_uid = '$tdc_uid';";
 
 QueryString2Map($sql);
-echo "OK";
+
+echo json_encode($result);
 exit;
 }
-echo "FAIL";
+$result = array('RESULT' => 'FAIL','REASON'=>'NO OPTION');
+echo json_encode($result);
 ?>
