@@ -3,7 +3,7 @@ require_once ("library.php"); // library.php 파일 포함
 
 $header = '오늘의 정보';
 
-$sql = "SELECT tdc_uid, title FROM today_contents;";
+$sql = "SELECT tdc_uid, title ,updt_date FROM today_contents order by updt_date desc;";
 $list_contents = json_encode(QueryString2Map($sql));
 
 
@@ -84,6 +84,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 			list_contents.forEach(function(item, index){
 					$('#table_today_all tbody').append(`<tr>
 						<th><a href="#" class='cla_show' id='${item.tdc_uid}'>${item.title}</a></th>
+            <th>${item.updt_date}</th>
 						<th><a href="#" class='cla_modify' id='${item.tdc_uid}'>수정</a> </th>
 						<th><a href="#" class='cla_del' id='${item.tdc_uid}'>삭제</a> </th>
 						</tr>`);
@@ -94,7 +95,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 
     $(function() {
-      console.log('ready');
+      console.log('ready 1');
 
 			var  map_container =
       { Header: "<?php echo $header; ?>", Discription: "이 페이지는 개인 정보를 저장하는 페이지 이다.",
@@ -153,6 +154,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 			<thead>
 				<tr>
 					<th>제목</th>
+          <th>날짜</th>
 					<th width=10>수정</th>
 					<th width=10>삭제</th>
 				</tr>
