@@ -97,6 +97,6 @@ QueryString2Map($sql);
 echo json_encode($result);
 exit;
 }
-$result = array('RESULT' => 'FAIL','REASON'=>'NO OPTION');
+$result = array('RESULT' => 'FAIL','REASON'=>'NO OPTION','test'=>'테스트');
 echo json_encode($result);
 ?>

@@ -1,7 +1,7 @@
 <meta charset="utf-8" />
 
 <?php
- include("library.php");  // library.php ÆÄÀÏ Æ÷ÇÔ
+ include("library.php");  // library.php ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
   checkSession();
 
 
@@ -16,8 +16,11 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['user_name'])) {
 	//echo "content='0;url=login.php?rebackurl=\"".$rebackurl."\"";
 	exit;
 }
-
-$mapresult = QueryString2Map("SELECT pwd_uid FROM passwd where site like '%$keyword%';");
+echo '$sql';
+$sql = "SELECT pwd_uid FROM passwd where site regexp '$keyword';";
+echo $sql;
+pnl() ;
+$mapresult = QueryString2Map($sql);
 $uids = array();
 
 foreach ($mapresult as $k => $v){
@@ -26,7 +29,7 @@ foreach ($mapresult as $k => $v){
 }
 
 $strarrays = join(',', $uids);
-echo $strarrays; 
+echo $strarrays;
 $url = "showlist.php?uids=$strarrays";
 echo $url;
 pagego($url);
@@ -36,5 +39,3 @@ pagego($url);
 
 
 ?>
-
-

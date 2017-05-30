@@ -3,7 +3,7 @@ require_once("library.php");  // library.php 파일 포함
 //defMeta();
 setHome("");
 
-$maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_date, comment FROM fav_link;");
+$maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_date, comment FROM fav_link order by seq;");
 // $list_aa = array();
 //
 // foreach ($maplist as $map){
