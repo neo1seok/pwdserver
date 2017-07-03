@@ -1,6 +1,36 @@
 
 
 
+function mainController($scope, $window) {
+ console.log('myApp');
+ console.log('chipInit',$window.list_contents);;
+ $scope.list_contents = $window.list_contents
+$scope.bodyInit= function() {
+
+
+
+}
+$scope.get_contents= function(tdc_uid) {
+
+console.log('get_contents',tdc_uid);
+
+}
+$scope.modify= function(tdc_uid) {
+
+console.log('modify',tdc_uid);
+
+
+
+}
+$scope.delete= function(tdc_uid) {
+
+console.log('delete',tdc_uid);
+
+}
+
+};
+
+
 
 function map_click(){
   //

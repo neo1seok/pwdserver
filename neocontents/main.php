@@ -25,7 +25,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 		<!-- 부가적인 테마 -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
     <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
@@ -59,7 +59,10 @@ $list_contents = json_encode(QueryString2Map($sql));
   </head>
 </head>
 
-<body>
+
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
+
+
 
 
 
@@ -69,29 +72,35 @@ $list_contents = json_encode(QueryString2Map($sql));
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 		<script src="../comm/js/util.js"></script>
 		<script src="../comm/js/base64.js"></script>
 		<script src="js/main.js"></script>
 
     <script type="text/javascript">
+    window.str_list_contents = `<?php echo $list_contents; ?>`;
+    window.list_contents = JSON.parse(convert_to_safe_json_string(window.str_list_contents));
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window',mainController]);
 
 
-		var str_list_contents = `<?php echo $list_contents; ?>`;
-		console.log(convert_to_safe_json_string(str_list_contents));
-		var list_contents = JSON.parse(convert_to_safe_json_string(str_list_contents));
-		function update_list(list_contents) {
-			list_contents.forEach(function(item, index){
-					$('#table_today_all tbody').append(`<tr>
-						<th><a href="#" class='cla_show' id='${item.tdc_uid}'>${item.title}</a></th>
-            <th>${item.updt_date}</th>
-						<th><a href="#" class='cla_modify' id='${item.tdc_uid}'>수정</a> </th>
-						<th><a href="#" class='cla_del' id='${item.tdc_uid}'>삭제</a> </th>
-						</tr>`);
 
-
-			})
-		}
+    //
+		// var str_list_contents = `<?php echo $list_contents; ?>`;
+		// console.log(convert_to_safe_json_string(str_list_contents));
+		// var list_contents = JSON.parse(convert_to_safe_json_string(str_list_contents));
+		// function update_list(list_contents) {
+		// 	list_contents.forEach(function(item, index){
+		// 			$('#table_today_all tbody').append(`<tr>
+		// 				<th><a href="#" class='cla_show' id='${item.tdc_uid}'>${item.title}</a></th>
+    //         <th>${item.updt_date}</th>
+		// 				<th><a href="#" class='cla_modify' id='${item.tdc_uid}'>수정</a> </th>
+		// 				<th><a href="#" class='cla_del' id='${item.tdc_uid}'>삭제</a> </th>
+		// 				</tr>`);
+    //
+    //
+		// 	})
+		// }
 
 
     $(function() {
@@ -114,7 +123,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 
       setup_nav('#navi','#main_container',map_container,'#nav_contents');
-      update_list(list_contents);
+      //update_list(list_contents);
 
 			//$('#div_today').show();
 			//$('#div_all').hide();
@@ -160,6 +169,19 @@ $list_contents = json_encode(QueryString2Map($sql));
 				</tr>
 			</thead>
 			<tbody>
+        <tr ng-repeat="contents in list_contents">
+        <td>
+          <button class="w3-btn w3-ripple" ng-click="get_contents(contents.tdc_uid)">&#9998; {{contents.title }}</button>
+        </td>
+         <td>{{ contents.updt_date }}</td>
+        <td>
+          <button class="w3-btn w3-ripple" ng-click="modify(contents.tdc_uid)">&#9998;수정</button>
+        </td>
+        <td>
+          <button class="w3-btn w3-ripple" ng-click="delete(contents.tdc_uid)">&#9998; 삭제</button>
+        </td>
+      </tr>
+
 		 </tbody>
 		</table>
 		<a id="input_new" href="#">새로운 글 입력 </a>
