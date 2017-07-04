@@ -1,32 +1,258 @@
 
 
 
-function mainController($scope, $window) {
+function mainController($scope, $window,$http) {
  console.log('myApp');
  console.log('chipInit',$window.list_contents);;
  $scope.list_contents = $window.list_contents
+ $scope.shwoContents = false;
+ $scope.warning = "";
+ $scope.msg = "";
+ $scope.contents_title = "Insert New CONTENTS:";
+$scope.check_save = false;
+$scope.showlist = true ;
+ console.log($scope.shwoContents);
 $scope.bodyInit= function() {
 
 
 
 }
-$scope.get_contents= function(tdc_uid) {
+$scope.editContents= function(tdc_uid) {
 
-console.log('get_contents',tdc_uid);
+console.log('get_contents 23',tdc_uid);
+$scope.uid = tdc_uid;
+
+$http.post('dbupdate.php', $.param({option:'get_contents', id:tdc_uid}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+//$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
+  .then(function (response) {
+    console.log('get_contents');
+    console.log(response.data);
+
+    var map_contents= response.data;
+    if(map_contents.length == 0) return false;
+
+
+    $scope.title = map_contents[0].title;
+    $scope.issue=map_contents[0].issue;
+    $scope.solution=map_contents[0].solution;
+    $scope.shwoContents = true;
+    $scope.showlist = false;
+
+
+  },function errorCallback(response) {
+    $scope.warning = response.status;
+  }
+);
+
+
 
 }
-$scope.modify= function(tdc_uid) {
+// $scope.modify= function(tdc_uid) {
+//
+// console.log('modify',tdc_uid);
+//
+// var id = tdc_uid;
+//
+//
+// $.ajax({
+//   type: 'post',
+//   dataType: 'json',
+//   url: 'dbupdate.php',
+//   data: {option:'get_contents', id:id},
+//   success: function (data) {
+//       console.log(data);
+//       console.log(data.length);
+//
+//   },
+//   error: function (request, status, error) {
+//       console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+//   }
+// });
+//
+//
+//
+// }
 
-console.log('modify',tdc_uid);
 
-
+$scope.editable= function(tdc_uid) {
+  console.log('editable',$scope.check_save);
+//  $scope.edit = $scope.check_save;
 
 }
 $scope.delete= function(tdc_uid) {
 
 console.log('delete',tdc_uid);
 
+var id = tdc_uid;
+
+if(!confirm('정말로 삭제하시겠습니까?')) return false;
+
+$.ajax({
+  type: 'post',
+  dataType: 'json',
+  url: 'dbupdate.php',
+  data: {option:'delete',id:id},
+  success: function (data) {
+      console.log(data);
+      console.log(data.length);
+      var result= data;
+      if(result.RESULT != 'OK') {
+        return false;
+      }
+
+      location.reload();
+      console.log('location.reload');
+      //
+      // console.log(map_contents[0].title);
+      // $('#inputTitle').val(map_contents[0].title);
+      // $('#inputIssue').val(map_contents[0].issue);
+      // $('#inputSolution').val(map_contents[0].solution);
+      // $('#inputId').val(map_contents[0].tdc_uid);
+      //
+      // $('#div_contents').hide();
+      //  $('#div_input').show();
+      //  $(location).attr('href', '#div_input')
+  },
+  error: function (request, status, error) {
+      console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+  }
+});
+
 }
+
+$scope.newcontents= function() {
+
+  console.log('newcontents');
+  $scope.shwoContents = true;
+  $scope.check_save = true;
+  $scope.uid = '';
+  $scope.title = '';
+  $scope.issue= '';
+  $scope.solution= '';
+  $scope.showlist = false;
+
+
+
+}
+
+$scope.save= function() {
+
+  console.log('save');
+  // $scope.shwoContents = true;
+  // $scope.check_save = true;
+  // $scope.uid = '';
+  // $scope.title = '';
+  // $scope.issue= '';
+  // $scope.solution= '';
+  //
+  //
+
+  var inputTitle = $scope.title;
+  var inputIssue = $scope.issue;
+  var inputSolution = $scope.solution;
+  var inputId =$scope.uid;
+
+  if( inputTitle == '' ){
+    alert('값을 입력해 주세요');
+    return;
+  }
+
+  var map_contents ={
+    Title:inputTitle,
+    Issue:inputIssue,
+    Solution:inputSolution,
+  }
+  var json_contents = JSON.stringify(map_contents)
+
+//				JSON.stringify(map_contents);
+
+
+
+  var b64_contents = utf8_to_b64( json_contents );
+  console.log(json_contents);
+  console.log(inputTitle,inputIssue,inputSolution);
+  console.log(b64_contents);
+
+  var option = "input";
+  if(inputId !="" ){
+    var option = "modify";
+  }
+  console.log(option);
+  if(!confirm('입력 하시겠습니까?')) return false;
+
+  $.ajax({
+    type: 'post',
+    dataType: 'json',
+    url: 'dbupdate.php',
+    data: {option:option, contents:json_contents,id:inputId},
+    success: function (data) {
+        console.log(data);
+        console.log(data.length);
+        var result= data;
+        if(result.RESULT != 'OK') {
+          return false;
+        }
+
+        location.reload();
+        console.log('location.reload');
+        //
+        // console.log(map_contents[0].title);
+        // $('#inputTitle').val(map_contents[0].title);
+        // $('#inputIssue').val(map_contents[0].issue);
+        // $('#inputSolution').val(map_contents[0].solution);
+        // $('#inputId').val(map_contents[0].tdc_uid);
+        //
+        // $('#div_contents').hide();
+        //  $('#div_input').show();
+        //  $(location).attr('href', '#div_input')
+    },
+    error: function (request, status, error) {
+        console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+    }
+  });
+
+
+
+
+
+
+
+}
+
+$scope.toggle= function(id) {
+  console.log('toggle',id);
+
+
+  switch(id) {
+    case 'toggle_input':
+    console.log('1');
+      $scope.shwoContents = !$scope.shwoContents;
+
+        break;
+    case 'toggle_list':
+        console.log('2');
+        $scope.showlist = !$scope.showlist;
+        break;
+    case 'toggle_all':
+      console.log('3');
+      if( $scope.shwoContents || $scope.showlist){
+        $scope.shwoContents = false;
+        $scope.showlist = false;
+
+      }
+      else{
+        $scope.shwoContents = true;
+        $scope.showlist = true;
+      }
+
+        break;
+    default:
+
+}
+
+}
+
+
 
 };
 
