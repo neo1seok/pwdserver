@@ -205,6 +205,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 		</div>
     <button class="w3-btn w3-green w3-ripple"  ng-click="newcontents()" >&#10004;  새 글쓰기</button>
+    <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button>
 
     <form ng-show="shwoContents" class="w3-container" id="div_input" name="div_input">
       <h3>{{contents_title}}</h2>
@@ -242,6 +243,8 @@ $list_contents = json_encode(QueryString2Map($sql));
       <br>
       <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
       <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="save()" >&#10004; SAVE</button>
+      <br>
+
 
 
       </form>

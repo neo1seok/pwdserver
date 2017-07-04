@@ -4,6 +4,8 @@ require_once ("library.php"); // library.php 파일 포함
 header("Content-Type:application/json");
 
 $option = getsaftyReq('option');
+//echo ' 23';
+//echo "<script>console.log( 'Debug Objects: " . $option . "' );</script>";
 $result = array('RESULT' => 'OK');
 if($option=='input' || $option=='modify'){
 
@@ -21,6 +23,17 @@ if($option=='input' || $option=='modify'){
 	$title = $map_contents['Title'];
 	$issue = $map_contents['Issue'];
 	$solution = $map_contents['Solution'];
+	// echo '24';
+	// echo "'";
+	// echo "\\'";
+	// echo $issue;
+	$title = str_replace("'","\\'",$title);
+	$issue = str_replace("'","\\'",$issue);
+	$solution = str_replace("'","\\'",$solution);
+	// echo $issue;
+
+
+
 // echo $b64_contents;
 // 	echo $jsonmap;
 
@@ -48,8 +61,30 @@ if($option=='input' || $option=='modify'){
 		VALUES ($seq_today_contents, '$tdc_uid', '$title', '$issue','$solution','', now(), now(), '');";
 
 	}
-	QueryString($sql);
 
+
+	//QueryString($sql);
+
+
+	try
+	{
+	    QueryString($sql);
+	}
+	catch(Exception $e)
+	{
+	    $s = $e->getMessage() . ' (오류코드:' . $e->getCode() . ')';
+			$result = array('RESULT' => 'FAIL','REASON'=>"SQL erro: $sql $s");
+			echo json_encode($result);
+			//echo 'test';
+			//echo $todaywebtoonMap;
+			#echo json_encode($list_today_contents);
+
+
+
+
+				exit;
+
+	}
 	$sql = "SELECT seq  ,tdc_uid  ,title  ,issue  ,solution  ,etc  ,updt_date  ,reg_date  ,comment
 	FROM today_contents where tdc_uid = '$tdc_uid';";
 

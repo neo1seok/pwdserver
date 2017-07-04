@@ -134,6 +134,20 @@ $scope.newcontents= function() {
 
 
 }
+$scope.test= function() {
+
+  console.log('newcontents');
+  $scope.shwoContents = true;
+  $scope.check_save = true;
+  $scope.uid = '';
+  $scope.title = 'aaaaaaaaaa2';
+  $scope.issue= 'aaaaaaaaaaa \'aaaaaaaaaaaaaaa ';
+  $scope.solution= '';
+  $scope.showlist = false;
+
+
+
+}
 
 $scope.save= function() {
 
@@ -173,6 +187,12 @@ $scope.save= function() {
   console.log(inputTitle,inputIssue,inputSolution);
   console.log(b64_contents);
 
+  var url = `dbupdate.php?option=input&contents=${json_contents}`;
+   if(inputId !="" ){
+       url = `dbupdate.php?option=modify&id=${inputId}&contents=${b64_contents}`;
+   }
+   console.log(url);
+
   var option = "input";
   if(inputId !="" ){
     var option = "modify";
@@ -180,36 +200,60 @@ $scope.save= function() {
   console.log(option);
   if(!confirm('입력 하시겠습니까?')) return false;
 
-  $.ajax({
-    type: 'post',
-    dataType: 'json',
-    url: 'dbupdate.php',
-    data: {option:option, contents:json_contents,id:inputId},
-    success: function (data) {
-        console.log(data);
-        console.log(data.length);
-        var result= data;
-        if(result.RESULT != 'OK') {
-          return false;
-        }
+  // $.ajax({
+  //   type: 'post',
+  //   dataType: 'json',
+  //   url: 'dbupdate.php',
+  //   data: {option:option, contents:json_contents,id:inputId},
+  //   success: function (data) {
+  //       console.log('save result');
+  //       console.log(data);
+  //       console.log(data.length);
+  //       var result= data;
+  //       if(result.RESULT != 'OK') {
+  //         return false;
+  //       }
+  //
+  //       location.reload();
+  //       console.log('location.reload');
+  //       //
+  //       // console.log(map_contents[0].title);
+  //       // $('#inputTitle').val(map_contents[0].title);
+  //       // $('#inputIssue').val(map_contents[0].issue);
+  //       // $('#inputSolution').val(map_contents[0].solution);
+  //       // $('#inputId').val(map_contents[0].tdc_uid);
+  //       //
+  //       // $('#div_contents').hide();
+  //       //  $('#div_input').show();
+  //       //  $(location).attr('href', '#div_input')
+  //   },
+  //   error: function (request, status, error) {
+  //     console.log('save error');
+  //       console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+  //       $scope.Warning = 'code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error;
+  //   }
+  // });
 
-        location.reload();
-        console.log('location.reload');
-        //
-        // console.log(map_contents[0].title);
-        // $('#inputTitle').val(map_contents[0].title);
-        // $('#inputIssue').val(map_contents[0].issue);
-        // $('#inputSolution').val(map_contents[0].solution);
-        // $('#inputId').val(map_contents[0].tdc_uid);
-        //
-        // $('#div_contents').hide();
-        //  $('#div_input').show();
-        //  $(location).attr('href', '#div_input')
-    },
-    error: function (request, status, error) {
-        console.log('code: '+request.status+"\n"+'message: '+request.responseText+"\n"+'error: '+error);
+  $http.post('dbupdate.php', $.param({option:option, contents:json_contents,id:inputId}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+  //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
+    .then(function (response) {
+      console.log('save result');
+      console.log(response.data);
+      console.log(response.data.length);
+      var result= response.data;
+      if(result.RESULT != 'OK') {
+        return false;
+      }
+
+      location.reload();
+      console.log('location.reload');
+
+
+    },function errorCallback(response) {
+      console.log('response',response);
+      $scope.warning = response;
     }
-  });
+  );
 
 
 
