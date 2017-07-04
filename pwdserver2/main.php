@@ -1,13 +1,17 @@
 <?php
 require_once ("library.php"); // library.php 파일 포함
 
-checkSession();
-$header = '패스워드 정보';
 
-#$sql = "SELECT tdc_uid, title ,updt_date FROM today_contents order by updt_date desc;";
-$incondition = '';
-$sql = "SELECT pwd_uid,site, B.title as header,ptail as tail ,B.phd_uid FROM passwd A,pheader B where A.phd_uid = B.phd_uid $incondition;";
-$list_contents = json_encode(QueryString2Map($sql));
+startSession();
+setSession('TEST1','TEST2');
+
+$page_state = get_login_state('PWD');
+if($page_state != "OK"){
+
+}
+$user_id = getsaftySession('user_id');
+$user_name = getsaftySession('user_name');
+$header = '개인 PWD 정보';
 
 
 ?>
@@ -28,6 +32,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 		<!-- 부가적인 테마 -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
@@ -58,11 +63,18 @@ $list_contents = json_encode(QueryString2Map($sql));
 		 display: inline;
 		 padding: 0 10px;
 		}
+
+    .login_short {
+    width: 100px;
+    }
 		</style>
   </head>
 </head>
 
-<body>
+
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
+
+
 
 
 
@@ -72,42 +84,28 @@ $list_contents = json_encode(QueryString2Map($sql));
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 		<script src="../comm/js/util.js"></script>
 		<script src="../comm/js/base64.js"></script>
-		<script src="js/main.js"></script>
-    <script 		src="js/util.js" type="text/javascript"></script>
-    <script 		src="js/company.js" type="text/javascript"></script>
+		<script src="js/pwdserver.js"></script>
 
     <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
 
+    window.page_state = "<?php echo $page_state; ?>";
+    window.user_id =  "<?php echo $user_id; ?>";
+    window.user_name =  "<?php echo $user_name; ?>";
 
-		var str_list_contents = `<?php echo $list_contents; ?>`;
-		console.log(convert_to_safe_json_string(str_list_contents));
-		var list_contents = JSON.parse(convert_to_safe_json_string(str_list_contents));
-		function update_list(list_contents) {
-			list_contents.forEach(function(item, index){
-					$('#table_today_all tbody').append(`<tr>
-						<th><a href="#" class='cla_site' id='${item.pwd_uid}'>${item.site}</a></th>
-            <th>${item.header}</th>
-            <th>${item.tail}</th>
-						</tr>`);
-
-
-			})
-		}
 
 
     $(function() {
       console.log('ready 1');
 
+
 			var  map_container =
       { Header: "<?php echo $header; ?>", Discription: "이 페이지는 개인 정보를 저장하는 페이지 이다.",
         Links: [
-            { Name: "입력>>", Link: "#" ,Id:"toggle_input"},
-            { Name: "전체 목록>>", Link: "#" ,Id:"toggle_list"},
-						{ Name: "정보>>", Link: "#" ,Id:"toggle_contents"},
-						{ Name: "전체토글>>", Link: "#" ,Id:"toggle_all"},
         ],
 
 
@@ -117,13 +115,13 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 
 
-      setup_nav('#navi','#main_container',map_container,'#nav_contents');
-      update_list(list_contents);
+      setup_nav('#navi','',map_container,'#nav_contents');
+      //update_list(list_contents);
 
 			//$('#div_today').show();
 			//$('#div_all').hide();
-      $('#div_input').hide();
-			$('#div_contents').hide();
+      // $('#div_input').hide();
+			// $('#div_contents').hide();
 
 			var toggle_map =
 			[
@@ -132,88 +130,136 @@ $list_contents = json_encode(QueryString2Map($sql));
 					{ Btn: "#toggle_input", Div:"#div_input",IsShow:false},
 			]
 
-			map_toggle_click(toggle_map);
-			all_toggle_click('#toggle_all',toggle_map);
+      $('#toggle_input').attr("ng-click","toggle('toggle_input')")
+
+
+
+
+
+			// map_toggle_click(toggle_map);
+			// all_toggle_click('#toggle_all',toggle_map);
 
 			// $('#toggle_all').click(function(){
 			// 	all_toggle_click(toggle_map);
 			//
 		  // });
 
-			map_click();
+			//map_click();
 
 
     });
 
 
     </script>
+
+
+
     <div id = 'navi'></div>
-    <div id = 'main_container'></div>
+    <div class="jumbotron">
+    <div class="container">
+          <br>
+            <h1>개인 PW 정보</h1>
+            <p>{{discription}}</p>
+            <p>
+            <a class="btn btn-info btn-lg" id="toggle_list" href="#" ng-click="toggle('toggle_list')">전체 목록 &gt;&gt;</a>
+            </p>
+          </div>
+    </div>
+
+    <!-- <a class="btn btn-info btn-lg" id='toggle_input' href="#" ng-click="toggle('toggle_input')">입력&gt;&gt;</a>
+
+    <a class="btn btn-info btn-lg" id="toggle_input" href="#" ng-click="toggle('toggle_input')">입력2&gt;&gt;</a> -->
+    <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button>
+    <form class="w3-container" id="search" name="search">
+      <input class="w3-input w3-border" type="text" ng-model="keyword"  placeholder="KEYWORD">
+      <button class="w3-btn w3-green w3-ripple" ng-click="find()" >&#10004; 검색</button>
+    </form>
 
 
-
-		<div class="col-md-6" id='div_list' >
-			<h2>전체 리스트</h2>
+		<div class="col-md-6" id='div_list' ng-show='showlist'>
+			<h2>리스트</h2>
 		<table id="table_today_all"  class="table table-striped">
 			<thead>
 				<tr>
 					<th>사이트</th>
-					<th width=10>헤더이름</th>
-					<th width=10>태일이름</th>
+          <th>헤더이름</th>
+					<th >테일이름</th>
 				</tr>
 			</thead>
 			<tbody>
+        <tr ng-repeat="(key,contents) in map_list_contents">
+        <td>
+          <button class="w3-btn w3-ripple" ng-click="editContents(key)">&#9998; {{contents.site }}</button>
+        </td>
+         <td>{{ contents.ptail }}</td>
+        <td>{{ contents.title }}</td>
+
+      </tr>
+
 		 </tbody>
 		</table>
-		<a id="input_new" href="#">새로운 글 입력 </a>
+
 
 		</div>
 
-		<div  class="container" id="div_input" name="div_input">
 
-      <h1>GIANT 2 회사 정보 입력</h1>
+    <button class="w3-btn w3-green w3-ripple"  ng-click="newcontents()" >&#10004;  새 글쓰기</button>
+    <br>
+    <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button> -->
 
-        <div class="">
-        <button type="button" id='generate' class="btn btn-lg btn-primary">샘플 발생</button>
-        </div>
-
-        <form id ='factorykey_form' name = 'default_form'>
-          <div class="form-group"></div>
-
-        </form>
-        <form id ='default_form' name = 'default_form'>
-          <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">회사 선택
-          <span class="caret"></span></button>
-          <ul class="dropdown-menu" id = 'company_no_select'>
-          </ul>
-          </div>
-
-          <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">FACTORY KEY ID 선택
-          <span class="caret"></span></button>
-          <ul class="dropdown-menu" id = 'factory_key_id_select'>
-          </ul>
-        </div>
-
-        </form>
-        <form id ='url_form' name = 'reg_form'>
-          <div class="form-group"></div>
-
-        </form>
-
-		</div> <!-- /container -->
-		<div  class="container" id="div_search" name="div_search">
-      <form class="form-signin">
-				<h2 class="form-signin-heading">컨텐츠 검색</h2>
-				<input type="hidden" id="inputId" class="form-control" value="">
-				<label for="inputTitle" class="sr-only">Title</label>
-				<input type="text" id="inputTitle" class="form-control" placeholder="Title" required autofocus>
-				<button id=btnSearch class="btn btn-lg btn-primary btn-block" >입력</button>
-			</form>
+  <form ng-show="shwoContents" class="w3-container" id="div_input" name="div_input">
+    <h3>{{contents_title}}</h3>
 
 
-		</div> <!-- /container -->
+     <table class="table table-striped">
+       <tr><td width=100> pwd_uid </td><td><input class="login_short"  type="text" ng-model="pwd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
+       <tr><td> site </td><td><input  class="w3-input w3-border" type="text" ng-model="site" ng-disabled="true" placeholder="site"></td></tr>
+       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="edit" ng-options="value for value in list_header"></select></td></tr>
+       <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></td></tr>
+       <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="true" placeholder="id"></td></tr>
+       <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="issue" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
+
+
+     </table>
+
+     <button class="w3-btn w3-green w3-ripple" ng-click="update()" >&#10004; UPDATE</button>
+
+     <!-- <label>ptail:   <input class="login_short"  type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></label><br/>
+     <label>id:   <input class="login_short"  type="text" ng-model="id" ng-disabled="true" placeholder="id"></label><br/>
+     <label>etc:   <input class="login_short"  type="text" ng-model="etc" ng-disabled="true" placeholder="etc"></label><br/> -->
+
+
+
+  </form>
+
+
+    <form ng-show="shwoLogin" class="w3-container" id="div_input" name="div_input">
+      <h3>LOG IN</h2>
+        <label>ID</label>
+        <input class="w3-input w3-border" type="text" ng-model="id"  placeholder="ID">
+      <br>
+      <label>PASSWD</label>
+      <input class="w3-input w3-border" type="text" ng-model="passwd" placeholder="PASSWD">
+    <br>
+
+      <br>
+      <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
+      <button class="w3-btn w3-green w3-ripple" ng-click="login()" >&#10004; LOGIN</button>
+      <br>
+
+
+
+      </form>
+
+      <div class="alert alert-success" ng-hide="msg == ''">
+       <strong>MSG</strong> {{msg}}
+      </div>
+
+      <div class="alert alert-danger" ng-hide="warning == ''">
+       <strong>Warning!</strong> {{warning}}
+     </div>
+
+
 
 </body>
 </html>

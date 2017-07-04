@@ -1,5 +1,9 @@
 <?php
 require_once("../comm/library.php");  // library.php 파일 포함
+
+
+
+
 function checkSession(){
 	checkSessionCatagory('PWD');
 }
@@ -25,7 +29,7 @@ function defLink(){
 			"매인화면"=>"main.php",
 			"BACK"=> "javascript:history.back()",
 			"로그아웃"=> "login.php?option=logout",
-				
+
 	);
 
 	MakeLink($maparray);
@@ -56,4 +60,4 @@ function processNoresult($title){
 
 }
 
-?>	
+?>

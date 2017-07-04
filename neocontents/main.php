@@ -192,13 +192,13 @@ $list_contents = json_encode(QueryString2Map($sql));
 			</thead>
 			<tbody>
         <tr ng-repeat="contents in list_contents">
-        <td>
+        <th>
           <button class="w3-btn w3-ripple" ng-click="editContents(contents.tdc_uid)">&#9998; {{contents.title }}</button>
-        </td>
-         <td>{{ contents.updt_date }}</td>
-        <td>
+        </th>
+         <th>{{ contents.updt_date }}</th>
+        <th>
           <button class="w3-btn w3-ripple" ng-click="delete(contents.tdc_uid)">&#9998; 삭제</button>
-        </td>
+        </th>
       </tr>
 
 		 </tbody>
