@@ -162,6 +162,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 
     <div id = 'navi'></div>
+    <div class="jumbotron">
     <div class="container">
           <br>
             <h1>오늘의 정보</h1>
@@ -171,6 +172,7 @@ $list_contents = json_encode(QueryString2Map($sql));
             <a class="btn btn-info btn-lg" id="toggle_all" href="#" ng-click="toggle('toggle_all')" >전체토글&gt;&gt;</a>
             </p>
           </div>
+    </div>
 
     <!-- <a class="btn btn-info btn-lg" id='toggle_input' href="#" ng-click="toggle('toggle_input')">입력&gt;&gt;</a>
 
