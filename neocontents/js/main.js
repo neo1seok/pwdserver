@@ -11,7 +11,7 @@ function mainController($scope, $window,$http) {
  $scope.contents_title = "Insert New CONTENTS:";
 $scope.check_save = false;
 $scope.showlist = true ;
- console.log($scope.shwoContents);
+ console.log($scope.list_contents);
 $scope.bodyInit= function() {
 
 
@@ -21,6 +21,7 @@ $scope.editContents= function(tdc_uid) {
 
 console.log('get_contents 23',tdc_uid);
 $scope.uid = tdc_uid;
+$scope.contents_title = "UPDATE CONTENTS:";
 
 $http.post('dbupdate.php', $.param({option:'get_contents', id:tdc_uid}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
 //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
@@ -83,6 +84,8 @@ $scope.delete= function(tdc_uid) {
 
 console.log('delete',tdc_uid);
 
+
+
 var id = tdc_uid;
 
 if(!confirm('정말로 삭제하시겠습니까?')) return false;
@@ -130,6 +133,7 @@ $scope.newcontents= function() {
   $scope.issue= '';
   $scope.solution= '';
   $scope.showlist = false;
+  $scope.contents_title = "Insert New CONTENTS:";
 
 
 
@@ -149,7 +153,7 @@ $scope.test= function() {
 
 }
 
-$scope.save= function() {
+$scope.save= function(tdc_uid) {
 
   console.log('save');
   // $scope.shwoContents = true;
@@ -164,7 +168,7 @@ $scope.save= function() {
   var inputTitle = $scope.title;
   var inputIssue = $scope.issue;
   var inputSolution = $scope.solution;
-  var inputId =$scope.uid;
+  var inputId =tdc_uid;
 
   if( inputTitle == '' ){
     alert('값을 입력해 주세요');

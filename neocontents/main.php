@@ -3,7 +3,7 @@ require_once ("library.php"); // library.php 파일 포함
 
 $header = '오늘의 정보';
 
-$sql = "SELECT tdc_uid, title ,updt_date FROM today_contents order by updt_date desc;";
+$sql = "SELECT tdc_uid, title ,DATE_FORMAT(updt_date,'%Y/%m/%d %H:%i') as updt_date FROM today_contents order by updt_date desc;";
 $list_contents = json_encode(QueryString2Map($sql));
 
 
@@ -187,18 +187,20 @@ $list_contents = json_encode(QueryString2Map($sql));
 				<tr>
 					<th>제목</th>
           <th>날짜</th>
-					<th width=10>삭제</th>
+					<!-- <th >삭제</th> -->
 				</tr>
 			</thead>
 			<tbody>
         <tr ng-repeat="contents in list_contents">
         <th>
-          <button class="w3-btn w3-ripple" ng-click="editContents(contents.tdc_uid)">&#9998; {{contents.title }}</button>
+          <a href="#" ng-click="editContents(contents.tdc_uid)" >&#9998; {{contents.title }}</a>
+          <!-- <button class="w3-btn w3-ripple" ng-click="editContents(contents.tdc_uid)">&#9998; {{contents.title }}</button> -->
         </th>
          <th>{{ contents.updt_date }}</th>
-        <th>
-          <button class="w3-btn w3-ripple" ng-click="delete(contents.tdc_uid)">&#9998; 삭제</button>
-        </th>
+        <!-- <th>
+          <a href="#" ng-click="delete(contents.tdc_uid)" >&#9998; 삭제</a>
+          <!-- <button class="w3-btn w3-ripple" ng-click="delete(contents.tdc_uid)">&#9998; 삭제</button> -->
+        </th> -->
       </tr>
 
 		 </tbody>
@@ -245,7 +247,8 @@ $list_contents = json_encode(QueryString2Map($sql));
 
       <br>
       <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
-      <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="save()" >&#10004; SAVE</button>
+      <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="save(uid)" >&#10004; SAVE</button>
+      <button class="w3-btn w3-green w3-ripple" ng-disabled="uid==''"  ng-click="delete(uid)" >&#10004; 삭제</button>
       <br>
 
 
