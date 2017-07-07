@@ -169,10 +169,11 @@ $header = '개인 PWD 정보';
     <!-- <a class="btn btn-info btn-lg" id='toggle_input' href="#" ng-click="toggle('toggle_input')">입력&gt;&gt;</a>
 
     <a class="btn btn-info btn-lg" id="toggle_input" href="#" ng-click="toggle('toggle_input')">입력2&gt;&gt;</a> -->
-    <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button>
+
     <form class="w3-container" id="search" name="search">
       <input class="w3-input w3-border" type="text" ng-model="keyword"  placeholder="KEYWORD">
       <button class="w3-btn w3-green w3-ripple" ng-click="find()" >&#10004; 검색</button>
+      <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button>
     </form>
 
 
@@ -188,11 +189,12 @@ $header = '개인 PWD 정보';
 			</thead>
 			<tbody>
         <tr ng-repeat="(key,contents) in map_list_contents">
-        <td>
-          <button class="w3-btn w3-ripple" ng-click="editContents(key)">&#9998; {{contents.site }}</button>
-        </td>
-         <td>{{ contents.ptail }}</td>
-        <td>{{ contents.title }}</td>
+        <th>
+          <!-- <button class="w3-btn w3-ripple" ng-click="editContents(key)">&#9998; {{contents.site }}</button> -->
+          <a href="#" ng-click="editContents(key)">&#9998; {{contents.site }}</a>
+        </th>
+         <th>{{ contents.ptail }}</th>
+        <th>{{ contents.title }}</th>
 
       </tr>
 
@@ -202,12 +204,42 @@ $header = '개인 PWD 정보';
 
 		</div>
 
-
+    <div class="w3-container">
     <button class="w3-btn w3-green w3-ripple"  ng-click="newcontents()" >&#10004;  새 글쓰기</button>
     <br>
+    </div>
+
+
+
+
     <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button> -->
 
-  <form ng-show="shwoContents" class="w3-container" id="div_input" name="div_input">
+  <form ng-show="showPwdForm" class="w3-container" id="div_input" name="div_input">
+    <h3>{{contents_title}}</h3>
+
+
+     <table class="table table-striped">
+       <tr><td width=100> pwd_uid </td><td><input class="login_short"  type="text" ng-model="pwd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
+       <tr><td> site </td><td><input  class="w3-input w3-border" type="text" ng-model="site" ng-disabled="true" placeholder="site"></td></tr>
+       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="edit" ng-options="value for value in list_header"></select></td></tr>
+       <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></td></tr>
+       <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="true" placeholder="id"></td></tr>
+       <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="issue" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
+
+
+     </table>
+
+     <button class="w3-btn w3-green w3-ripple" ng-click="update()" >&#10004; UPDATE</button>
+
+     <!-- <label>ptail:   <input class="login_short"  type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></label><br/>
+     <label>id:   <input class="login_short"  type="text" ng-model="id" ng-disabled="true" placeholder="id"></label><br/>
+     <label>etc:   <input class="login_short"  type="text" ng-model="etc" ng-disabled="true" placeholder="etc"></label><br/> -->
+
+
+
+  </form>
+
+  <form ng-show="showHeaderForm" class="w3-container" id="div_input" name="div_input">
     <h3>{{contents_title}}</h3>
 
 
@@ -233,7 +265,7 @@ $header = '개인 PWD 정보';
   </form>
 
 
-    <form ng-show="shwoLogin" class="w3-container" id="div_input" name="div_input">
+    <form ng-show="shwoLoginForm" class="w3-container" id="div_input" name="div_input">
       <h3>LOG IN</h2>
         <label>ID</label>
         <input class="w3-input w3-border" type="text" ng-model="id"  placeholder="ID">

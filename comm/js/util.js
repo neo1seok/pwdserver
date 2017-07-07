@@ -199,3 +199,16 @@ function all_toggle_click(btn,toggle_list_map) {
 
 
 }
+
+
+function make_map_from_list(list_contents,key_name){
+
+  var ret_map = {};
+  $.each(list_contents, function(key,value) {
+      //if(Number(version) > Number(value.version)) return;
+      console.log(value.site,value.pwd_uid);
+      ret_map[value[key_name]]=value
+
+  });
+  return ret_map;
+}

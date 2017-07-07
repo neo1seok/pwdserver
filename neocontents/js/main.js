@@ -3,8 +3,8 @@
 
 function mainController($scope, $window,$http) {
  console.log('myApp');
- console.log('chipInit',$window.list_contents);;
- $scope.list_contents = $window.list_contents
+ // console.log('chipInit',$window.list_contents);;
+ // $scope.list_contents = $window.list_contents
  $scope.shwoContents = false;
  $scope.warning = "";
  $scope.msg = "";
@@ -16,34 +16,72 @@ $scope.bodyInit= function() {
 
 
 
+  $http.post('dbupdate.php', $.param({option:'get_contents'}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+  //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
+    .then(function (response) {
+      console.log('get_contents');
+      console.log(response.data);
+
+      $scope.list_contents = response.data.list_contents;
+      $scope.map_list_contents = make_map_from_list(response.data.list_contents,"tdc_uid");
+
+      // $scope.list_contents = response.data.list_contents;
+      //
+      // $.each(response.data.list_contents, function(key,value) {
+    	// 		//if(Number(version) > Number(value.version)) return;
+    	// 		console.log(value.site,value.pwd_uid);
+    	// 		$scope.map_list_contents[value.tdc_uid]=value
+      //
+    	// });
+      //
+
+
+
+    },function errorCallback(response) {
+      $scope.warning = response.status;
+    }
+  );
+
+
+
 }
 $scope.editContents= function(tdc_uid) {
 
 console.log('get_contents 23',tdc_uid);
 $scope.uid = tdc_uid;
 $scope.contents_title = "UPDATE CONTENTS:";
-
-$http.post('dbupdate.php', $.param({option:'get_contents', id:tdc_uid}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
-//$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
-  .then(function (response) {
-    console.log('get_contents');
-    console.log(response.data);
-
-    var map_contents= response.data;
-    if(map_contents.length == 0) return false;
+  var map_contents= $scope.map_list_contents[tdc_uid];
+  console.log(map_contents);
 
 
-    $scope.title = map_contents[0].title;
-    $scope.issue=map_contents[0].issue;
-    $scope.solution=map_contents[0].solution;
+    $scope.title = map_contents.title;
+    $scope.issue=map_contents.issue;
+    $scope.solution=map_contents.solution;
     $scope.shwoContents = true;
     $scope.showlist = false;
 
-
-  },function errorCallback(response) {
-    $scope.warning = response.status;
-  }
-);
+//
+// $http.post('dbupdate.php', $.param({option:'get_contents', id:tdc_uid}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+// //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
+//   .then(function (response) {
+//     console.log('get_contents');
+//     console.log(response.data);
+//
+//     var map_contents= response.data;
+//     if(map_contents.length == 0) return false;
+//
+//
+//     $scope.title = map_contents[0].title;
+//     $scope.issue=map_contents[0].issue;
+//     $scope.solution=map_contents[0].solution;
+//     $scope.shwoContents = true;
+//     $scope.showlist = false;
+//
+//
+//   },function errorCallback(response) {
+//     $scope.warning = response.status;
+//   }
+// );
 
 
 

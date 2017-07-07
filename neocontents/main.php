@@ -2,9 +2,9 @@
 require_once ("library.php"); // library.php 파일 포함
 
 $header = '오늘의 정보';
-
-$sql = "SELECT tdc_uid, title ,DATE_FORMAT(updt_date,'%Y/%m/%d %H:%i') as updt_date FROM today_contents order by updt_date desc;";
-$list_contents = json_encode(QueryString2Map($sql));
+//
+// $sql = "SELECT tdc_uid, title ,DATE_FORMAT(updt_date,'%Y/%m/%d %H:%i') as updt_date FROM today_contents order by updt_date desc;";
+// $list_contents = json_encode(QueryString2Map($sql));
 
 
 ?>
@@ -80,28 +80,8 @@ $list_contents = json_encode(QueryString2Map($sql));
 		<script src="js/main.js"></script>
 
     <script type="text/javascript">
-    window.str_list_contents = `<?php echo $list_contents; ?>`;
-    window.list_contents = JSON.parse(convert_to_safe_json_string(window.str_list_contents));
     angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
 
-
-
-    //
-		// var str_list_contents = `<?php echo $list_contents; ?>`;
-		// console.log(convert_to_safe_json_string(str_list_contents));
-		// var list_contents = JSON.parse(convert_to_safe_json_string(str_list_contents));
-		// function update_list(list_contents) {
-		// 	list_contents.forEach(function(item, index){
-		// 			$('#table_today_all tbody').append(`<tr>
-		// 				<th><a href="#" class='cla_show' id='${item.tdc_uid}'>${item.title}</a></th>
-    //         <th>${item.updt_date}</th>
-		// 				<th><a href="#" class='cla_modify' id='${item.tdc_uid}'>수정</a> </th>
-		// 				<th><a href="#" class='cla_del' id='${item.tdc_uid}'>삭제</a> </th>
-		// 				</tr>`);
-    //
-    //
-		// 	})
-		// }
 
 
     $(function() {
@@ -110,9 +90,9 @@ $list_contents = json_encode(QueryString2Map($sql));
 			var  map_container =
       { Header: "<?php echo $header; ?>", Discription: "이 페이지는 개인 정보를 저장하는 페이지 이다.",
         Links: [
-            { Name: "입력>>", Link: "#" ,Id:"toggle_input"},
-            { Name: "전체 목록>>", Link: "#" ,Id:"toggle_list"},
-						{ Name: "전체토글>>", Link: "#" ,Id:"toggle_all"},
+            // { Name: "입력>>", Link: "#" ,Id:"toggle_input"},
+            // { Name: "전체 목록>>", Link: "#" ,Id:"toggle_list"},
+						// { Name: "전체토글>>", Link: "#" ,Id:"toggle_all"},
         ],
 
 
@@ -174,14 +154,10 @@ $list_contents = json_encode(QueryString2Map($sql));
           </div>
     </div>
 
-    <!-- <a class="btn btn-info btn-lg" id='toggle_input' href="#" ng-click="toggle('toggle_input')">입력&gt;&gt;</a>
-
-    <a class="btn btn-info btn-lg" id="toggle_input" href="#" ng-click="toggle('toggle_input')">입력2&gt;&gt;</a> -->
-
 
 
 		<div class="col-md-6" id='div_list' ng-show='showlist'>
-			<h2>전체 리스트</h2>
+      <h2>전체 리스트</h2>
 		<table id="table_today_all"  class="table table-striped">
 			<thead>
 				<tr>
@@ -191,7 +167,7 @@ $list_contents = json_encode(QueryString2Map($sql));
 				</tr>
 			</thead>
 			<tbody>
-        <tr ng-repeat="contents in list_contents">
+        <tr ng-repeat="(key,contents) in map_list_contents">
         <th>
           <a href="#" ng-click="editContents(contents.tdc_uid)" >&#9998; {{contents.title }}</a>
           <!-- <button class="w3-btn w3-ripple" ng-click="editContents(contents.tdc_uid)">&#9998; {{contents.title }}</button> -->
@@ -205,11 +181,13 @@ $list_contents = json_encode(QueryString2Map($sql));
 
 		 </tbody>
 		</table>
-
-
 		</div>
-    <button class="w3-btn w3-green w3-ripple"  ng-click="newcontents()" >&#10004;  새 글쓰기</button>
-    <br>
+    <div class="w3-container">
+      <button class="btn btn-info btn-lg"  ng-click="newcontents()" >&#10004;  새 글쓰기</button>
+      <br>
+
+    </div>
+
     <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button> -->
 
     <form ng-show="shwoContents" class="w3-container" id="div_input" name="div_input">
