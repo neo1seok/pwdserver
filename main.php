@@ -3,7 +3,8 @@ require_once("library.php");  // library.php 파일 포함
 //defMeta();
 setHome("");
 
-$maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_date, comment FROM fav_link;");
+$maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_date, comment FROM fav_link where type = 'MAIN' order by seq;");
+//$maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_date, comment FROM fav_link  order by seq;");
 // $list_aa = array();
 //
 // foreach ($maplist as $map){
@@ -18,6 +19,7 @@ $maplist = QueryString2Map("SELECT seq, fnk_uid, title, link, updt_date, reg_dat
 // }
 $str_json_maplist = json_encode($maplist);
 $curpage = getcurpage();
+//$sn = $_REQUEST['sn'];
 
 //#pagego('webtoon.php');
 
@@ -123,14 +125,15 @@ $curpage = getcurpage();
 				//console.log(`Fifteen is ${a + b} and\nnot ${2 * a + b}.`);
 
 				$(document).ready(function(){
+
+
+
 					update_link(maplist);
         //  var navi = get_navigation('');
 
         var base_url = window.location.origin;
-
-var host = window.location.host;
-
-var pathArray = window.location.pathname.split( '/' );
+        var host = window.location.host;
+        var pathArray = window.location.pathname.split( '/' );
 
 
           console.log(base_url);
@@ -148,13 +151,15 @@ var pathArray = window.location.pathname.split( '/' );
           };
 
 
-          setup_nav('#navi','#main_container',map_container);
+          setup_nav('#navi','#main_container',map_container,'#nav_main');
 
           //console.log(navi);
         //  $('#navi').append(get_navigation());
 					$('#div_link').hide();
 					$('#div_add_link').hide();
 					$('#div_excute_shell').hide();
+
+
 
 					$('.class_del').click(function(){
 						console.log('class_del');
@@ -209,24 +214,33 @@ var pathArray = window.location.pathname.split( '/' );
 
 					});
 
-					$('#toggle_link').click(function(){
-						console.log('toggle_link');
+          var toggle_map =
+          [
+              { Btn: "#toggle_link", Div:"#div_link",IsShow:false},
+              { Btn: "#toggle_add_link", Div:"#div_add_link",IsShow:false},
+              { Btn: "#toggle_excute", Div:"#div_excute_shell",IsShow:false},
+          ]
 
-						$('#div_link').toggle();
+          map_toggle_click(toggle_map);
 
-					});
-					$('#toggle_add_link').click(function(){
-						console.log('toggle_add_link');
-
-						$('#div_add_link').toggle();
-
-					});
-					$('#toggle_excute').click(function(){
-						console.log('toggle_excute');
-
-						$('#div_excute_shell').toggle();
-
-					});
+					// $('#toggle_link').click(function(){
+					// 	console.log('toggle_link');
+          //
+					// 	$('#div_link').toggle();
+          //
+					// });
+					// $('#toggle_add_link').click(function(){
+					// 	console.log('toggle_add_link');
+          //
+					// 	$('#div_add_link').toggle();
+          //
+					// });
+					// $('#toggle_excute').click(function(){
+					// 	console.log('toggle_excute');
+          //
+					// 	$('#div_excute_shell').toggle();
+          //
+					// });
 				});
 
 
@@ -234,6 +248,7 @@ var pathArray = window.location.pathname.split( '/' );
 
 
         <div id = 'navi'></div>
+
         <div id = 'main_container'></div>
 
 

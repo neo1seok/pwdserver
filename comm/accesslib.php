@@ -59,27 +59,27 @@ function loginform($isprecheck){
 
 
 
-	if($isprecheck == 'TRUE'){
+		if($isprecheck == 'TRUE'){
 
-		$listmpap = QueryString2Map("SELECT id,rn FROM user;");
-		$mapidRn = getMapFromResultDB('id','rn',$listmpap);
+			$listmpap = QueryString2Map("SELECT id,rn FROM user;");
+			$mapidRn = getMapFromResultDB('id','rn',$listmpap);
 
-		$mapidRnJson = json_encode($mapidRn);
+			$mapidRnJson = json_encode($mapidRn);
 
-		$precheck = 'true';
-		$mapHint = array(
-				"0331"=>"second sister",
-				"1219"=>"first sister",
-				"0124"=>"dad",
-				"1111"=>"mom",
+			$precheck = 'true';
+			$mapHint = array(
+					"0331"=>"second sister",
+					"1219"=>"first sister",
+					"0124"=>"dad",
+					"1111"=>"mom",
 
 
-		);
+			);
 
-		//$date =  date("md");
-		$rnshort = generateRandomString(4);
-// 		$randnum = rand(0, count($mapHint)-1);
-// 		$index = 0;
+			//$date =  date("md");
+			$rnshort = generateRandomString(4);
+	// 		$randnum = rand(0, count($mapHint)-1);
+	// 		$index = 0;
 
 // 		foreach ($mapHint as $k => $v){
 
@@ -283,3 +283,4 @@ function confirm(){
 
 	commBackHome();
 }
+?>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once ("library.php"); // library.php 파일 포함
 
 
@@ -49,6 +49,46 @@ if($option=='updatetopids'){
 		QueryString($sql);
 
 	}
+
+
+	exit;
+}
+if($option=='input'){
+	header('Content-Type: text/plain; charset=utf-8');
+
+
+
+	$id =getsaftyReq('id');// $_REQUEST['json'];
+	$date =getsaftyReq('date');// $_REQUEST['json'];
+	$title =getsaftyReq('title');// $_REQUEST['json'];
+
+	$seq_webtoon = getNextSeq('webtoon');
+	$wtn_uid = "wtn_$seq_webtoon";
+
+	$seq_date_wetoon = getNextSeq('date_webtoon');
+	$dte_uid = "dte_$seq_date_wetoon";
+
+
+	$sql = "INSERT INTO webtoon (seq  ,wtn_uid  ,title  ,id  ,updt_date  ,reg_date  ,comment)
+	VALUES ($seq_webtoon, '$wtn_uid', '$title', '$id', now(), now(), '');
+	";
+QueryString($sql);
+	$sql = "INSERT INTO date_webtoon (seq  ,dte_uid  ,wtn_uid  ,`date`  ,updt_date  ,reg_date  ,comment)
+	VALUES ($seq_date_wetoon, '$dte_uid','$wtn_uid', '$date', now(), now(), '');
+	";
+QueryString($sql);
+
+
+	$sql = "SELECT title, id FROM webtoon where wtn_uid = '$wtn_uid';";
+
+
+
+$todaywebtoonMap = QueryString2Map($sql);
+//echo 'test';
+//echo $todaywebtoonMap;
+echo json_encode($todaywebtoonMap);
+
+
 
 
 	exit;

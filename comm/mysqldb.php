@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once 'commlib.php';
 
@@ -243,8 +243,8 @@ function viewQueryResult($mapvalue){
 			if (in_array($k, $ignoretitle)) {
 				continue;
 			}
-				
-				
+
+
 			if($k=='site'){
 				echo "<td><a href='update.php?uid=$uid'>$v</a></td>";
 				continue;
@@ -254,8 +254,8 @@ function viewQueryResult($mapvalue){
 			if($k=='title'){
 				echo "<td><a href='viewheader.php?uid=$phd_uid'>$v</a></td>";
 				continue;
-					
-					
+
+
 			}
 			echo "<td>";
 			echo $v;
@@ -343,3 +343,4 @@ function viewQueryResult_OLD($dbname,$strQuery){
 
 
 }
+?>

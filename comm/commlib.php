@@ -1,5 +1,4 @@
-﻿<?php
-
+<?php
 
 //$_ENV_G = array();
 

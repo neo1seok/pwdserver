@@ -1,4 +1,4 @@
-﻿<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 
 <?php
 echo "query()함수를 이용한 테이블 생성 0008<br />";
