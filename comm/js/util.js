@@ -206,7 +206,8 @@ function make_map_from_list(list_contents,key_name){
   var ret_map = {};
   $.each(list_contents, function(key,value) {
       //if(Number(version) > Number(value.version)) return;
-      console.log(value.site,value.pwd_uid);
+      //console.log(value.site,value.pwd_uid);
+      console.log(value);
       ret_map[value[key_name]]=value
 
   });
