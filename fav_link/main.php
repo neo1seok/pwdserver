@@ -7,6 +7,7 @@ $option = getsaftyReq('option');
 
 if($option == 'priv_link'){
   checkSession();
+
 }
 
 

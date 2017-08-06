@@ -11,14 +11,20 @@ function mainController($scope, $window,$http) {
  $scope.contents_title = "Insert New CONTENTS:";
 $scope.check_save = false;
 $scope.showlist = true ;
-$scope.option =document.option;
+$scope.type = 'MAIN';
+if(document.option =='priv_link'){
+  $scope.type = 'PRIVATE';
+
+}
+
 console.log(document.option);
+console.log($scope.type);
  console.log($scope.list_contents);
 $scope.bodyInit= function() {
 
 
 
-  $http.post('dbupdate.php', $.param({option:'get_contents'}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+  $http.post('dbhandler.php', $.param({cmd:'get_contents',type:$scope.type}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
   //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
     .then(function (response) {
       console.log('get_contents');
@@ -77,8 +83,8 @@ if(!confirm('정말로 삭제하시겠습니까?')) return false;
 $.ajax({
   type: 'post',
   dataType: 'json',
-  url: 'dbupdate.php',
-  data: {option:'delete',id:id},
+  url: 'dbhandler.php',
+  data: {cmd:'delete',id:id},
   success: function (data) {
       console.log(data);
       console.log(data.length);
@@ -158,15 +164,15 @@ $scope.save= function(fnk_uid) {
 
   console.log(json_contents);
 
-  var option = "input";
+  var cmd = "input";
   if(inputId !="" ){
-    var option = "modify";
+    var cmd = "modify";
   }
-  console.log(option);
+  console.log(cmd);
   if(!confirm('입력 하시겠습니까?')) return false;
 
 
-  $http.post('dbupdate.php', $.param({option:option, contents:json_contents,id:inputId}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+  $http.post('dbhandler.php', $.param({cmd:cmd, contents:json_contents,id:inputId,type:$scope.type}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
   //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
     .then(function (response) {
       console.log('save result');
