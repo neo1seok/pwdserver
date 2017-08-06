@@ -4,8 +4,9 @@
 include("library.php");  // library.php 파일 포함
 
 $option = getsaftyReq('option');
-
+$_SESSION['option']=$option;
 if($option == 'priv_link'){
+
   checkSession();
 
 }

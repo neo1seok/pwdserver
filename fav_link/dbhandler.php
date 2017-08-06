@@ -1,11 +1,16 @@
 <?php
 require_once ("library.php"); // library.php 파일 포함
-checkSession();
+
+$type = getsaftyReq('type');
+if($type == 'PRIVATE'){
+	checkSession();
+}
+
 
 header("Content-Type:application/json");
 
 $cmd = getsaftyReq('cmd');
-$type = getsaftyReq('type');
+
 //echo ' 23';
 //echo "<script>console.log( 'Debug Objects: " . $cmd . "' );</script>";
 $result = array('RESULT' => 'OK');
