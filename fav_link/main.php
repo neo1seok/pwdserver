@@ -171,7 +171,7 @@ $header='';
 			<tbody>
         <tr ng-repeat="(key,contents) in map_list_contents">
           <th>
-            <a href="{{contents.link}}"  >{{contents.title}}</a>
+            <a href="{{contents.link}}"  target="Starfall">{{contents.title}}</a>
 
             <!-- <button class="w3-btn w3-ripple" ng-click="editContents(contents.tdc_uid)">&#9998; {{contents.title }}</button> -->
           </th>
