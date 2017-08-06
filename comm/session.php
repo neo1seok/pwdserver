@@ -32,7 +32,49 @@ function get_login_state($catagory){
 
 }
 
+function checkSessionCatagoryByNoPrint($catagory){
+	startSession();
 
+	$login_status = get_login_state($catagory);
+
+	switch ($login_status) {
+		case 'NOT_LOGIN':
+			pagego('login.php');
+			exit;
+		case 'LOGIN_TIME_OUT':
+			pagego('login.php');
+			exit;
+
+		default:
+			# code...
+			break;
+	}
+	$user_id = $_SESSION['user_id'];
+	$user_name = $_SESSION['user_name'];
+	$ret = strpos($user_id, 'VISIT');
+	$rettest = strpos($user_id, 'TESTER');
+	if ((0 === $ret || 0 === $rettest) && $catagory =='PWD') {
+//		echo 'test';
+//		exit;
+		pagego('login.php');
+		logout();
+		exit;
+	}
+	$regdate =getsaftySession('date');
+
+	$date = date('Y-m-d.H:i:s');
+
+	$tdifftime = strtotime(date('Y-m-d.H:i:s')) - strtotime($regdate);
+
+	
+	if($tdifftime >10*60){
+		pagego('login.php');
+//		logout();
+		exit;
+
+	}
+
+}
 
 function checkSessionCatagory($catagory){
 

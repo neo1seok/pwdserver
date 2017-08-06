@@ -1,5 +1,6 @@
 <?php
 require_once ("library.php"); // library.php 파일 포함
+checkSession();
 
 header("Content-Type:application/json");
 
