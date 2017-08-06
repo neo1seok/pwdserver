@@ -115,7 +115,7 @@ $header='';
 
 
 
-      setup_nav('#navi','',map_container,'#nav_contents');
+      setup_nav('#navi','',map_container,'#nav_fav_link');
       //update_list(list_contents);
 
 			//$('#div_today').show();
