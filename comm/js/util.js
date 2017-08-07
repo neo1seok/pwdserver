@@ -135,6 +135,7 @@ function setup_nav(sel_nav,sel_cont,map_container,active_sel_id){
     { Name: "MAIN", Link: window.location.origin +"/" ,Id:"nav_main"},
       { Name: "WEBTOON", Link: window.location.origin +"/webtoon/",Id:"nav_webtoon" },
       { Name: "오늘의 정보", Link: window.location.origin +"/neocontents/",Id:"nav_contents" },
+      { Name: "FAV LINK", Link: "/fav_link/",Id:"nav_fav_link" },
       { Name: "개인 PW정보", Link: window.location.origin +"/pwdserver/",Id:"nav_pwd" },
 
       // { Name: "MAIN", Link: window.location.origin +"/" },
@@ -206,7 +207,8 @@ function make_map_from_list(list_contents,key_name){
   var ret_map = {};
   $.each(list_contents, function(key,value) {
       //if(Number(version) > Number(value.version)) return;
-      console.log(value.site,value.pwd_uid);
+      //console.log(value.site,value.pwd_uid);
+      console.log(value);
       ret_map[value[key_name]]=value
 
   });
