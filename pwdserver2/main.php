@@ -193,8 +193,13 @@ $header = '개인 PWD 정보';
           <!-- <button class="w3-btn w3-ripple" ng-click="editContents(key)">&#9998; {{contents.site }}</button> -->
           <a href="#" ng-click="editContents(key)">&#9998; {{contents.site }}</a>
         </th>
+        <!-- <th>{{ contents.title }}</th> -->
+        <th>
+        <a href="#" ng-click="editheader(contents.phd_uid)">&#9998; {{contents.title }}</a>
+        </th>
+
          <th>{{ contents.ptail }}</th>
-        <th>{{ contents.title }}</th>
+
 
       </tr>
 
@@ -205,9 +210,11 @@ $header = '개인 PWD 정보';
 		</div>
 
     <div class="w3-container">
-    <button class="w3-btn w3-green w3-ripple"  ng-click="newcontents()" >&#10004;  새 글쓰기</button>
+    <button class="w3-btn w3-green w3-ripple"  ng-click="editContents('')" >&#10004;  사이트입력</button>
     <br>
     </div>
+
+
 
 
 
@@ -217,13 +224,18 @@ $header = '개인 PWD 정보';
   <form ng-show="showPwdForm" class="w3-container" id="div_input" name="div_input">
     <h3>{{contents_title}}</h3>
 
+    <label>내용수정:
+      <input type="checkbox" ng-model="check_save" ng-click="editable()">
+    </label><br/>
+
+
 
      <table class="table table-striped">
        <tr><td width=100> pwd_uid </td><td><input class="login_short"  type="text" ng-model="pwd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
-       <tr><td> site </td><td><input  class="w3-input w3-border" type="text" ng-model="site" ng-disabled="true" placeholder="site"></td></tr>
-       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="edit" ng-options="value for value in list_header"></select></td></tr>
-       <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></td></tr>
-       <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="true" placeholder="id"></td></tr>
+       <tr><td> site </td><td><input  class="w3-input w3-border" type="text" ng-model="site" ng-disabled="!check_save" placeholder="site"></td></tr>
+       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="!check_save" ng-options="value for value in list_header"></select></td></tr>
+       <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="!check_save" placeholder="ptail"></td></tr>
+       <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="!check_save" placeholder="id"></td></tr>
        <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="issue" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
 
 
@@ -238,20 +250,22 @@ $header = '개인 PWD 정보';
 
 
   </form>
+  <div class="w3-container">
+  <button class="w3-btn w3-green w3-ripple"  ng-click="editheader('')" >&#10004;  헤더입력</button>
+  <br>
+  </div>
 
   <form ng-show="showHeaderForm" class="w3-container" id="div_input" name="div_input">
     <h3>{{contents_title}}</h3>
-
+    <label>내용수정:
+      <input type="checkbox" ng-model="check_save_header" ng-click="editable()">
+    </label><br/>
 
      <table class="table table-striped">
-       <tr><td width=100> pwd_uid </td><td><input class="login_short"  type="text" ng-model="pwd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
-       <tr><td> site </td><td><input  class="w3-input w3-border" type="text" ng-model="site" ng-disabled="true" placeholder="site"></td></tr>
-       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="edit" ng-options="value for value in list_header"></select></td></tr>
-       <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></td></tr>
-       <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="true" placeholder="id"></td></tr>
-       <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="issue" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
-
-
+       <tr><td width=100> phd_uid </td><td><input class="login_short"  type="text" ng-model="phd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
+       <tr><td> title </td><td><input  class="w3-input w3-border" type="text" ng-model="title" ng-disabled="true" placeholder="site"></td></tr>
+       <tr><td> hint </td><td><input   class="w3-input w3-border" type="text" ng-model="hint" ng-disabled="true" placeholder="id"></td></tr>
+       <tr><td> special_letter </td><td><input  class="w3-input w3-border" type="text" ng-model="special_letter" ng-disabled="true" placeholder="ptail"></td></tr>
      </table>
 
      <button class="w3-btn w3-green w3-ripple" ng-click="update()" >&#10004; UPDATE</button>

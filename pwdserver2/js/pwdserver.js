@@ -130,19 +130,79 @@ $scope.bodyInit= function() {
 $scope.editContents= function(uid) {
 	console.log('editContents',uid);
 	console.log($scope.map_list_contents);
+	var contents = {
+		pwd_uid : '',
+		site : '',
+		title : '',
+		ptail : '',
+		id : '',
+		etc : '',
 
-	var contents = $scope.map_list_contents[uid];
+	}
+	if(uid !=''){
+		contents = $scope.map_list_contents[uid];
+		$scope.check_save = false;
+
+
+
+	}else{
+		$scope.check_save = true;
+	}
+
+
 	console.log(contents);
-	$scope.shwoContents = true;
-	$scope.check_save = true;
+	//$scope.check_save = true;
 	$scope.pwd_uid = contents.pwd_uid;
 	$scope.site = contents.site;
 	$scope.header = contents.title;
 	$scope.ptail= contents.ptail;
 	$scope.id= contents.id;
 	$scope.etc = contents.etc;
+	$scope.showPwdForm = true;
+	$scope.showlist = false;
 
 };
+
+$scope.editheader= function(uid) {
+
+  console.log('editheader');
+	var header_info = {
+		phd_uid : '',
+		title : '',
+		hint : '',
+		special_letter : '',
+	}
+
+	if(uid !=''){
+		header_info = $scope.map_list_header_contents[uid]
+		$scope.check_save_header = false;
+
+
+
+	}else{
+		$scope.check_save_header = true;
+	}
+
+
+
+
+	$scope.phd_uid = header_info.phd_uid;
+	$scope.title = header_info.title;
+	$scope.hint = header_info.hint;
+	$scope.special_letter = header_info.special_letter;
+
+
+
+  $scope.showHeaderForm = true;
+  $scope.check_save = true;
+
+
+
+  $scope.showlist = false;
+
+
+
+}
 $scope.test= function() {
 
   console.log('newcontents');
@@ -174,20 +234,8 @@ $scope.test= function() {
 
 
 }
-$scope.newcontents= function() {
-
-  console.log('newcontents');
-  $scope.shwoContents = true;
-  $scope.check_save = true;
-  $scope.uid = '';
-  $scope.title = '';
-  $scope.issue= '';
-  $scope.solution= '';
-  $scope.showlist = false;
 
 
-
-}
 $scope.find= function() {
 
   console.log('search');
