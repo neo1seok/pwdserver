@@ -133,7 +133,8 @@ $scope.editContents= function(uid) {
 
 	var contents = $scope.map_list_contents[uid];
 	console.log(contents);
-	$scope.shwoContents = true;
+	$scope.showPwdForm = true;
+	$scope.showlist =false;
 	$scope.check_save = true;
 	$scope.pwd_uid = contents.pwd_uid;
 	$scope.site = contents.site;
@@ -177,13 +178,16 @@ $scope.test= function() {
 $scope.newcontents= function() {
 
   console.log('newcontents');
-  $scope.shwoContents = true;
+  $scope.showPwdForm = true;
   $scope.check_save = true;
-  $scope.uid = '';
-  $scope.title = '';
-  $scope.issue= '';
-  $scope.solution= '';
   $scope.showlist = false;
+
+	$scope.pwd_uid = "";
+	$scope.site = "";
+	$scope.header = "";
+	$scope.ptail= "";
+	$scope.id= "";
+	$scope.etc = "";
 
 
 
@@ -217,7 +221,7 @@ $scope.toggle= function(id) {
   switch(id) {
     case 'toggle_input':
     console.log('1');
-      $scope.shwoContents = !$scope.shwoContents;
+      $scope.showPwdForm = !$scope.showPwdForm;
 
         break;
     case 'toggle_list':
@@ -226,8 +230,8 @@ $scope.toggle= function(id) {
         break;
     case 'toggle_all':
       console.log('3');
-      if( $scope.shwoContents || $scope.showlist){
-        $scope.shwoContents = false;
+      if( $scope.showPwdForm || $scope.showlist){
+        $scope.showPwdForm = false;
         $scope.showlist = false;
 
       }
