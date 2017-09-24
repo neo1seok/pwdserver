@@ -7,7 +7,7 @@
 <body>
 
 
-<script src='../comm/js/sha256.js'></script>			
+<script src='../comm/js/sha256.js'></script>
 <script type='text/javascript'>
 
 function makePasswd(id,passwd,precheck){
@@ -17,42 +17,42 @@ function makePasswd(id,passwd,precheck){
 	var pwhash = Sha256.hash(passwd+rn).toUpperCase();
 	var precheckHash = Sha256.hash(precheck).toUpperCase();
 	return pwhash+precheckHash;
-	
+
 }
 function onInputSubmit(item) {
 	console.log('onsubmit');
 	var passwd = item.user_pw.value
 	var id = item.user_id.value
-	
+
 	var passlen = passwd.length-$prechecklength;
 
 	var precheck = passwd.slice(passlen);
 	passwd = passwd.slice(0,passlen);
-	
+
 	item.user_pw.value = makePasswd(id,passwd,precheck);
-	
+
 	return true;
 	var mapidRnJson = JSON.parse('$mapidRnJson');
-	
+
 	var rn = mapidRnJson[id];
-	
+
 	var passlen = passwd.length-$prechecklength;
 
 	var precheck = passwd.slice(passlen);
 	passwd = passwd.slice(0,passlen);
-	
-	
-	
+
+
+
 	var pwhash = Sha256.hash(passwd+rn).toUpperCase();
 	var precheckHash = Sha256.hash(precheck).toUpperCase();
-	
 
-	
-	item.user_pw.value = pwhash+precheckHash; 
 
-	
+
+	item.user_pw.value = pwhash+precheckHash;
+
+
 	return true;
-	
+
 }
  // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -81,9 +81,7 @@ function onInputSubmit(item) {
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
   function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
+    FB.getLoginStatus(statusChangeCallback);
   }
 
   window.fbAsyncInit = function() {
@@ -94,9 +92,9 @@ function onInputSubmit(item) {
 	      version    : 'v2.7'
 	    });
 	  };
-	  
-	  
-  // Now that we've initialized the JavaScript SDK, we call 
+
+
+  // Now that we've initialized the JavaScript SDK, we call
   // FB.getLoginStatus().  This function gets the state of the
   // person visiting this page and can return one of three states to
   // the callback you provide.  They can be:
@@ -112,7 +110,7 @@ function onInputSubmit(item) {
  //   statusChangeCallback(response);
 //  });
 
- 
+
 
   // Load the SDK asynchronously
    (function(d, s, id){
@@ -141,7 +139,7 @@ function onInputSubmit(item) {
     	console.log('email:');
     	console.log(email);
   }
-	
+
 </script>
 
 
