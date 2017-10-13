@@ -214,3 +214,41 @@ function make_map_from_list(list_contents,key_name){
   });
   return ret_map;
 }
+
+function setCookie(cname, cvalue, exdays) {
+
+  var d = new Date();
+
+  d.setDate(d.getDate() + exdays); //1일 뒤 이 시간
+
+  var expires = "expires=" + d.toGMTString();
+
+  document.cookie = cname + "=" + cvalue + "; " + expires;
+
+}
+
+// 쿠키명 (cname), 쿠키 값(cvalue), 쿠키 만료 날짜(exdays)
+
+
+
+
+
+function getCookie(cname) {
+
+  var name = cname + "=";
+
+  var ca = document.cookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') c = c.substring(1);
+
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+
+  }
+
+  return "";
+
+}

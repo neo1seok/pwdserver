@@ -68,7 +68,14 @@ function connect(){
 
 }
 
-function QueryString($strQuery){
+$def_die_string = function($mysql_error,$strQuery) {
+    return "SQL error=>" .$strQuery;
+};
+function QueryString($strQuery,$die_string= NULL){
+	if($die_string == NULL){
+		$die_string = $GLOBALS['def_die_string'];
+
+	}
 
 	// 	$dbname = "neo_pwinfo";
 
@@ -81,7 +88,7 @@ function QueryString($strQuery){
 	$connect = connect();
 
 	//Print Query Result
-	$result = @mysql_query($strQuery) or die("SQL error=>" .$strQuery);
+	$result = @mysql_query($strQuery) or die($die_string(mysql_error(),$strQuery));
 
 	$data=@mysql_fetch_row($result);
 

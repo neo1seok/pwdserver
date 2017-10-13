@@ -1,7 +1,7 @@
 <?php
 require_once ("library.php"); // library.php 파일 포함
 
-
+//checkSession();
 startSession();
 setSession('TEST1','TEST2');
 
@@ -132,21 +132,6 @@ $header = '개인 PWD 정보';
 
       $('#toggle_input').attr("ng-click","toggle('toggle_input')")
 
-
-
-
-
-			// map_toggle_click(toggle_map);
-			// all_toggle_click('#toggle_all',toggle_map);
-
-			// $('#toggle_all').click(function(){
-			// 	all_toggle_click(toggle_map);
-			//
-		  // });
-
-			//map_click();
-
-
     });
 
 
@@ -233,7 +218,7 @@ $header = '개인 PWD 정보';
      <table class="table table-striped">
        <tr><td width=100> pwd_uid </td><td><input class="login_short"  type="text" ng-model="pwd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
        <tr><td> site </td><td><input  class="w3-input w3-border" type="text" ng-model="site" ng-disabled="!check_save" placeholder="site"></td></tr>
-       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="!check_save" ng-options="value for value in list_header"></select></td></tr>
+       <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="!check_save" ng-options="value.title for value in list_header_contents"></select></td></tr>
        <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="!check_save" placeholder="ptail"></td></tr>
        <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="!check_save" placeholder="id"></td></tr>
        <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="issue" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
@@ -263,12 +248,12 @@ $header = '개인 PWD 정보';
 
      <table class="table table-striped">
        <tr><td width=100> phd_uid </td><td><input class="login_short"  type="text" ng-model="phd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
-       <tr><td> title </td><td><input  class="w3-input w3-border" type="text" ng-model="title" ng-disabled="true" placeholder="site"></td></tr>
-       <tr><td> hint </td><td><input   class="w3-input w3-border" type="text" ng-model="hint" ng-disabled="true" placeholder="id"></td></tr>
-       <tr><td> special_letter </td><td><input  class="w3-input w3-border" type="text" ng-model="special_letter" ng-disabled="true" placeholder="ptail"></td></tr>
+       <tr><td> title </td><td><input  class="w3-input w3-border" type="text" ng-model="title" ng-disabled="!check_save_header" placeholder="site"></td></tr>
+       <tr><td> hint </td><td><input   class="w3-input w3-border" type="text" ng-model="hint" ng-disabled="!check_save_header" placeholder="id"></td></tr>
+       <tr><td> special_letter </td><td><input  class="w3-input w3-border" type="text" ng-model="special_letter" ng-disabled="!check_save_header" placeholder="ptail"></td></tr>
      </table>
 
-     <button class="w3-btn w3-green w3-ripple" ng-click="update()" >&#10004; UPDATE</button>
+     <button class="w3-btn w3-green w3-ripple" ng-click="update_header()" >&#10004; UPDATE</button>
 
      <!-- <label>ptail:   <input class="login_short"  type="text" ng-model="ptail" ng-disabled="true" placeholder="ptail"></label><br/>
      <label>id:   <input class="login_short"  type="text" ng-model="id" ng-disabled="true" placeholder="id"></label><br/>
