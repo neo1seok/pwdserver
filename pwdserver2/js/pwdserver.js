@@ -183,9 +183,18 @@ function mainController($scope, $window, $http) {
 
 
 
-    } else {
-      $scope.check_save_header = true;
-    }
+	console.log(contents);
+	$scope.showPwdForm = true;
+	$scope.showlist =false;
+	$scope.check_save = true;
+	$scope.pwd_uid = contents.pwd_uid;
+	$scope.site = contents.site;
+	$scope.header = contents.title;
+	$scope.ptail= contents.ptail;
+	$scope.id= contents.id;
+	$scope.etc = contents.etc;
+	$scope.showPwdForm = true;
+	$scope.showlist = false;
 
 
 
@@ -265,6 +274,10 @@ function mainController($scope, $window, $http) {
 
 
 
+  console.log('newcontents');
+  $scope.showPwdForm = true;
+  $scope.check_save = true;
+  $scope.showlist = false;
 
     }
 
