@@ -71,7 +71,7 @@ function loginform($isprecheck){
 					"0331"=>"second sister",
 					"1219"=>"first sister",
 					"0124"=>"dad",
-					"1111"=>"mom",
+					"1011"=>"mom",
 
 
 			);
@@ -196,16 +196,7 @@ function logout(){
 	//echo $homeurl;
 	pagego($homeurl);
 }
-function generateRandomString($length = 10) {
-	$characters = 'abcdefghijklmnopqrstuvwxyz';
-	#$characters = '0123456789';
-	$charactersLength = strlen($characters);
-	$randomString = '';
-	for ($i = 0; $i < $length; $i++) {
-		$randomString .= $characters[rand(0, $charactersLength - 1)];
-	}
-	return $randomString;
-}
+
 function debugconfirm(){
 	startSession();
 	appendLn("로그인 성공");
@@ -254,8 +245,10 @@ function confirm(){
 		exit;
 
 	}
-
+	$rn = $res[0];
 	$hashpwd = $res[1];
+	$name = $res[2];
+
 
 
 	$cmppwdhash = strtoupper(hash('sha256', $pwd . $res[0])).$precheck;

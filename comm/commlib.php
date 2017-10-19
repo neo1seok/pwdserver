@@ -66,7 +66,16 @@ function appendWithTag($tag,$str){
 function pnl(){
 	echo "<br />\n";
 }
-
+function generateRandomString($length = 10) {
+	$characters = 'abcdefghijklmnopqrstuvwxyz';
+	#$characters = '0123456789';
+	$charactersLength = strlen($characters);
+	$randomString = '';
+	for ($i = 0; $i < $length; $i++) {
+		$randomString .= $characters[rand(0, $charactersLength - 1)];
+	}
+	return $randomString;
+}
 
 function defMeta(){
 	echo '<!DOCTYPE html>';
@@ -163,5 +172,32 @@ function getsaftySession($key){
 function base64_url_decode($input)
 {
 	return base64_decode(strtr($input, '-_,', '+/='));
+}
+function sha256_from_hexstr($hex_str){
+	//var_dump($hex_str);
+	$arr = hex2bin($hex_str);
+	// var_dump($arr);
+	// $arr = array_map("hexdec", $arr);
+	// $arr = array_map("chr", $arr);
+	return strtoupper(hash('sha256',$arr));
+
+	//return strtoupper(hash('sha256',implode($arr)));
+
+}
+function strToHex($string){
+    $hex = '';
+    for ($i=0; $i<strlen($string); $i++){
+        $ord = ord($string[$i]);
+        $hexCode = dechex($ord);
+        $hex .= substr('0'.$hexCode, -2);
+    }
+    return strToUpper($hex);
+}
+function hexToStr($hex){
+    $string='';
+    for ($i=0; $i < strlen($hex)-1; $i+=2){
+        $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+    }
+    return $string;
 }
 ?>
