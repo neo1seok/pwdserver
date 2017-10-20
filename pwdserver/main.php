@@ -161,7 +161,8 @@ $header = '개인 PWD 정보';
             <h1>개인 PW 정보</h1>
             <p>{{discription}}</p>
             <p>
-            <a class="btn btn-info btn-lg" id="toggle_list" href="#" ng-click="toggle('toggle_list')">전체 목록 &gt;&gt;</a>
+            <a class="btn btn-info btn-lg" id="toggle_list" href="#" ng-click="toggle('toggle_list')">PW 목록 &gt;&gt;</a>
+            <a class="btn btn-info btn-lg" id="toggle_list" href="#" ng-click="toggle('toggle_list_header')">헤더 목록 &gt;&gt;</a>
             </p>
           </div>
     </div>
@@ -207,12 +208,17 @@ $header = '개인 PWD 정보';
 		</table>
 
 
+
+
 		</div>
 
     <div class="w3-container">
     <button class="w3-btn w3-green w3-ripple"  ng-click="editContents('')" >&#10004;  사이트입력</button>
     <br>
     </div>
+
+
+
 
 
 
@@ -250,6 +256,40 @@ $header = '개인 PWD 정보';
 
 
   </form>
+
+
+  		<div class="col-md-6" id='div_list' ng-show='showlist_header'>
+  			<h2>리스트</h2>
+  		<table id="table_today_all"  class="table table-striped">
+  			<thead>
+  				<tr>
+  					<th>TITLE</th>
+            <th>HINT</th>
+  					<th >SPECIAL LETTER</th>
+  				</tr>
+  			</thead>
+  			<tbody>
+          <tr ng-repeat="(key,contents) in map_list_header_contents">
+          <th>
+            <!-- <button class="w3-btn w3-ripple" ng-click="editContents(key)">&#9998; {{contents.site }}</button> -->
+            <a href="#" ng-click="editheader(key)">&#9998; {{contents.title }}</a>
+          </th>
+          <!-- <th>{{ contents.title }}</th> -->
+          <th>{{ contents.hint }}</th>
+
+           <th>{{ contents.special_letter }}</th>
+
+
+        </tr>
+
+  		 </tbody>
+  		</table>
+
+
+
+
+  		</div>
+
   <div class="w3-container">
   <button class="w3-btn w3-green w3-ripple"  ng-click="editheader('')" >&#10004;  헤더입력</button>
   <br>

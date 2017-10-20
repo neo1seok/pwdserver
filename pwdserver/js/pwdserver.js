@@ -30,7 +30,12 @@ function update_from_showlist($scope, response) {
 
 
 }
-
+function hideAll($scope){
+  $scope.showlist = false;
+  $scope.showPwdForm = false;
+  $scope.showHeaderForm = false;
+  $scope.showlist_header = false;
+}
 
 function mainController($scope, $window, $http) {
   console.log('myApp');
@@ -44,10 +49,11 @@ function mainController($scope, $window, $http) {
   $scope.map_list_contents = {};
   $scope.map_list_header_contents = {};
 
-
-  $scope.showlist = false;
-  $scope.showPwdForm = false;
-  $scope.showHeaderForm = false;
+  hideAll($scope);
+  // $scope.showlist = false;
+  // $scope.showPwdForm = false;
+  // $scope.showHeaderForm = false;
+  // $scope.showlist_header = false;
 
 
   $scope.msg = "";
@@ -156,10 +162,12 @@ function mainController($scope, $window, $http) {
       $scope.check_save = true;
     }
 
-    $scope.showlist = false;
-    $scope.showPwdForm = false;
-    $scope.showHeaderForm = false;
 
+      // $scope.showlist = false;
+      // $scope.showPwdForm = false;
+      // $scope.showHeaderForm = false;
+      // $scope.showlist_header = false;
+      hideAll($scope);
 
 
     console.log(contents);
@@ -193,10 +201,12 @@ function mainController($scope, $window, $http) {
     }
 
 
-    $scope.showlist = false;
-    $scope.showPwdForm = false;
-    $scope.showHeaderForm = false;
-
+      //
+      // $scope.showlist = false;
+      // $scope.showPwdForm = false;
+      // $scope.showHeaderForm = false;
+      // $scope.showlist_header = false;
+      hideAll($scope);
 
     $scope.phd_uid = header_info.phd_uid;
     $scope.title = header_info.title;
@@ -384,9 +394,13 @@ function mainController($scope, $window, $http) {
         console.log(response.data);
         update_from_showlist($scope, response);
 
-        $scope.showlist = false;
-        $scope.showPwdForm = false;
-        $scope.showHeaderForm = false;
+          //
+          // $scope.showlist = false;
+          // $scope.showPwdForm = false;
+          // $scope.showHeaderForm = false;
+          // $scope.showlist_header = false;
+
+          hideAll($scope);
 
         $scope.showlist = true;
 
@@ -411,9 +425,10 @@ function mainController($scope, $window, $http) {
 
 
     switch (id) {
-      case 'toggle_input':
-        console.log('1');
-        $scope.shwoContents = !$scope.shwoContents;
+      case 'toggle_list_header':
+        console.log('toggle_list_header');
+
+        $scope.showlist_header = !$scope.showlist_header;
 
         break;
       case 'toggle_list':
