@@ -21,29 +21,20 @@ $mapHint = array(
     "dad"=>"0124",
     "mom"=>"1011",
     "me"=>"0815",
+    "sewol_sadday"=>"0416",
 );
 
-$sql = sprintf("SELECT rn,pwd,name FROM user where id='%s';",$id);
 
-$res = QueryString($sql);
-// $result['sql'] = $sql;
-// $result['res'] = $res;
-if(!isset($res)|| !$res ){
-  $result['result'] = 'FAIL';
-  $result['error'] = 'ID NOT EXIST';
-  echo json_encode($result);
-  exit;
-
-}
-
-$rn = $res[0];
-$hashpwd = $res[1];
-$name = $res[2];
 
 if($option=='access_info'){
   $listmpap = QueryString2Map("SELECT id,rn FROM user;");
   $mapidRn = getMapFromResultDB('id','rn',$listmpap);
-  $result['rn'] = $rn;
+  $map_rn_per_hashid = array();
+  foreach($mapidRn as $key=>$value){
+    $map_rn_per_hashid[sha256($key)]=$value;
+	}
+  $result['rn_per_hashid'] = $map_rn_per_hashid;
+
   $server_rn = strtoupper(hash('sha256', generateRandomString(4)));;
 
   $index = rand(0, count($mapHint) - 1);
@@ -51,6 +42,7 @@ if($option=='access_info'){
   $key = array_keys($mapHint)[$index];
 
   $result['pre_key'] = $key;
+  $result['server_rn'] = $server_rn;
   $result['server_rn'] = $server_rn;
 
 
@@ -62,7 +54,32 @@ if($option=='access_info'){
   echo json_encode($result);
   exit;
 }
+elseif ($option=='log_out') {
+  #session_start();
+	session_destroy();
+  echo json_encode($result);
+  exit;
+  # code...
+}
 
+
+$sql = sprintf("SELECT rn,pwd,name FROM user where id='%s';",$id);
+
+$res = QueryString($sql);
+
+$rn = $res[0];
+$hashpwd = $res[1];
+$name = $res[2];
+
+// $result['sql'] = $sql;
+// $result['res'] = $res;
+if(!isset($res)|| !$res ){
+  $result['result'] = 'FAIL';
+  $result['error'] = 'ID NOT EXIST';
+  echo json_encode($result);
+  exit;
+
+}
 
 $pre_key_value = $mapHint[$pre_key];
 $input_hash = $hashpwd.$server_rn.sha256_from_hexstr(strToHex($pre_key_value));
@@ -83,7 +100,11 @@ $cmppwdhash = sha256_from_hexstr($input_hash);
 if($access_code != $cmppwdhash){
   $result['result'] = 'FAIL';
   $result['error'] = 'PASSWORD IS NOT MATCH';
-  $result['input_hash'] = $input_hash;
+//  $result['input_hash'] = $input_hash;
+
+}
+else{
+  setSession($id,$name);
 
 }
 // $result['cmppwdhash'] = $cmppwdhash;

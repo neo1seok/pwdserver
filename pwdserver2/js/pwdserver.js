@@ -50,7 +50,8 @@ function mainController($scope, $window, $http) {
 
   $scope.msg = "";
   $scope.warning = "";
-  $scope.contents_title = "Insert New CONTENTS:";
+  $scope.contents_title = "사이트입력:";
+  $scope.contents_header_title = "헤더입력:";
   $scope.check_save = false;
 
 
@@ -180,24 +181,15 @@ function mainController($scope, $window, $http) {
     if (uid != '') {
       header_info = $scope.map_list_header_contents[uid]
       $scope.check_save_header = false;
+    } else {
+      $scope.check_save_header = true;
+    }
 
 
 
-	console.log(contents);
-	$scope.showPwdForm = true;
-	$scope.showlist =false;
-	$scope.check_save = true;
-	$scope.pwd_uid = contents.pwd_uid;
-	$scope.site = contents.site;
-	$scope.header = contents.title;
-	$scope.ptail= contents.ptail;
-	$scope.id= contents.id;
-	$scope.etc = contents.etc;
-	$scope.showPwdForm = true;
-	$scope.showlist = false;
 
-
-
+    $scope.showPwdForm = false;
+    $scope.showlist = false;
 
     $scope.phd_uid = header_info.phd_uid;
     $scope.title = header_info.title;
@@ -264,6 +256,12 @@ function mainController($scope, $window, $http) {
       $scope.ptail, $scope.id, $scope.etc, $scope.header);
 
     console.log($scope.header);
+
+    console.log('newcontents');
+    $scope.showPwdForm = true;
+    $scope.check_save = true;
+    $scope.showlist = false;
+
     param = {
       pwd_uid: $scope.pwd_uid,
       site: $scope.site,
@@ -271,14 +269,62 @@ function mainController($scope, $window, $http) {
       id: $scope.id,
       etc: $scope.etc,
       phd_uid: $scope.header.phd_uid,
+    }
+    if(!confirm('PWD정보 업데이트를 하시겠습니까?')) return false;
+
+    $http.post('update_site.php', $.param(param), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+        }
+      })
+      //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
+      .then(function(response) {
+        console.log('update_header');
+        console.log(response.data);
+        console.log(response.data.result);
+        if(response.data.result == "ok"){
+          location.reload();
+
+        }
+        else{
+          $scope.warning = response.data.error;
+        }
 
 
 
-  console.log('newcontents');
-  $scope.showPwdForm = true;
-  $scope.check_save = true;
-  $scope.showlist = false;
 
+      }, function errorCallback(response) {
+        $scope.warning = response.status;
+      });
+
+
+
+
+
+  }
+  $scope.update_header = function() {
+
+    console.log('update_header');
+
+    if(!confirm('헤더 업데이트를 하시겠습니까?')) return false;
+
+    var option = 'insert';
+
+    console.log($scope.pwd_uid, $scope.site,
+      $scope.ptail, $scope.id, $scope.etc, $scope.header);
+
+    console.log($scope.header);
+
+    console.log('newcontents');
+    $scope.showPwdForm = true;
+    $scope.check_save = true;
+    $scope.showlist = false;
+
+    param = {
+      phd_uid: $scope.phd_uid,
+      title: $scope.title,
+      hint: $scope.hint,
+      special_letter: $scope.special_letter,
     }
 
     $http.post('update_header.php', $.param(param), {
@@ -290,6 +336,14 @@ function mainController($scope, $window, $http) {
       .then(function(response) {
         console.log('update_header');
         console.log(response.data);
+        if(response.data.result == "ok"){
+          location.reload();
+
+        }
+        else{
+          $scope.warning = response.data.error;
+        }
+
 
 
 
@@ -306,6 +360,8 @@ function mainController($scope, $window, $http) {
   $scope.find = function() {
 
     console.log('search');
+
+    if(!confirm('검색 하시겠습니까?')) return false;
 
     $http.post('showlist.php', $.param({
         option: 'find',

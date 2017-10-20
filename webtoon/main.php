@@ -396,6 +396,7 @@ $totallist = viewWebtoonLink_total();
 
 
     </script>
+		<div class="col-md-6">
     <div id = 'navi'></div>
     <div id = 'main_container'></div>
     <!-- <div class="jumbotron">
@@ -461,6 +462,7 @@ $totallist = viewWebtoonLink_total();
 		  	 <button type="submit" id='btn_add_webtoon' class="btn btn-success">입력</button>
 		  </form>
 
+		</div>
 		</div>
 </body>
 </html>

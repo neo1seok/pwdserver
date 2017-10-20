@@ -3,10 +3,12 @@ require_once ("library.php"); // library.php 파일 포함
 
 //checkSession();
 startSession();
-setSession('TEST1','TEST2');
+#setSession('TEST1','TEST2');
 
 $page_state = get_login_state('PWD');
 if($page_state != "OK"){
+
+
 
 }
 $user_id = getsaftySession('user_id');
@@ -90,17 +92,30 @@ $header = '개인 PWD 정보';
 
 
 
-    <script type="text/javascript">
-    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
 
+
+    <script type="text/javascript">
     window.page_state = "<?php echo $page_state; ?>";
     window.user_id =  "<?php echo $user_id; ?>";
     window.user_name =  "<?php echo $user_name; ?>";
+
+    console.log('window.page_state',window.page_state);
+    console.log("window.location",window.location.pathname);
+
+//     alert("Url  ="+document.location);
+// alert("PathName  ="+ window.location.pathname);// Returns path only
+// alert("url  ="+window.location.href);// Returns full URL
+
+    go_login_form(window.page_state,window,window.location.pathname);
+
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
+
 
 
 
     $(function() {
       console.log('ready 1');
+
 
 
 			var  map_container =
@@ -138,7 +153,7 @@ $header = '개인 PWD 정보';
     </script>
 
 
-
+    <div class="col-md-6" id='div_list' >
     <div id = 'navi'></div>
     <div class="jumbotron">
     <div class="container">
@@ -207,7 +222,7 @@ $header = '개인 PWD 정보';
     <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button> -->
 
   <form ng-show="showPwdForm" class="w3-container" id="div_input" name="div_input">
-    <h3>{{contents_title}}</h3>
+    <h3>사이트 PWD</h3>
 
     <label>내용수정:
       <input type="checkbox" ng-model="check_save" ng-click="editable()">
@@ -241,7 +256,7 @@ $header = '개인 PWD 정보';
   </div>
 
   <form ng-show="showHeaderForm" class="w3-container" id="div_input" name="div_input">
-    <h3>{{contents_title}}</h3>
+    <h3>헤더</h3>
     <label>내용수정:
       <input type="checkbox" ng-model="check_save_header" ng-click="editable()">
     </label><br/>
@@ -262,7 +277,7 @@ $header = '개인 PWD 정보';
 
 
   </form>
-
+<!--
 
     <form ng-show="shwoLoginForm" class="w3-container" id="div_input" name="div_input">
       <h3>LOG IN</h2>
@@ -274,13 +289,13 @@ $header = '개인 PWD 정보';
     <br>
 
       <br>
-      <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
+
       <button class="w3-btn w3-green w3-ripple" ng-click="login()" >&#10004; LOGIN</button>
       <br>
 
 
 
-      </form>
+      </form> -->
 
       <div class="alert alert-success" ng-hide="msg == ''">
        <strong>MSG</strong> {{msg}}
@@ -288,6 +303,7 @@ $header = '개인 PWD 정보';
 
       <div class="alert alert-danger" ng-hide="warning == ''">
        <strong>Warning!</strong> {{warning}}
+     </div>
      </div>
 
 

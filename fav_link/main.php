@@ -2,18 +2,20 @@
 
 <?php
 include("library.php");  // library.php 파일 포함
-
+startSession();
 $option = getsaftyReq('option');
-$_SESSION['option']=$option;
-if($option == 'priv_link'){
-
-  checkSession();
-
+#$_SESSION['option']=$option;
+$page_state = get_login_state('PWD');
+if($option != 'priv_link'){
+  $page_state = "OK";
 }
 
+$user_id = getsaftySession('user_id');
+$user_name = getsaftySession('user_name');
+$header = '개인 PWD 정보';
 
 
-$header='';
+$header='FAV LINK';
 
 ?>
 
@@ -89,9 +91,18 @@ $header='';
 		<script src="js/main.js"></script>
 
     <script type="text/javascript">
+    console.log('start');
 
-    document.option = "<?php echo $option; ?>";
-    console.log(document.option );
+    window.page_state = "<?php echo $page_state; ?>";
+    window.user_id =  "<?php echo $user_id; ?>";
+    window.user_name =  "<?php echo $user_name; ?>";
+    window.option = "<?php echo $option; ?>";
+
+    go_login_form(window.page_state,window,window.location.pathname+"?option=priv_link");
+
+
+
+    console.log('window.page_state',window.page_state );
 
     angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
 
@@ -140,7 +151,7 @@ $header='';
 
     </script>
 
-
+<div class="col-md-6">
 
     <div id = 'navi'></div>
     <div class="jumbotron">
@@ -226,6 +237,7 @@ $header='';
 
 
       </form>
+      </div>
       <!--
 
 		<div  class="container" id="div_input" name="div_input">

@@ -245,6 +245,7 @@ $curpage = getcurpage();
 
 
 				</script>
+        <div class="col-md-6" id='div_list' >
 
 
         <div id = 'navi'></div>
@@ -322,6 +323,7 @@ $curpage = getcurpage();
 				<!--<input type='submit' tabindex='3' value='실행' style='height:50px'/>
 				</form>-->
 				</div>
+        </div>
 
   </body>
 </html>

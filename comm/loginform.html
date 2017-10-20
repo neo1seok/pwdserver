@@ -1,168 +1,118 @@
 <!DOCTYPE html>
-<html>
-<style>
-/* Full-width input fields */
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
+<html lang="ko">
 
-/* Set a style for all buttons */
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+  <title>샘플폼</title>
 
-button:hover {
-    opacity: 0.8;
-}
+  <!-- 부트스트랩 -->
 
-/* Extra styles for the cancel button */
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-}
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-/* Center the image and position the close button */
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
-}
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="js/sha256.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/base64.js"></script>
+  <script src="js/loginform.js"></script>
 
-.container {
-    padding: 16px;
-}
 
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
+</head>
 
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    padding-top: 60px;
-}
 
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
 
-/* The Close Button (x) */
-.close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 35px;
-    font-weight: bold;
-}
 
-.close:hover,
-.close:focus {
-    color: red;
-    cursor: pointer;
-}
 
-/* Add Zoom Animation */
-.animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s
-}
 
-@-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)}
-    to {-webkit-transform: scale(1)}
-}
 
-@keyframes animatezoom {
-    from {transform: scale(0)}
-    to {transform: scale(1)}
-}
 
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-    span.psw {
-       display: block;
-       float: none;
-    }
-    .cancelbtn {
-       width: 100%;
-    }
-}
-</style>
-<body>
 
-<h2>Modal Login Form</h2>
 
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+  <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window', '$http', mainController]);
 
-<div id="id01" class="modal">
 
-  <form class="modal-content animate" action="/action_page.php">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
 
-    <div class="container">
-      <label><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+    $(function() {
+      console.log('ready 1');
 
-      <label><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      var map_container = {
+        Header: "",
+        Discription: "이 페이지는 개인 정보를 저장하는 페이지 이다.",
+        Links: [],
 
-      <button type="submit">Login</button>
-      <input type="checkbox" checked="checked"> Remember me
-    </div>
 
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-  </form>
-</div>
+      };
 
-<script>
-// Get the modal
-var modal = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
+
+
+
+    setup_nav('#navi', '', map_container, '#nav_contents');
+
+
+
+    });
+  </script>
+
+  <div class="col-md-6" id='div_list' >
+
+    <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button> -->
+
+    <form ng-show="shwoContents" class="w3-container" id="div_input" name="div_input">
+      <h2>로그인</h2>
+      <p>
+      힌트 키: {{pre_key}}
+      </p>
+
+      <label>ID</label>
+      <input class="w3-input w3-border" type="text" ng-model="id" >
+      <br>
+
+      <label>패스워드</label>
+      <input class="w3-input w3-border" type="password" ng-model="pwd">
+      <br>
+
+      <label>힌트값</label>
+      <input class="w3-input w3-border" type="password" ng-model="hint">
+      <br>
+
+      <br>
+      <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
+      <button class="w3-btn w3-green w3-ripple"  ng-click="login()">&#10004; 로그인</button>
+      <button class="w3-btn w3-green w3-ripple"  ng-click="cancel()">&#10004; 취소</button>
+
+      <br>
+
+
+
+    </form>
+
+      <div class="alert alert-success" ng-hide="msg == ''">
+        <strong>Warning!</strong> {{msg}}
+      </div>
+
+      <div class="alert alert-danger" ng-hide="warning == ''">
+        <strong>Warning!</strong> {{warning}}
+      </div>
+
+
+
+  </div>
+
 
 </body>
+
 </html>

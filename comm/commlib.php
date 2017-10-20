@@ -173,13 +173,16 @@ function base64_url_decode($input)
 {
 	return base64_decode(strtr($input, '-_,', '+/='));
 }
+function sha256($str){
+	return strtoupper(hash('sha256',$str));
+}
 function sha256_from_hexstr($hex_str){
 	//var_dump($hex_str);
-	$arr = hex2bin($hex_str);
+	$str = hex2bin($hex_str);
 	// var_dump($arr);
 	// $arr = array_map("hexdec", $arr);
 	// $arr = array_map("chr", $arr);
-	return strtoupper(hash('sha256',$arr));
+	return sha256($str);
 
 	//return strtoupper(hash('sha256',implode($arr)));
 

@@ -1,7 +1,8 @@
 <?php
 include("library.php");  // library.php ���� ����
-checkSession();
 header("Content-Type:application/json");
+checkSession();
+
 
 $phd_uid = getsaftyReq('phd_uid');
 $title = getsaftyReq('title');

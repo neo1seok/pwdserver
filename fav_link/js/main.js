@@ -12,7 +12,7 @@ function mainController($scope, $window,$http) {
 $scope.check_save = false;
 $scope.showlist = true ;
 $scope.type = 'MAIN';
-if(document.option =='priv_link'){
+if($window.option =='priv_link'){
   $scope.type = 'PRIVATE';
 
 }

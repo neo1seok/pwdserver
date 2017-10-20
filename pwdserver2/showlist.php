@@ -2,6 +2,8 @@
 <?php
 require_once ("library.php"); // library.php 파일 포함
 header("Content-Type:application/json");
+checkSession();
+
 
 $page_state = get_login_state('PWD');
 $result = array('RESULT' => 'OK');

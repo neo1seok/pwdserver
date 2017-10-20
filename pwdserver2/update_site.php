@@ -1,8 +1,8 @@
 <?php
 include("library.php");  // library.php ���� ����
-
-checkSession();
 header("Content-Type:application/json");
+checkSession();
+
 
 
 $site = getsaftyReq('site');

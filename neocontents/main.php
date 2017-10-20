@@ -140,7 +140,7 @@ $header = '오늘의 정보';
     </script>
 
 
-
+    <div class="col-md-6" >
     <div id = 'navi'></div>
     <div class="jumbotron">
     <div class="container">
@@ -232,6 +232,7 @@ $header = '오늘의 정보';
 
 
       </form>
+      </div>
       <!--
 
 		<div  class="container" id="div_input" name="div_input">
