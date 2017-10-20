@@ -263,9 +263,9 @@ $header = '개인 PWD 정보';
 
      <table class="table table-striped">
        <tr><td width=100> phd_uid </td><td><input class="login_short"  type="text" ng-model="phd_uid" ng-disabled="true" placeholder="pwd_uid"></td></tr>
-       <tr><td> title </td><td><input  class="w3-input w3-border" type="text" ng-model="title" ng-disabled="!check_save_header" placeholder="site"></td></tr>
-       <tr><td> hint </td><td><input   class="w3-input w3-border" type="text" ng-model="hint" ng-disabled="!check_save_header" placeholder="id"></td></tr>
-       <tr><td> special_letter </td><td><input  class="w3-input w3-border" type="text" ng-model="special_letter" ng-disabled="!check_save_header" placeholder="ptail"></td></tr>
+       <tr><td> title </td><td><input  class="w3-input w3-border" type="text" ng-model="title" ng-disabled="!check_save_header" placeholder="title"></td></tr>
+       <tr><td> hint </td><td><input   class="w3-input w3-border" type="text" ng-model="hint" ng-disabled="!check_save_header" placeholder="hint"></td></tr>
+       <tr><td> special_letter </td><td><input  class="w3-input w3-border" type="text" ng-model="special_letter" ng-disabled="!check_save_header" placeholder="special_letter"></td></tr>
      </table>
 
      <button class="w3-btn w3-green w3-ripple" ng-click="update_header()" >&#10004; UPDATE</button>
