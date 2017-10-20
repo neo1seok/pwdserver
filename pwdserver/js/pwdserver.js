@@ -31,6 +31,7 @@ function update_from_showlist($scope, response) {
 
 }
 
+
 function mainController($scope, $window, $http) {
   console.log('myApp');
 
@@ -43,10 +44,11 @@ function mainController($scope, $window, $http) {
   $scope.map_list_contents = {};
   $scope.map_list_header_contents = {};
 
+
+  $scope.showlist = false;
   $scope.showPwdForm = false;
   $scope.showHeaderForm = false;
-  $scope.shwoLoginForm = false;
-  $scope.showlist = false;
+
 
   $scope.msg = "";
   $scope.warning = "";
@@ -154,6 +156,11 @@ function mainController($scope, $window, $http) {
       $scope.check_save = true;
     }
 
+    $scope.showlist = false;
+    $scope.showPwdForm = false;
+    $scope.showHeaderForm = false;
+
+
 
     console.log(contents);
     //$scope.check_save = true;
@@ -186,10 +193,10 @@ function mainController($scope, $window, $http) {
     }
 
 
-
-
-    $scope.showPwdForm = false;
     $scope.showlist = false;
+    $scope.showPwdForm = false;
+    $scope.showHeaderForm = false;
+
 
     $scope.phd_uid = header_info.phd_uid;
     $scope.title = header_info.title;
@@ -377,6 +384,12 @@ function mainController($scope, $window, $http) {
         console.log(response.data);
         update_from_showlist($scope, response);
 
+        $scope.showlist = false;
+        $scope.showPwdForm = false;
+        $scope.showHeaderForm = false;
+
+        $scope.showlist = true;
+
         //$scope.list_contents=response.data.list_contents;
 
 
@@ -384,6 +397,12 @@ function mainController($scope, $window, $http) {
         $scope.warning = response.status;
       });
 
+
+  }
+
+  $scope.all_update = function() {
+
+    location.reload();
 
   }
 

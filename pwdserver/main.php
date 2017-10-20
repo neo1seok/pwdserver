@@ -145,7 +145,7 @@ $header = '개인 PWD 정보';
 					{ Btn: "#toggle_input", Div:"#div_input",IsShow:false},
 			]
 
-      $('#toggle_input').attr("ng-click","toggle('toggle_input')")
+  //    $('#toggle_input').attr("ng-click","toggle('toggle_input')")
 
     });
 
@@ -173,7 +173,7 @@ $header = '개인 PWD 정보';
     <form class="w3-container" id="search" name="search">
       <input class="w3-input w3-border" type="text" ng-model="keyword"  placeholder="KEYWORD">
       <button class="w3-btn w3-green w3-ripple" ng-click="find()" >&#10004; 검색</button>
-      <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button>
+      <button class="w3-btn w3-green w3-ripple"  ng-click="all_update()" >&#10004; 전체리스트</button>
     </form>
 
 
