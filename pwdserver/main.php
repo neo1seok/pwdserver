@@ -130,7 +130,7 @@ $header = '개인 PWD 정보';
 
 
 
-      setup_nav('#navi','',map_container,'#nav_contents');
+      setup_nav('#navi','',map_container,'#nav_pwd');
       //update_list(list_contents);
 
 			//$('#div_today').show();

@@ -73,18 +73,18 @@ $curpage = getcurpage();
   </head>
   <script src="https://www.w3schools.com/lib/w3data.js"></script>
 
+  				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  				<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+  				<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  				<script src="comm/js/util.js"></script>
+
 
   <body>
 
 
+    <script type="text/javascript">
 
-
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-				<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
-				<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-				<script src="comm/js/util.js"></script>
-				<script type="text/javascript">
         w3IncludeHTML();
 
 				function update_link(maplist){
@@ -142,8 +142,8 @@ $curpage = getcurpage();
           var  map_container =
           { Header: "원석의 심플 홈피", Discription: "이 홈페이지는 신원석(neo1seok)의 집에 있는 라즈베리파이의 아파치 서버위에서 돌아가고 있습니다.",
             Links: [
-                { Name: "FAV LINK>>", Link: "#",Id:"toggle_link" },
-                { Name: "ADD LINK>>", Link: "#" ,Id:"toggle_add_link"},
+                // { Name: "FAV LINK>>", Link: "#",Id:"toggle_link" },
+                // { Name: "ADD LINK>>", Link: "#" ,Id:"toggle_add_link"},
                 { Name: "EXCUTE SHELL>>", Link: "#" ,Id:"toggle_excute"},
             ],
 
@@ -161,50 +161,50 @@ $curpage = getcurpage();
 
 
 
-					$('.class_del').click(function(){
-						console.log('class_del');
-						var link_id = `${this.id}_link`;
-						tr_id = `${this.id}_tr`;
-						console.log(link_id);
-						console.log(tr_id);
-						var ret = confirm($('#'+link_id).text()+' 항목을 지우시겠습니까?');
-						console.log(ret);
-						if(!ret) return;
-						del_result = 'FAIL';
-						var resp = $.get( "del_link.php?uid="+this.id, function( data ) {
-								console.log('get del_link');
-								console.log(data);
-								console.log(toHex(data));
-								data = convert_to_safe_json_string(data)
-
-								console.log(toHex(data));
-
-								if( data =='OK'){
-									console.log(tr_id);
-									$('#'+tr_id).remove();
-								}
-							//console.log(data.html());
-							//var map_Presult  = $.parseJSON( convert_to_safe_json_string(data));
-							//console.log(map_Presult);
-							 $('#txt_result').append( data );
-							 //del_result = data;
-							 //console.log(data);
-							 //alert( "Load was performed." );
-							 //return 'FUCK';
-						 });
-						//$('#'+tr_id).remove();
-
-
-						//console.log($(this).val);
-
-
-
-					});
+					// $('.class_del').click(function(){
+					// 	console.log('class_del');
+					// 	var link_id = `${this.id}_link`;
+					// 	tr_id = `${this.id}_tr`;
+					// 	console.log(link_id);
+					// 	console.log(tr_id);
+					// 	var ret = confirm($('#'+link_id).text()+' 항목을 지우시겠습니까?');
+					// 	console.log(ret);
+					// 	if(!ret) return;
+					// 	del_result = 'FAIL';
+					// 	var resp = $.get( "del_link.php?uid="+this.id, function( data ) {
+					// 			console.log('get del_link');
+					// 			console.log(data);
+					// 			console.log(toHex(data));
+					// 			data = convert_to_safe_json_string(data)
+          //
+					// 			console.log(toHex(data));
+          //
+					// 			if( data =='OK'){
+					// 				console.log(tr_id);
+					// 				$('#'+tr_id).remove();
+					// 			}
+					// 		//console.log(data.html());
+					// 		//var map_Presult  = $.parseJSON( convert_to_safe_json_string(data));
+					// 		//console.log(map_Presult);
+					// 		 $('#txt_result').append( data );
+					// 		 //del_result = data;
+					// 		 //console.log(data);
+					// 		 //alert( "Load was performed." );
+					// 		 //return 'FUCK';
+					// 	 });
+					// 	//$('#'+tr_id).remove();
+          //
+          //
+					// 	//console.log($(this).val);
+          //
+          //
+          //
+					// });
 					$('#btn_excute').click(function(){
 						console.log('btn_excute');
 						var strcmd= $('#txt_cmd').val();
 						console.log(strcmd);
-						 $.get( "comm/excuteshell.php?cmd="+strcmd, function( data ) {
+						 $.get( "/comm/excuteshell.php?cmd="+strcmd, function( data ) {
 							 console.log('get ');
 							 //$(data).html();
 
@@ -216,8 +216,8 @@ $curpage = getcurpage();
 
           var toggle_map =
           [
-              { Btn: "#toggle_link", Div:"#div_link",IsShow:false},
-              { Btn: "#toggle_add_link", Div:"#div_add_link",IsShow:false},
+              // { Btn: "#toggle_link", Div:"#div_link",IsShow:false},
+              // { Btn: "#toggle_add_link", Div:"#div_add_link",IsShow:false},
               { Btn: "#toggle_excute", Div:"#div_excute_shell",IsShow:false},
           ]
 
@@ -281,7 +281,7 @@ $curpage = getcurpage();
 				</div>
 				<div id='div_add_link' >
 
-				<form name = 'input' method='post' action='insertlink.php'>
+				<!-- <form name = 'input' method='post' action='insertlink.php'>
 
 				<input type='hidden' name='option'  readonly value='' />
 
@@ -301,7 +301,7 @@ $curpage = getcurpage();
 				</table>
 
 				<input type='submit' tabindex='3' value='링크추가' style='height:50px'/>
-				</form>
+				</form> -->
 				</div>
 				<div id='div_excute_shell' >
 				<!--

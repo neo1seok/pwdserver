@@ -122,11 +122,13 @@ $header='FAV LINK';
 
       };
 
+      var cur_id = '#nav_fav_link';
+      if(window.option == 'priv_link'  ){
+        cur_id = '#nav_fav_link_priv';
+      }
 
 
-
-
-      setup_nav('#navi','',map_container,'#nav_fav_link');
+      setup_nav('#navi','',map_container,cur_id);
       //update_list(list_contents);
 
 			//$('#div_today').show();

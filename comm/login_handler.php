@@ -6,6 +6,7 @@ require_once 'mysqldb.php';
 require_once 'session.php';
 header("Content-Type:application/json");
 startSession();
+$page_state = get_login_state('PWD');
 
 $id = getsaftyReq('id');
 $access_code = getsaftyReq('access_code');

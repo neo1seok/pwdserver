@@ -155,21 +155,22 @@ function setup_nav(sel_nav, sel_cont, map_container, active_sel_id) {
   var navinfo = {
     Title: {
       Name: "neo1seok main",
-      Link: window.location.origin + "/"
+      Link: "/"
     },
-    Links: [{
-        Name: "MAIN",
-        Link: window.location.origin + "/",
-        Id: "nav_main"
-      },
+    Links: [
+      // {
+      //   Name: "MAIN",
+      //   Link: "/",
+      //   Id: "nav_main"
+      // },
       {
         Name: "WEBTOON",
-        Link: window.location.origin + "/webtoon/",
+        Link: "/webtoon/",
         Id: "nav_webtoon"
       },
       {
         Name: "오늘의 정보",
-        Link: window.location.origin + "/neocontents/",
+        Link: "/neocontents/",
         Id: "nav_contents"
       },
       {
@@ -178,10 +179,32 @@ function setup_nav(sel_nav, sel_cont, map_container, active_sel_id) {
         Id: "nav_fav_link"
       },
       {
-        Name: "개인 PW정보",
-        Link: window.location.origin + "/pwdserver2/",
+        Name: "개인 PW정보(로그인필요)",
+        Link:"/pwdserver/",
         Id: "nav_pwd"
       },
+
+      {
+        Name: "FAV LINK(개인링크)",
+        Link: "/fav_link/main.php?option=priv_link",
+        Id: "nav_fav_link_priv"
+      },
+      {
+        Name: "개인 PW정보 예전방식(로그인필요)",
+        Link: "/pwdserver_old/",
+        Id: "nav_pwd_old"
+      },
+      {
+        Name: "LOG_IN",
+        Link: "/comm/loginform.html",
+        Id: ""
+      },
+      {
+        Name: "LOG_OUT",
+        Link: "/comm/log_out.html",
+        Id: ""
+      },
+
 
       // { Name: "MAIN", Link: window.location.origin +"/" },
       //   { Name: "WEBTOON", Link: window.location.origin +"/webtoon/" },
