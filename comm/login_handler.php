@@ -91,8 +91,12 @@ $cmppwdhash = sha256_from_hexstr($input_hash);
 //$option = getsaftyReq('option');
 
 //$result['etc_info'] = $mapidRn;
-// $result['pre_key'] = $pre_key;
-// $result['pre_key_value'] = $pre_key_value;
+ $result['pre_key'] = $pre_key;
+ $result['input_hash'] = $input_hash;
+ $result['hashpwd'] = $hashpwd;
+ $result['access_code'] = $access_code;
+ $result['cmppwdhash'] = $cmppwdhash;
+
 
 // $result['hash_pre_key_value'] = sha256_from_hexstr(strToHex($pre_key_value));
 // $result['hex_pre_key_value'] = strToHex($pre_key_value);

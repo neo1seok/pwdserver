@@ -37,8 +37,6 @@ function calc_access_code(passwd,rn,prev_value,server_rn){
 
 
 
-
-
 function mainController($scope, $window,$http) {
  console.log('myApp');
  // console.log('chipInit',$window.list_contents);;
@@ -50,6 +48,7 @@ function mainController($scope, $window,$http) {
 $scope.check_save = false;
 
 $scope.hint = '';
+$window.scope = $scope;
 
 $scope.bodyInit= function() {
 
@@ -180,6 +179,115 @@ $scope.login= function() {
 }
 
 
+  $scope.statusChangeCallback = function (response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+			console.log("connected:",response.authResponse.accessToken);
+      $scope.connected_api();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+
+  $scope.connected_api  = function() {
+    console.log('connected_api');
+
+    var email = '';
+    FB.api('/me',{fields:  'id,name,picture,cover,email'}, function(response) {
+       console.log(response);
+       email = response['email'];
+       nid = response['id'];
+       $scope.login_fb(email,nid,$scope.hint)
+
+     });
+     console.log('email:');
+     console.log(email);
+  }
+
+
+
+  $scope.login_fb =  function  (id,pwd,hint) {
+    console.log('login_fb');
+    console.log(id,pwd,hint);
+    $scope.warning = "";
+
+    console.log('login',id,pwd,hint);
+    if(id =='' || pwd ==''|| hint == ''){
+      $scope.warning ="값이 비어 있습니다. ";
+      return;
+    }
+
+
+
+       hash_id = Sha256.hash(id);
+       rn = $scope.rn_per_hashid[hash_id];
+       console.log('rn',rn);
+       console.log('test',toHex('teHIJKGst'));
+       console.log($scope.rn_per_hashid);
+
+
+      access_code = calc_access_code(pwd,rn,hint,$scope.server_rn)
+      console.log('access_code',access_code);
+
+
+
+    $http.post('/comm/login_handler.php', $.param({
+        id:id,
+        access_code:access_code
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+        }
+      })
+      //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
+      .then(function(response) {
+        console.log('get_contents');
+        console.log(response.data);
+
+        if(response.data.result != 'OK'){
+          $scope.warning = response.data.error;
+          return;
+        }
+
+
+        setCookie('id',id,1);
+        console.log('login returl_url cookie='+document.cookie);
+        setCookie('pwd',pwd,1);
+        console.log('login returl_url cookie='+document.cookie);
+        url = getCookie('returl_url');
+
+        //alert("url  ="+url);// Returns full URL
+        //alert('returl_url cookie='+getCookie('returl_url'));
+        if(url != "")
+          console.log('url',url);
+        else {
+          url = '/';
+
+        }
+
+        document.location.href = url;
+
+
+      }, function errorCallback(response) {
+        $scope.warning = response.status;
+      });
+
+
+  }
 
 
 

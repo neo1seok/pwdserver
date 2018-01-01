@@ -22,6 +22,7 @@
   <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script src="js/sha256.js"></script>
   <script src="js/util.js"></script>
   <script src="js/base64.js"></script>
@@ -33,15 +34,37 @@
 
 <body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
 
-
-
-
-
-
-
-
   <script type="text/javascript">
     angular.module('myApp', []).controller('userCtrl', ['$scope', '$window', '$http', mainController]);
+
+
+     function checkLoginState() {
+       FB.getLoginStatus(window.scope.statusChangeCallback);
+     }
+
+     window.fbAsyncInit = function() {
+   	    FB.init({
+   	      //appId      : '171344269971521',
+   	      appId      : '171344269971521',
+   	      xfbml      : true,
+   	      version    : 'v2.7'
+   	    });
+   	  };
+
+
+
+     // Load the SDK asynchronously
+      // (function(d, s, id){
+      //   var js, fjs = d.getElementsByTagName(s)[0];
+      //   if (d.getElementById(id)) {return;}
+      //   js = d.createElement(s); js.id = id;
+      //   js.src = '//connect.facebook.net/en_US/sdk.js';
+      //   fjs.parentNode.insertBefore(js, fjs);
+      // }(document, 'script', 'facebook-jssdk'));
+
+     // Here we run a very simple test of the Graph API after login is
+     // successful.  See statusChangeCallback() for when this call is made.
+
 
 
 
@@ -71,6 +94,12 @@
 
     <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="test()" >&#10004; TEST</button> -->
 
+
+
+
+    <div id='status'>
+    </div>
+
     <form ng-show="shwoContents" class="w3-container" id="div_input" name="div_input">
       <h2>로그인</h2>
       <p>
@@ -92,8 +121,11 @@
       <br>
       <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
       <button class="w3-btn w3-green w3-ripple"  ng-click="login()">&#10004; 로그인</button>
-      <button class="w3-btn w3-green w3-ripple"  ng-click="cancel()">&#10004; 취소</button>
-
+      <br>
+      <fb:login-button scope='public_profile,email' onlogin='checkLoginState();'>
+      </fb:login-button>
+      <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="cancel()">&#10004; 취소</button> -->
+      <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
       <br>
 
 
