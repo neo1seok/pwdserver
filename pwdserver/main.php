@@ -242,7 +242,7 @@ $header = '개인 PWD 정보';
        <tr><td> header </td><td><select class="w3-input w3-border" ng-model="header"  ng-disabled="!check_save" ng-options="value.title for value in list_header_contents"></select></td></tr>
        <tr><td> ptail </td><td><input  class="w3-input w3-border" type="text" ng-model="ptail" ng-disabled="!check_save" placeholder="ptail"></td></tr>
        <tr><td> id </td><td><input   class="w3-input w3-border" type="text" ng-model="id" ng-disabled="!check_save" placeholder="id"></td></tr>
-       <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="issue" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
+       <tr><td> etc </td><td><TEXTAREA class="w3-input w3-border" id=inputSolution ng-model="etc" ng-disabled="!check_save" NAME='cmd' ROWS=10 COLS=100 placeholder="etc" class="form-control" tabindex='2'></TEXTAREA></td></tr>
 
 
      </table>

@@ -119,14 +119,21 @@
       <br>
 
       <br>
+
+            <fb:login-button size="xlarge"
+                       onlogin='checkLoginState();'>
+        Login with Facebook
+      </fb:login-button>
+      <br>
       <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
       <button class="w3-btn w3-green w3-ripple"  ng-click="login()">&#10004; 로그인</button>
-      <br>
-      <fb:login-button scope='public_profile,email' onlogin='checkLoginState();'>
-      </fb:login-button>
+
+      <!-- <fb:login-button size="medium" scope='public_profile,email' onlogin='checkLoginState();'>
+      </fb:login-button> -->
+
       <!-- <button class="w3-btn w3-green w3-ripple"  ng-click="cancel()">&#10004; 취소</button> -->
-      <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
-      <br>
+      <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+
 
 
 
