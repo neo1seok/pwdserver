@@ -34,8 +34,10 @@ if($option=='todaylist' ||$option=='alllist'){
 if($option=='updatetopids'){
 	header('Content-Type: text/plain; charset=utf-8');
 	echo $jsonmap;
-	$jsonmap = base64_decode($jsonmap);
-	echo $jsonmap;
+	// $jsonmap = base64_decode($jsonmap);
+	// echo 'test\n';
+	// echo $jsonmap;
+	// echo 'test\n';
 
 
 	$maptopid = json_decode($jsonmap);
